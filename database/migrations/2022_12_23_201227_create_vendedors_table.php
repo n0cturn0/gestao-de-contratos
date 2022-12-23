@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGruposTable extends Migration
+class CreateVendedorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateGruposTable extends Migration
      */
     public function up()
     {
-        Schema::create('grupos', function (Blueprint $table) {
+        Schema::create('vendedors', function (Blueprint $table) {
             $table->id();
-            $table->string('grupo')->comment('Descrição/nome do grupo');  
+            $table->string('vendedor')->comment('Nome do vendedor');
+            $table->string('fone')->comment('Número do telefone');
             $table->integer('status')->comment('0 = Ativo 1 = Inativo')->default(0);
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ class CreateGruposTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grupos');
+        Schema::dropIfExists('vendedors');
     }
 }
