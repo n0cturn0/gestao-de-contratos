@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicosTable extends Migration
+class CreateGruposTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateServicosTable extends Migration
      */
     public function up()
     {
-        Schema::create('servicos', function (Blueprint $table) {
+        Schema::create('grupos', function (Blueprint $table) {
             $table->id();
-            $table->string('servico')->comment('Descrição/nome do serviço');
-            $table->integer('tipo')->comment('0 = produto 1 = serviço');
-            $table->integer('status')->comment('0 = Ativo 1 = Inativo')->default(0);
+            $table->string('grupo')->comment('Descrição/nome do grupo');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateServicosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicos');
+        Schema::dropIfExists('grupos');
     }
 }
