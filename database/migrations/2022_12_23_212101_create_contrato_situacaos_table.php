@@ -17,6 +17,7 @@ class CreateContratoSituacaosTable extends Migration
             $table->id();
             $table->integer('idcontrato');
             $table->integer('situacao')->comment('0 = Ativo 1 = Inativo 2= Renovado 3= Reincidido');
+            $table->integer('status')->comment('0 = Ativo 1 = Inativo')->default(0);
             $table->timestamps();
         });
     }
