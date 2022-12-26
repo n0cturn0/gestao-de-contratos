@@ -26,7 +26,7 @@ class CreateComissoesServicosTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations.g
      *
      * @return void
      */
