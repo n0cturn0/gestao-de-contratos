@@ -5,7 +5,7 @@
 @section('adminlte_css')
     @stack('css')
     @yield('css')
-    @livewireStyles
+   
 @stop
 
 @section('classes_body', $layoutHelper->makeBodyClasses())
@@ -14,7 +14,7 @@
 
 @section('body')
     <div class="wrapper">
-
+        @livewireStyles
         {{-- Preloader Animation --}}
         @if($layoutHelper->isPreloaderEnabled())
             @include('adminlte::partials.common.preloader')
@@ -48,12 +48,12 @@
         @if(config('adminlte.right_sidebar'))
             @include('adminlte::partials.sidebar.right-sidebar')
         @endif
-
+        @livewireScripts
     </div>
 @stop
 
 @section('adminlte_js')
     @stack('js')
     @yield('js')
-    @livewireScripts
+    
 @stop
