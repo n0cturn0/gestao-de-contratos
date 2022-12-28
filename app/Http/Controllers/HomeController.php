@@ -28,7 +28,11 @@ class HomeController extends Controller
 
     public function produto()
     {
-        return view('produto');
+        $data = [
+            'title' => 'Cadastrando um novo produto',
+            'etiqueta' => 'Cadastro de produto'
+        ];
+        return view('produto', ['colection' => collect($data)]);
     }
 
    
