@@ -37,6 +37,7 @@
                     Price
                     {{-- @include('partials._sort-icon',['field'=>'price']) --}}
                 </th>
+                <th></th>
             </tr>
         </thead>
 
@@ -49,6 +50,10 @@
                 <td>{{$item->produto}}</td>
                 <td></td>
                 <td></td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-primary" wire:click="editProduto({{$item}})">Editar</button>
+                    <button type="button" class="btn btn-sm btn-danger" wire:click="confirmDelete({{$item['id']}})">Apagar</button>
+                </td>
             </tr>
 
             @endforeach

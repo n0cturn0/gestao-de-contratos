@@ -41,5 +41,11 @@ class ProdutoComponent extends Component
 
         return $this->sortBy = $field;
     }
+
+    public function editProduto($product)
+    {
+        $this->editProduto = $product;
+        $this->editModal = true;
+    }
     
 }
