@@ -15,13 +15,16 @@ class ProdutoComponent extends Component
     public $perPage = 10;
     public $search = '';
 
-
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
 
 
     public function render()
     {
-       $items = Produto::query()->orderBy($this->sortBy, $this->sortDirection)->paginate(3);
+       $items = Produto::query()->search($this->search)->orderBy($this->sortBy, $this->sortDirection)->paginate($this->perPage);
         return view('livewire.produto-component', compact('items'));
     }
 
@@ -38,4 +41,5 @@ class ProdutoComponent extends Component
 
         return $this->sortBy = $field;
     }
+    
 }

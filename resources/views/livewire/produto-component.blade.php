@@ -62,9 +62,7 @@
 
     <div>
 
-        <p>
-            Showing {{$items->firstItem()}} to {{$items->lastItem()}} out of {{$items->total()}} items
-        </p>
+        
         <p>
               {{$items->links()}} 
           
