@@ -1,3 +1,4 @@
+<?php ?>
 <div>
 
     <div class="row mb-4">
@@ -14,11 +15,13 @@
 
         <div class="col">
           
-            <input wire:model.debounce.300ms="search" class="form-control" type="text" placeholder="Search Products...">
+            <input wire:model.debounce.300ms="search" class="form-control" type="text" placeholder="Buscar Produto...">
         </div>
 
     </div>
-
+    
+    <div>
+      
     <table class="table">
         <thead>
             <tr>
@@ -28,15 +31,7 @@
                     @include('partials._sort-icon',['field'=>'produto'])
 
                 </th>
-                <th wire:click="sortBy('description')"  style="cursor: pointer;">
-                    Description
-
-                    {{-- @include('partials._sort-icon',['field'=>'description']) --}}
-                </th>
-                <th wire:click="sortBy('price')" style="cursor: pointer;">
-                    Price
-                    {{-- @include('partials._sort-icon',['field'=>'price']) --}}
-                </th>
+              
                 <th></th>
             </tr>
         </thead>
@@ -48,11 +43,11 @@
 
             <tr>
                 <td>{{$item->produto}}</td>
-                <td></td>
-                <td></td>
+              
                 <td>
-                    <button type="button" class="btn btn-sm btn-primary" wire:click="editProduto({{$item}})">Editar</button>
-                    <button type="button" class="btn btn-sm btn-danger" wire:click="confirmDelete({{$item['id']}})">Apagar</button>
+                  <a class="btn btn-sm btn-primary" href="{{route('event.view', ['event' =>$item->id])}}">Editar</a>
+                   {{-- <button wire.click.prevent="EditProduto" class="btn btn-sm btn-primary" >Editar</button>  --}}
+                    {{-- <button type="button" class="btn btn-sm btn-danger" wire:click="confirmDelete({{$item['id']}})">Apagar</button> --}}
                 </td>
             </tr>
 
@@ -64,7 +59,7 @@
 
         </tbody>
     </table>
-
+</div>
     <div>
 
         
@@ -73,5 +68,20 @@
           
         </p>
     </div>
+
+
+
+
+
+
+
+
+
   
 </div>
+
+
+    
+
+
+

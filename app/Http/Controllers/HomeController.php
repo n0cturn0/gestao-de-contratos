@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function produto()
     {
       
-            $message = 'Cadastro um novo produto';
+            $message = 'Produto cadastrados';
            
         
 

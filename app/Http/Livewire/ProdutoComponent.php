@@ -14,10 +14,11 @@ class ProdutoComponent extends Component
     public $sortDirection = 'asc';
     public $perPage = 10;
     public $search = '';
+    
 
-    public function updatingSearch()
+    public function editar()
     {
-        $this->resetPage();
+        dd('here');
     }
 
 
@@ -42,10 +43,6 @@ class ProdutoComponent extends Component
         return $this->sortBy = $field;
     }
 
-    public function editProduto($product)
-    {
-        $this->editProduto = $product;
-        $this->editModal = true;
-    }
+   
     
 }
