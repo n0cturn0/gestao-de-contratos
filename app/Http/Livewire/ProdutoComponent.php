@@ -14,7 +14,7 @@ class ProdutoComponent extends Component
     public $sortDirection = 'asc';
     public $perPage = 10;
     public $search = '';
-    
+
 
     public function editar()
     {
@@ -43,6 +43,6 @@ class ProdutoComponent extends Component
         return $this->sortBy = $field;
     }
 
-   
-    
+
+
 }

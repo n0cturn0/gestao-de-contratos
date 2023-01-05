@@ -26,16 +26,27 @@ class HomeController extends Controller
         return view('home');
     }
 
+//    public function produto()
+//    {
+//        $message = 'Produto cadastrados';
+//        return view('produto', ['message' => $message]);
+//    }
+
+//    public function cadastro()
+//    {
+//
+//        return view('produto.cadastro');
+//    }
+
     public function produto()
     {
-      
-            $message = 'Produto cadastrados';
-           
-        
-
-
-        return view('produto', ['message' => $message]);
+        return view('produto.index');
     }
 
-   
+    public function cliente()
+    {
+        return view('cliente.index');
+    }
+
+
 }
