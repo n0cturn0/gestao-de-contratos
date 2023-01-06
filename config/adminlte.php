@@ -335,6 +335,11 @@ return [
             'icon_color' => 'red',
         ],
         [
+            'text' => 'Vendedor',
+            'url'  => '/vendedor',
+            'icon_color' => 'red',
+        ],
+        [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
