@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 
-@section('title', 'Cadastro de novo Cliente')
+@section('title', 'Cadastro de novo Produto')
 
 @section('content_header')
 
@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    @livewire('cliente.index')
+    @livewire('vendedor.index')
 @stop
 
 @section('script')
@@ -21,8 +21,6 @@
             $('#deleteStudentModal').modal('hide');
         })
     </script>
-
-
 @endsection
 
 

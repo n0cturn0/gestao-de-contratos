@@ -48,5 +48,10 @@ class HomeController extends Controller
         return view('cliente.index');
     }
 
+    public function vendedor()
+    {
+        return view('vendedor.index');
+    }
+
 
 }
