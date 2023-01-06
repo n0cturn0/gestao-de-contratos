@@ -24,5 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Route::get('/produto', [App\Http\Controllers\HomeController::class, 'produto'])->name('produto');
 //Route::get('/produto-cadastro', [App\Http\Controllers\HomeController::class, 'cadastro'])->name('produto.cadastro');
 Route::get('/produto', [App\Http\Controllers\HomeController::class, 'produto'])->name('produto.principal');
+Route::get('/cliente', [App\Http\Controllers\HomeController::class, 'cliente'])->name('cliente.principal');
 //Route::get('/produto/{event}', ProdutoEventView::class, 'teste')->name('event.view');
 

@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
 
@@ -80,6 +82,8 @@
 <body class="@yield('classes_body')" @yield('body_data')>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
     {{-- Body Content --}}
     @yield('body')
 
@@ -88,6 +92,7 @@
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+
 
         {{-- Configured Scripts --}}
         @include('adminlte::plugins', ['type' => 'js'])
@@ -107,6 +112,8 @@
     @endif
 
     {{-- Custom Scripts --}}
+<!-- Coloque o JS no seu FOOTER, logo depois da jQuery -->
+
     @yield('adminlte_js')
 @yield('script')
 </body>
