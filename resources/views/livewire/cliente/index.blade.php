@@ -12,7 +12,7 @@
                 <div class="card" style="margin-top: 25px;">
                     <div class="card-header">
                         <h4>
-                            <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar produto" style="width: 230px" />
+                            <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar cliente" style="width: 230px" />
                             <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentModal">
                                 Adicionar novo Produto
                             </button>

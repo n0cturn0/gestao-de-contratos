@@ -325,49 +325,22 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
+            'text' => 'Produto',
+            'url'  => '/produto',
+            'icon_color' => 'red',
+        ],
+        [
+            'text' => 'Cliente',
+            'url'  => '/cliente',
+            'icon_color' => 'red',
+        ],
+        [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
 
-        [
-            'text'    => 'Produtos',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'Cadastar',
-                    'url'  => 'produto-cadastro',
-                ],
-                [
-                    'text'    => 'Listar',
-                    'url'     => 'produto-cadastro',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
+
         [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
