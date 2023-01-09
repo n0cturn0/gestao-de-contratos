@@ -53,5 +53,14 @@ class HomeController extends Controller
         return view('vendedor.index');
     }
 
+    public function grupo()
+    {
+        return view('grupo.index');
+    }
+    public function contrato()
+    {
+        return view('contrato.index');
+    }
+
 
 }

@@ -340,6 +340,11 @@ return [
             'icon_color' => 'red',
         ],
         [
+            'text' => 'Grupo',
+            'url'  => '/grupo',
+            'icon_color' => 'red',
+        ],
+        [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
@@ -347,12 +352,12 @@ return [
 
 
         [
-            'text'    => 'multilevel',
+            'text'    => 'Contrato',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Novo Contrato',
+                    'url'  => '/contrato',
                 ],
                 [
                     'text'    => 'level_one',

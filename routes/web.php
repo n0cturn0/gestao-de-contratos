@@ -26,5 +26,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/produto', [App\Http\Controllers\HomeController::class, 'produto'])->name('produto.principal');
 Route::get('/cliente', [App\Http\Controllers\HomeController::class, 'cliente'])->name('cliente.principal');
 Route::get('/vendedor', [App\Http\Controllers\HomeController::class, 'vendedor'])->name('vendedor.principal');
+Route::get('/grupo', [App\Http\Controllers\HomeController::class, 'grupo'])->name('grupo.principal');
+//Contrato
+Route::get('/contrato', [App\Http\Controllers\HomeController::class, 'contrato'])->name('contrato.principal');
 //Route::get('/produto/{event}', ProdutoEventView::class, 'teste')->name('event.view');
 
