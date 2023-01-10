@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contrato;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -59,7 +61,26 @@ class HomeController extends Controller
     }
     public function contrato()
     {
-        return view('contrato.index');
+        $cliente = DB::table('clientes')->get();
+        return view('contrato.index', ['data' => $cliente]);
+    }
+
+    public function cadastrocontrato(Request $request)
+    {
+        $contrato = new Contrato;
+
+       if ($this->validate($request, [
+            'cliente' => 'required|integer|min:1',
+            'produto'   => 'required|integer|min:1',
+        ])){
+            $contrato->idCliente = $request['cliente'];
+            $contrato->idProduto = $request['produto'];
+            $contrato->observacao = $request->input('observacao');
+            $contrato->save();
+       }
+
+
+
     }
 
 

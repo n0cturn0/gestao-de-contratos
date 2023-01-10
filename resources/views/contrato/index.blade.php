@@ -2,7 +2,7 @@
 @extends('adminlte::page')
 
 
-@section('title', 'Criando um contrato');
+@section('title', 'Criando um contrato')
 
 @section('content_header')
 

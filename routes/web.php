@@ -29,5 +29,6 @@ Route::get('/vendedor', [App\Http\Controllers\HomeController::class, 'vendedor']
 Route::get('/grupo', [App\Http\Controllers\HomeController::class, 'grupo'])->name('grupo.principal');
 //Contrato
 Route::get('/contrato', [App\Http\Controllers\HomeController::class, 'contrato'])->name('contrato.principal');
+Route::post('/cadastrocontrato', [App\Http\Controllers\HomeController::class, 'cadastrocontrato'])->name('cadastro-contrato');
 //Route::get('/produto/{event}', ProdutoEventView::class, 'teste')->name('event.view');
 

@@ -11,15 +11,10 @@ class Index extends Component
     public function render()
     {
 
-        $data =  [
+        $data = array(
             'cliente' => Cliente::select()->get(),
-            'produto'  => Produto::select()->get()
-        ];
-
-
-
-
-
+            'produto' => Produto::select()->get(),
+        );
         return view('livewire.contrato.index',['data' => $data]);
     }
 }
