@@ -79,8 +79,11 @@ class HomeController extends Controller
             $contrato->save();
        }
 
+    }
 
-
+    public function listacontrato()
+    {
+       dd('oi');
     }
 
 

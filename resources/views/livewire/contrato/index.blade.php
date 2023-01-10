@@ -1,9 +1,9 @@
-<div>
+<div >
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-    <div class="container-fluid">
+    <div class="container-fluid" >
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-primary">
+                <div class="card card-primary" style="margin-top: 19px;">
                     <div class="card-body">
                         @if ($errors->any())
                             <div class="alert alert-danger">
