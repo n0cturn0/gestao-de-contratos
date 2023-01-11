@@ -11,6 +11,7 @@
                     @endif
 
                     <div class="card" style="margin-top: 25px;">
+
                         <div class="card-header">
                             <h4>
 {{--                                <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar cliente" style="width: 230px" />--}}
@@ -19,7 +20,25 @@
 {{--                                </button>--}}
                             </h4>
                         </div>
-                        <form wire:submit.prevent="saveContrato">
+                        <div class="col-md-6">
+                            <span>
+                               <label>Selecione  o status do contrato</label>
+                            </span>
+                            <div class="form-group">
+                                <select name="identificador" class="custom-select"name="" id="" wire:model="type">
+                                    <option value="0">Ativo</option>
+                                    <option value="1">Inativo</option>
+                                    <option value="2">Renovado</option>
+                                    <option value="3">Reincidido</option>
+                                </select>
+                            </div>
+
+
+
+
+
+                        </div>
+
                         <div class="card-body">
                             <table class="table table-borderd table-striped">
                                 <thead>
@@ -39,26 +58,26 @@
                                         <td>{{ $student->cliente }}</td>
                                         <td>{{ $student->produto }}</td>
                                         <td>
-                                            @if($student->situacao == 0 )
+                                            @if($student->situacao == 0)
 
                                             <span style="align-items: center" class="float-center badge bg-success">ativo</span></td>
                                         @endif
 
                                         @if($student->situacao == 1 )
 
-                                            <span style="align-items: center" class="float-center badge bg-secondary">ativo</span></td>
+                                            <span style="align-items: center" class="float-center badge bg-secondary">Inativo</span></td>
                                         @endif
 
                                         @if($student->situacao == 2 )
 
-                                            <span style="align-items: center" class="float-center badge bg-primary">ativo</span></td>
+                                            <span style="align-items: center" class="float-center badge bg-primary">Renovado</span></td>
                                         @endif
                                         @if($student->situacao == 3 )
 
-                                            <span style="align-items: center" class="float-center badge bg-danger">ativo</span></td>
+                                            <span style="align-items: center" class="float-center badge bg-danger">Reincidido</span></td>
                                         @endif
                                         <td>
-                                            <button type="button" class="btn btn-block btn-primary btn-sm">Alterar Status</button>
+                                            <a href="{{url('situacao-contrato/'.$student->id)}}" class="btn btn-block btn-primary btn-sm">Alterar Status</a>
                                         </td>
                                     </tr>
                                 @empty
@@ -72,7 +91,7 @@
                                 {{ $students->links() }}
                             </div>
                         </div>
-                        </form>
+
                     </div>
                 </div>
             </div>

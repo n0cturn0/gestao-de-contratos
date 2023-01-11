@@ -6,9 +6,13 @@ use App\Models\Contrato;
 use App\Models\ContratoSituacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithPagination;
+
 
 class HomeController extends Controller
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     /**
      * Create a new controller instance.
      *
@@ -85,6 +89,7 @@ class HomeController extends Controller
        {
           $situacao->idcontrato =  $key->id ;
           $situacao->situacao = 0;
+           $situacao->controle = 0;
           $situacao->save();
           echo  'Decidir o redirect';
 
@@ -95,6 +100,43 @@ class HomeController extends Controller
     public function listacontrato()
     {
        return view('contrato.lista');
+    }
+    public function situacaocontrato($id="NULL")
+    {
+
+        $items = DB::table('contratos')
+            ->join('clientes','idCliente', '=', 'clientes.id')
+            ->join ('produtos', 'idProduto', '=', 'produtos.id')
+            ->join('contrato_situacaos','idcontrato','=', 'contratos.id' )
+            ->where('contratos.id', $id)
+            ->select('contratos.*', 'produtos.produto', 'clientes.cliente', 'contrato_situacaos.situacao')
+            ->paginate(10);
+        return view('contrato.situacao', ['students' => $items]);
+    }
+
+    public function atualizastatuscontrato(Request $request)
+    {
+
+
+        $atualiza = DB::table('contrato_situacaos')
+            ->where('idcontrato', '=', $request->input('id'))
+            ->where('controle', '=', 1)->get();
+        foreach ($atualiza as $atual)
+            {
+                echo $atual->id;
+            }
+
+        $situacao = new ContratoSituacao;
+//        $situacao->idcontrato = $request->input('id');
+//        $situacao->contrato =0;
+//        $situacao->situacao = $request->input('identificador');
+//        if ($situacao->save())
+//        {
+//
+//            return redirect()->route('lista-contrato');
+//        }
+
+
     }
 
 
