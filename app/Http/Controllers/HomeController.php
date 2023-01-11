@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contrato;
+use App\Models\ContratoSituacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -68,6 +69,7 @@ class HomeController extends Controller
     public function cadastrocontrato(Request $request)
     {
         $contrato = new Contrato;
+        $situacao = new ContratoSituacao;
 
        if ($this->validate($request, [
             'cliente' => 'required|integer|min:1',
@@ -78,12 +80,21 @@ class HomeController extends Controller
             $contrato->observacao = $request->input('observacao');
             $contrato->save();
        }
+       $last = Contrato::latest()->limit(1)->get();
+       foreach ($last as $key)
+       {
+          $situacao->idcontrato =  $key->id ;
+          $situacao->situacao = 0;
+          $situacao->save();
+          echo  'Decidir o redirect';
+
+       }
 
     }
 
     public function listacontrato()
     {
-       dd('oi');
+       return view('contrato.lista');
     }
 
 
