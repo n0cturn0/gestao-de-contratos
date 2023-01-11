@@ -51,6 +51,7 @@
                                                 <td>
                                                     <div class="form-group">
                                                         <select name="identificador" class="custom-select">
+
                                                             <option value="0">Ativo</option>
                                                             <option value="1">Inativo</option>
                                                             <option value="2">Renovado</option>

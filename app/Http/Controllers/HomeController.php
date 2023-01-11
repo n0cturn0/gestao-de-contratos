@@ -109,6 +109,7 @@ class HomeController extends Controller
             ->join ('produtos', 'idProduto', '=', 'produtos.id')
             ->join('contrato_situacaos','idcontrato','=', 'contratos.id' )
             ->where('contratos.id', $id)
+            ->where('controle', '=', 0)
             ->select('contratos.*', 'produtos.produto', 'clientes.cliente', 'contrato_situacaos.situacao')
             ->paginate(10);
         return view('contrato.situacao', ['students' => $items]);
@@ -120,10 +121,11 @@ class HomeController extends Controller
 
         $atualiza = DB::table('contrato_situacaos')
             ->where('idcontrato', '=', $request->input('id'))
-            ->where('controle', '=', 1)->get();
+            ->where('controle', '=', 0)->get();
         foreach ($atualiza as $atual)
             {
                 echo $atual->id;
+                //https://laravel.com/docs/8.x/queries#update-statements
             }
 
         $situacao = new ContratoSituacao;
