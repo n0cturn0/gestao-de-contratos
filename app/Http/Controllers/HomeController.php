@@ -124,19 +124,22 @@ class HomeController extends Controller
             ->where('controle', '=', 0)->get();
         foreach ($atualiza as $atual)
             {
-                echo $atual->id;
+                $affected = DB::table('contrato_situacaos')
+                    ->where('id', '=',$atual->id )
+                    ->update(['controle' => 1]);
+
                 //https://laravel.com/docs/8.x/queries#update-statements
             }
 
         $situacao = new ContratoSituacao;
-//        $situacao->idcontrato = $request->input('id');
-//        $situacao->contrato =0;
-//        $situacao->situacao = $request->input('identificador');
-//        if ($situacao->save())
-//        {
-//
-//            return redirect()->route('lista-contrato');
-//        }
+        $situacao->idcontrato = $request->input('id');
+        $situacao->controle =0;
+        $situacao->situacao = $request->input('identificador');
+        if ($situacao->save())
+        {
+
+            return redirect()->route('lista-contrato');
+        }
 
 
     }
