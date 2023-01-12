@@ -59,7 +59,8 @@
                                                         </select>
                                                     </div>
                                                 <td>
-                                                    <input type="submit" class="btn btn-block btn-primary btn-sm" >
+                                                    <input type="submit" class="btn btn-block btn-primary btn-sm" value="Alterar Status">
+
 
                                                 </td>
                                             </tr>

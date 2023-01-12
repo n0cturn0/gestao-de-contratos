@@ -46,7 +46,9 @@
                                     <th>ID</th>
                                     <th>Cliente</th>
                                     <th>Produto</th>
-                                    <th></th>
+                                    <th>Data de criação</th>
+                                    <th>Status do contrato</th>
+
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -57,6 +59,7 @@
                                         <td>{{ $student->id }}</td>
                                         <td>{{ $student->cliente }}</td>
                                         <td>{{ $student->produto }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($student->created_at)); }}</td>
                                         <td>
                                             @if($student->situacao == 0)
 

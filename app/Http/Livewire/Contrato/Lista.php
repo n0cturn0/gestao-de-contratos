@@ -13,19 +13,10 @@ class Lista extends Component
 
     protected $paginationTheme = 'bootstrap';
     public $idcontrato,  $student_id, $identificador, $default=0;
-    public $type=null;
+    public $type='';
     public $search = '';
 
-    public function ativos()
-    {
-        $default=0;
-        if (empty($ativos))
-        {
-            $ativos = $default;
-        }
 
-
-    }
 
 
         public function render()
