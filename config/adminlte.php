@@ -360,6 +360,10 @@ return [
                     'url'  => '/contrato',
                 ],
                 [
+                    'text' => 'Listar Contrato',
+                    'url'  => '/lista-contrato',
+                ],
+                [
                     'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
