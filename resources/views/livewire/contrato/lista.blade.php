@@ -47,9 +47,11 @@
                                     <th>Cliente</th>
                                     <th>Produto</th>
                                     <th>Data de criação</th>
-                                    <th>Status do contrato</th>
-
+                                    <th>Contrato</th>
                                     <th></th>
+                                    <th></th>
+
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -80,8 +82,13 @@
                                             <span style="align-items: center" class="float-center badge bg-danger">Reincidido</span></td>
                                         @endif
                                         <td>
-                                            <a href="{{url('situacao-contrato/'.$student->id)}}" class="btn btn-block btn-primary btn-sm">Alterar Status</a>
+
+                                            <a href="{{url('situacao-contrato/'.$student->id)}}" class="btn btn-block btn-primary btn-sm"><i class="fa fa-sign-in-alt"> Status </i> </a>
+
+
                                         </td>
+
+                                        <td> <a href="{{url('situacao-contrato/'.$student->id)}}" class="btn btn-block btn-danger btn-sm"><i class="fa fa-check-double"> Config</i></a></td>
                                     </tr>
                                 @empty
                                     <tr>
