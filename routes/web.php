@@ -33,6 +33,8 @@ Route::post('/cadastrocontrato', [App\Http\Controllers\HomeController::class, 'c
 Route::get('/lista-contrato', [App\Http\Controllers\HomeController::class, 'listacontrato'])->name('lista-contrato');
 Route::get('/situacao-contrato/{id}', [App\Http\Controllers\HomeController::class, 'situacaocontrato'])->name('situacao-contrato');
 Route::post('/atualizastatuscontrato', [App\Http\Controllers\HomeController::class, 'atualizastatuscontrato'])->name('atualiza-status-contrato');
+Route::get('/configura-contrato/{id}', [App\Http\Controllers\HomeController::class, 'configuracontrato'])->name('configura-contrato');
+
 
 //Route::get('/produto/{event}', ProdutoEventView::class, 'teste')->name('event.view');
 

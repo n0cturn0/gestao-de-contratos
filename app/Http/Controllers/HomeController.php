@@ -117,8 +117,6 @@ class HomeController extends Controller
 
     public function atualizastatuscontrato(Request $request)
     {
-
-
         $atualiza = DB::table('contrato_situacaos')
             ->where('idcontrato', '=', $request->input('id'))
             ->where('controle', '=', 0)->get();
@@ -127,8 +125,6 @@ class HomeController extends Controller
                 $affected = DB::table('contrato_situacaos')
                     ->where('id', '=',$atual->id )
                     ->update(['controle' => 1]);
-
-                //https://laravel.com/docs/8.x/queries#update-statements
             }
 
         $situacao = new ContratoSituacao;
@@ -137,11 +133,13 @@ class HomeController extends Controller
         $situacao->situacao = $request->input('identificador');
         if ($situacao->save())
         {
-
             return redirect()->route('lista-contrato');
         }
+    }
 
-
+    public function configuracontrato($id="null")
+    {
+        return view('contrato.configura');
     }
 
 
