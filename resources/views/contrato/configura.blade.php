@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-
+<script src="https://momentjs.com/downloads/moment.js"></script>
 
 @section('title', 'Criando um contrato')
 
@@ -586,14 +586,58 @@
         </section>
 
          <script>
-             $(function() {
+         //     $(function() {
+         //     $('input[name="daterange"]').daterangepicker({
+         //         opens: 'left'
+         //     }, function(start, end, label) {
+         //         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+         //     });
+         // });
+
+         $(function() {
              $('input[name="daterange"]').daterangepicker({
-                 opens: 'left'
+                 "singleDatePicker": true,
+                 "locale": {
+                     "format": "MM/DD/YYYY",
+                     "separator": " - ",
+                     "applyLabel": "Aplicar",
+                     "cancelLabel": "Cancelar",
+                     "fromLabel": "From",
+                     "toLabel": "To",
+                     "customRangeLabel": "Custom",
+                     "weekLabel": "W",
+                     "daysOfWeek": [
+                         "Do",
+                         "Seg",
+                         "Ter",
+                         "Qua",
+                         "Qui",
+                         "Sex",
+                         "Sab"
+                     ],
+                     "monthNames": [
+                         "Janeiro",
+                         "Fevereiro",
+                         "Março",
+                         "Abril",
+                         "Maio",
+                         "Junho",
+                         "Julho",
+                         "Agosto",
+                         "Setembro",
+                         "Outubro",
+                         "Novembro",
+                         "Dezembro"
+                     ],
+                     "firstDay": 1
+                 },
+                 "startDate": "01/07/2023",
+                 "endDate": "01/13/2023"
              }, function(start, end, label) {
-                 console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                 console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
              });
          });
 
-     </script>
+         </script>
 
 @stop
