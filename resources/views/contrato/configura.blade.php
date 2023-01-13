@@ -25,6 +25,8 @@
                                 <h4>Configuração do contrato</h4>
 
 
+
+
                                 <div class="form-group">
                                     <label for="exampleSelectBorder">Selecione um vendedor <code></code></label>
                                     <select class="custom-select form-control-border" id="exampleSelectBorder">
@@ -34,10 +36,21 @@
                                         <option>Value 3</option>
                                     </select>
                                 </div>
+
                                 <div class="form-group">
-                                    <label>Date:</label>
+                                    <label>Data Inicial e data final</label>
                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+                                        <input type="text" class="form-control" name="master" value="01/01/2018 - 01/15/2018" />
+                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Data do reajuste:</label>
+                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                        <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -46,6 +59,24 @@
                                 <div class="form-group">
 
                                 </div>
+
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="number" name="parcela" class="form-control" placeholder="Nº Parcela ">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="numer" name="vencimento" class="form-control" placeholder="Dia Vencimento">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" name="valor" class="form-control" placeholder="Valor R$">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-info">Inserir</button>
+                                <button type="submit" class="btn btn-default float-right">Cancelar</button>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -597,6 +628,50 @@
          $(function() {
              $('input[name="daterange"]').daterangepicker({
                  "singleDatePicker": true,
+                 "locale": {
+                     "format": "MM/DD/YYYY",
+                     "separator": " - ",
+                     "applyLabel": "Aplicar",
+                     "cancelLabel": "Cancelar",
+                     "fromLabel": "From",
+                     "toLabel": "To",
+                     "customRangeLabel": "Custom",
+                     "weekLabel": "W",
+                     "daysOfWeek": [
+                         "Do",
+                         "Seg",
+                         "Ter",
+                         "Qua",
+                         "Qui",
+                         "Sex",
+                         "Sab"
+                     ],
+                     "monthNames": [
+                         "Janeiro",
+                         "Fevereiro",
+                         "Março",
+                         "Abril",
+                         "Maio",
+                         "Junho",
+                         "Julho",
+                         "Agosto",
+                         "Setembro",
+                         "Outubro",
+                         "Novembro",
+                         "Dezembro"
+                     ],
+                     "firstDay": 1
+                 },
+                 "startDate": "01/07/2023",
+                 "endDate": "01/13/2023"
+             }, function(start, end, label) {
+                 console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+             });
+         });
+
+
+         $(function() {
+             $('input[name="master"]').daterangepicker({
                  "locale": {
                      "format": "MM/DD/YYYY",
                      "separator": " - ",
