@@ -165,6 +165,7 @@ class HomeController extends Controller
             'datafinal'     => $s_final,
             'datainicial'   => $s_inicial,
             'datareajuste'  => $_reajuste,
+            'reajuste'      => $request->reajuste,
             'qtdparcela'    => $request->parcela,
             'diavencimento' => $request->vencimento,
             'valormensalidade'  => $request->valor

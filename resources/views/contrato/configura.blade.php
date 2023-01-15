@@ -61,10 +61,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                    <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <input type="text" name="reajuste" class="form-control" placeholder="Valor do reajuste (%) ">
+                                        </div>
 
-                                </div>
-
+                                    </div>
+                                    </div>
 
                                 <div class="row">
                                     <div class="col-4">
