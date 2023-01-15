@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contrato;
+use App\Models\ContratoPeriodo;
 use App\Models\ContratoSituacao;
+use App\Models\Vendedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
@@ -139,7 +141,36 @@ class HomeController extends Controller
 
     public function configuracontrato($id="null")
     {
-        return view('contrato.configura');
+        $vendedores = DB::table('vendedors')->get();
+        $data = array(
+            'id' => $id,
+            'vendedores'    => $vendedores
+        );
+        return view('contrato.configura',['data' => $data]);
+    }
+
+    public function insereconfiguracao(Request $request)
+    {
+        $datas      = $request->master;
+        $inicial    = substr($datas, 0,10);
+        $final      = substr($datas, 12,19);
+        $s_final = date('Y-m-d', strtotime($final));
+        $s_inicial =date('Y-m-d', strtotime($inicial));
+        $_reajuste = date('Y-m-d', strtotime($request->daterange));
+
+
+        $save = ContratoPeriodo::insert([
+            'idsituacao'    => $request->id,
+            'idvendedor'       =>$request->idvendedor,
+            'datafinal'     => $s_final,
+            'datainicial'   => $s_inicial,
+            'datareajuste'  => $_reajuste,
+            'qtdparcela'    => $request->parcela,
+            'diavencimento' => $request->vencimento,
+            'valormensalidade'  => $request->valor
+        ]);
+
+
     }
 
 

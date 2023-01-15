@@ -26,21 +26,26 @@
 
 
 
-
+                                <form action="/insere-contrato-configuraca" method="POST">
+                                    @csrf
                                 <div class="form-group">
                                     <label for="exampleSelectBorder">Selecione um vendedor <code></code></label>
-                                    <select class="custom-select form-control-border" id="exampleSelectBorder">
+                                    <select name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">
+
                                         <option>Selecione</option>
-                                        <option>Value 1</option>
-                                        <option>Value 2</option>
-                                        <option>Value 3</option>
+                                        @foreach($data['vendedores'] as $value)
+                                        <option value="{{$value->id}}">{{ $value->vendedor }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+
+                                    <input type="hidden" name="id" value="{{$data['id']}}">
+
 
                                 <div class="form-group">
                                     <label>Data Inicial e data final</label>
                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control" name="master" value="01/01/2018 - 01/15/2018" />
+                                        <input  type="text" class="form-control" name="master" value="01/01/2018 - 01/15/2018" />
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -80,6 +85,7 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+                    </form>
                         <!-- /.card -->
 
                         <!-- Input addon -->
