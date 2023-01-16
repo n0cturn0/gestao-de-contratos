@@ -7,5 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContratoPeriodo extends Model
 {
-    use HasFactory;
+
+    protected $fillable =
+        [
+            'idsituacao',
+            'idvendedor',
+            'datainicial',
+            'datainicial',
+            'datafinal',
+            'datareajuste',
+            'qtdparcela',
+            'diavencimento',
+            'valormensalidade'
+        ];
 }

@@ -145,6 +145,9 @@ class HomeController extends Controller
 
     public function configuracontrato($id="null")
     {
+
+
+
         //Diferente de 0 ja existe configurações feitas
         $contador = ContratoPeriodo::where('idsituacao', '=', $id)->count();
         $contrato = ContratoPeriodo::where('idsituacao', '=', $id)->get();
@@ -162,6 +165,12 @@ class HomeController extends Controller
 
     public function insereconfiguracao(Request $request)
     {
+
+        $this->validate($request,[
+            'vendedor' => 'required',
+
+        ]);
+
         $datas      = $request->master;
         $inicial    = substr($datas, 0,10);
         $final      = substr($datas, 12,19);
@@ -172,7 +181,7 @@ class HomeController extends Controller
 
         $save = ContratoPeriodo::insert([
             'idsituacao'    => $request->id,
-            'idvendedor'       =>$request->idvendedor,
+            'idvendedor'       =>$request->vendedor,
             'datafinal'     => $s_final,
             'datainicial'   => $s_inicial,
             'datareajuste'  => $_reajuste,
@@ -181,6 +190,38 @@ class HomeController extends Controller
             'diavencimento' => $request->vencimento,
             'valormensalidade'  => $request->valor
         ]);
+
+
+    }
+
+    public function atualizacontratoconfiguraca(Request $request)
+    {
+        if ($this->validate($request,[
+            'idvendedor' => 'required',
+
+        ])) {
+            dd('Voce precisa selectionar um vendedor');
+        }
+
+        $datas      = $request->master;
+        $inicial    = substr($datas, 0,10);
+        $final      = substr($datas, 12,19);
+        $s_final = date('Y-m-d', strtotime($final));
+        $s_inicial =date('Y-m-d', strtotime($inicial));
+        $_reajuste = date('Y-m-d', strtotime($request->daterange));
+
+        $affected = DB::table('contrato_periodos')
+            ->where('idsituacao',$request->id)
+            ->update([
+                'idvendedor'       =>$request->idvendedor,
+                'datafinal'     => $s_final,
+                'datainicial'   => $s_inicial,
+                'datareajuste'  => $_reajuste,
+                'reajuste'      => $request->reajuste,
+                'qtdparcela'    => $request->parcela,
+                'diavencimento' => $request->vencimento,
+                'valormensalidade'  => $request->valor
+            ]);
 
 
     }

@@ -35,6 +35,7 @@ Route::get('/situacao-contrato/{id}', [App\Http\Controllers\HomeController::clas
 Route::post('/atualizastatuscontrato', [App\Http\Controllers\HomeController::class, 'atualizastatuscontrato'])->name('atualiza-status-contrato');
 Route::get('/configura-contrato/{id}', [App\Http\Controllers\HomeController::class, 'configuracontrato'])->name('configura-contrato');
 Route::post('/insere-contrato-configuraca', [App\Http\Controllers\HomeController::class, 'insereconfiguracao'])->name('insere-contrato-configuraca');
+Route::post('/atualiza-contrato-configuraca', [App\Http\Controllers\HomeController::class, 'atualizacontratoconfiguraca'])->name('atualiza-contrato-configuraca');
 
 
 

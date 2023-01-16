@@ -22,16 +22,26 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <h4>Configuração do contrato</h4>
-
                                 @if($data['configura'] != 0)
+                                <h4>Configuração do contrato para atualizar</h4>
+
+
                                     <form action="/atualiza-contrato-configuraca" method="POST">
                                         @csrf
                                         <div class="form-group">
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
                                             <label for="exampleSelectBorder">Selecione um vendedor para atualizar <code></code></label>
-                                            <select name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">
+                                            <select required  name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">
 
-                                                <option>Selecione</option>
+                                                <option value="">Selecione</option>
                                                 @foreach($data['vendedores'] as $value)
                                                     <option value="{{$value->id}}">{{ $value->vendedor }}</option>
                                                 @endforeach
@@ -64,6 +74,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-3">
+                                                    <label>Reajuste</label>
                                                     <input type="text" name="reajuste" value="{{$contra->reajuste}}" class="form-control" placeholder="Valor do reajuste (%) ">
                                                 </div>
 
@@ -72,12 +83,15 @@
 
                                         <div class="row">
                                             <div class="col-4">
+                                                <label>Nº Parcela </label>
                                                 <input type="number" name="parcela" value="{{$contra->qtdparcela}}" class="form-control" placeholder="Nº Parcela ">
                                             </div>
                                             <div class="col-4">
+                                                <label>Dia Vencimento</label>
                                                 <input type="numer" name="vencimento" value="{{$contra->diavencimento}}" class="form-control" placeholder="Dia Vencimento">
                                             </div>
                                             <div class="col-4">
+                                                <label>Valor R$</label>
                                                 <input type="text" name="valor" value="{{$contra->valormensalidade}}" class="form-control" placeholder="Valor R$">
                                             </div>
                                         </div>
@@ -96,14 +110,17 @@
 
 
                                 @else
+                            <h4>Criando configuração do contrato</h4>
 
                                 <form action="/insere-contrato-configuraca" method="POST">
                                     @csrf
                                 <div class="form-group">
-                                    <label for="exampleSelectBorder">Selecione um vendedor <code></code></label>
-                                    <select name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">
 
-                                        <option>Selecione</option>
+
+                                    <label for="exampleSelectBorder">Selecione um vendedor <code></code></label>
+                                    <select required name="vendedor" class="custom-select form-control-border">
+
+                                        <option label="Please Select" value=""></option>
                                         @foreach($data['vendedores'] as $value)
                                         <option value="{{$value->id}}">{{ $value->vendedor }}</option>
                                         @endforeach
