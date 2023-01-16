@@ -24,7 +24,78 @@
                             <div class="card-body">
                                 <h4>Configuração do contrato</h4>
 
+                                @if($data['configura'] != 0)
+                                    <form action="/atualiza-contrato-configuraca" method="POST">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="exampleSelectBorder">Selecione um vendedor para atualizar <code></code></label>
+                                            <select name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">
 
+                                                <option>Selecione</option>
+                                                @foreach($data['vendedores'] as $value)
+                                                    <option value="{{$value->id}}">{{ $value->vendedor }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <input type="hidden" name="id" value="{{$data['id']}}">
+
+
+                                        <div class="form-group">
+                                            <label>Data Inicial e data final</label>
+                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                <input  type="text" class="form-control" name="master" value="01/01/2018 - 01/15/2018" />
+                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Data do reajuste:</label>
+                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
+                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @foreach($data['contrato'] as $contra)
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <input type="text" name="reajuste" value="{{$contra->reajuste}}" class="form-control" placeholder="Valor do reajuste (%) ">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <input type="number" name="parcela" value="{{$contra->qtdparcela}}" class="form-control" placeholder="Nº Parcela ">
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="numer" name="vencimento" value="{{$contra->diavencimento}}" class="form-control" placeholder="Dia Vencimento">
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="text" name="valor" value="{{$contra->valormensalidade}}" class="form-control" placeholder="Valor R$">
+                                            </div>
+                                        </div>
+                                    @endforeach
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-info">Inserir</button>
+                                <button type="submit" class="btn btn-default float-right">Cancelar</button>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        </form>
+
+
+
+
+                                @else
 
                                 <form action="/insere-contrato-configuraca" method="POST">
                                     @csrf
@@ -90,6 +161,7 @@
                             <!-- /.card-body -->
                         </div>
                     </form>
+                @endif
                         <!-- /.card -->
 
                         <!-- Input addon -->

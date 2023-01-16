@@ -101,7 +101,9 @@ class HomeController extends Controller
 
     public function listacontrato()
     {
-       return view('contrato.lista');
+//        $items = DB::table('contratos')
+//            ->join('contrato_periodos','id', '=', 'idsituacao')
+        return view('contrato.lista');
     }
     public function situacaocontrato($id="NULL")
     {
@@ -114,6 +116,8 @@ class HomeController extends Controller
             ->where('controle', '=', 0)
             ->select('contratos.*', 'produtos.produto', 'clientes.cliente', 'contrato_situacaos.situacao')
             ->paginate(10);
+
+
         return view('contrato.situacao', ['students' => $items]);
     }
 
@@ -141,10 +145,17 @@ class HomeController extends Controller
 
     public function configuracontrato($id="null")
     {
+        //Diferente de 0 ja existe configurações feitas
+        $contador = ContratoPeriodo::where('idsituacao', '=', $id)->count();
+        $contrato = ContratoPeriodo::where('idsituacao', '=', $id)->get();
+
         $vendedores = DB::table('vendedors')->get();
         $data = array(
-            'id' => $id,
-            'vendedores'    => $vendedores
+            'id'            => $id,
+            'vendedores'    => $vendedores,
+            'configura'     => $contador,
+            'contrato'      => $contrato
+
         );
         return view('contrato.configura',['data' => $data]);
     }
