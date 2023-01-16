@@ -23,7 +23,9 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 @if($data['configura'] != 0)
-                                <h4>Configuração do contrato para atualizar</h4>
+                                      <h4>Configuração do contrato para atualizar </h4> <div><div class="direct-chat-text">
+                                            Você já havia configurado antes, se salvar as informações o contrato será atualizado
+                                        </div></div>
 
 
                                     <form action="/atualiza-contrato-configuraca" method="POST">
