@@ -181,7 +181,7 @@ class HomeController extends Controller
 
         $save = ContratoPeriodo::insert([
             'idsituacao'    => $request->id,
-            'idvendedor'       =>00,
+            'idvendedor'       =>$request->vendedor,
             'datafinal'     => $s_final,
             'datainicial'   => $s_inicial,
             'datareajuste'  => $_reajuste,
@@ -196,12 +196,7 @@ class HomeController extends Controller
 
     public function atualizacontratoconfiguraca(Request $request)
     {
-        if ($this->validate($request,[
-            'idvendedor' => 'required',
 
-        ])) {
-            dd('Voce precisa selectionar um vendedor');
-        }
 
         $datas      = $request->master;
         $inicial    = substr($datas, 0,10);
@@ -213,7 +208,7 @@ class HomeController extends Controller
         $affected = DB::table('contrato_periodos')
             ->where('idsituacao',$request->id)
             ->update([
-                'idvendedor'       =>00,
+                'idvendedor'       =>$request->vendedor,
                 'datafinal'     => $s_final,
                 'datainicial'   => $s_inicial,
                 'datareajuste'  => $_reajuste,

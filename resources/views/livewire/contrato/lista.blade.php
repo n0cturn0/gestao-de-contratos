@@ -92,8 +92,8 @@
                                         </td>
 
                                         <td> <a href="{{url('configura-contrato/'.$student->id)}}" class="btn btn-block btn-danger btn-sm"><i class="fa fa-check-double"> Config</i></a></td>
-                                        <td> <a href="{{url('configura-contrato/'.$student->id)}}" class="btn btn-block btn-success btn-sm"><i class="fa fa-solid fa-plus"></i></a></td>
-                                        <td> <a href="{{url('configura-contrato/'.$student->id)}}" class="btn btn-block btn-warning btn-sm"><i class="fa fa-solid fa-plus"></i></a></td>
+                                        <td> <a href="{{url('insere-servico/'.$student->id)}}" class="btn btn-block btn-success btn-sm"><i class="fa fa-solid fa-plus"></i></a></td>
+                                        <td> <a href="{{url('insere-produto/'.$student->id)}}" class="btn btn-block btn-warning btn-sm"><i class="fa fa-solid fa-plus"></i></a></td>
                                     </tr>
                                 @empty
                                     <tr>

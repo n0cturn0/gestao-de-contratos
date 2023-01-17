@@ -31,15 +31,23 @@
                                     <form action="/atualiza-contrato-configuraca" method="POST">
                                         @csrf
                                         <div class="form-group">
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            <label for="exampleSelectBorder">Selecione um vendedor para atualizar <code></code></label>
+                                            <select required  name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder">
 
-{{--                                            <label for="exampleSelectBorder">Selecione um vendedor para atualizar <code></code></label>--}}
-{{--                                            <select required  name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">--}}
-
-{{--                                                <option value="">Selecione</option>--}}
-{{--                                                @foreach($data['vendedores'] as $value)--}}
-{{--                                                    <option value="{{$value->id}}">{{ $value->vendedor }}</option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </select>--}}
+                                                <option value="" selected>Selecione</option>
+                                                @foreach($data['vendedores'] as $value)
+                                                    <option value="{{$value->id}}">{{ $value->vendedor }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <input type="hidden" name="id" value="{{$data['id']}}">
@@ -111,8 +119,14 @@
                                 <div class="form-group">
 
 
-{{--                                    <label for="exampleSelectBorder">Selecione um vendedor <code></code></label>--}}
+                                    <label for="exampleSelectBorder">Selecione um vendedor <code></code></label>
+                                    <select required name="vendedor" class="custom-select form-control-border">
 
+                                        <option label="Please Select" value=""></option>
+                                        @foreach($data['vendedores'] as $value)
+                                        <option value="{{$value->id}}">{{ $value->vendedor }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                     <input type="hidden" name="id" value="{{$data['id']}}">
