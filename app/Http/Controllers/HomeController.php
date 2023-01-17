@@ -166,10 +166,10 @@ class HomeController extends Controller
     public function insereconfiguracao(Request $request)
     {
 
-        $this->validate($request,[
-            'vendedor' => 'required',
-
-        ]);
+//        $this->validate($request,[
+//            'vendedor' => 'required',
+//
+//        ]);
 
         $datas      = $request->master;
         $inicial    = substr($datas, 0,10);
@@ -181,7 +181,7 @@ class HomeController extends Controller
 
         $save = ContratoPeriodo::insert([
             'idsituacao'    => $request->id,
-            'idvendedor'       =>$request->vendedor,
+            'idvendedor'       =>00,
             'datafinal'     => $s_final,
             'datainicial'   => $s_inicial,
             'datareajuste'  => $_reajuste,
@@ -213,7 +213,7 @@ class HomeController extends Controller
         $affected = DB::table('contrato_periodos')
             ->where('idsituacao',$request->id)
             ->update([
-                'idvendedor'       =>$request->idvendedor,
+                'idvendedor'       =>00,
                 'datafinal'     => $s_final,
                 'datainicial'   => $s_inicial,
                 'datareajuste'  => $_reajuste,
@@ -223,6 +223,16 @@ class HomeController extends Controller
                 'valormensalidade'  => $request->valor
             ]);
 
+
+    }
+
+    public function adicionaservico($id='NULL')
+    {
+
+    }
+
+    public function adicionaproduto($id='NULL')
+    {
 
     }
 
