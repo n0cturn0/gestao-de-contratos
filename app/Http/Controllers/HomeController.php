@@ -223,7 +223,14 @@ class HomeController extends Controller
 
     public function adicionaservico($id='NULL')
     {
+        $vendedores = DB::table('vendedors')->get();
+        $data = array(
+            'id'            => $id,
 
+
+
+        );
+        return view('contrato.insere-servico',['data' => $data]);
     }
 
     public function adicionaproduto($id='NULL')

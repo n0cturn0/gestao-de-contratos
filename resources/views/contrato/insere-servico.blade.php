@@ -27,30 +27,48 @@
 
                         <h4>Criando configuração do contrato</h4>
 
-                        <form action="/insere-contrato-configuraca" method="POST">
+                        <form action="/" method="POST">
                             @csrf
+                            <input type="hidden" name="tipo" value="0">
                             <div class="form-group">
                                 <div class="row">
-                                <div class="col-6">
-                                <label for="exampleSelectBorder">Selecione um vendedor para atualizar <code></code></label>
-                                <select required  name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">
-                                <option value="">Selecione</option>
-                                @foreach($data['vendedores'] as $value)
-                                    <option value="{{$value->id}}">{{ $value->vendedor }}</option>
-                                @endforeach
-                                </select>
-                                </div>
+
+{{--                                <div class="col-6">--}}
+{{--                                <label for="exampleSelectBorder">Selecione um vendedor para atualizar <code></code></label>--}}
+{{--                                <select required  name="idvendedor" class="custom-select form-control-border" id="exampleSelectBorder">--}}
+{{--                                <option value="">Selecione</option>--}}
+{{--                                @foreach($data['vendedores'] as $value)--}}
+{{--                                    <option value="{{$value->id}}">{{ $value->vendedor }}</option>--}}
+{{--                                @endforeach--}}
+{{--                                </select>--}}
+{{--                                </div>--}}
 
 
-                                <div class="col-6">
-                                    <label>Selecione a data de vencimento (Data de Refeência)</label>
+                                <div class="col-4">
+                                    <label>Data de Referência</label>
                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
                                         <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
+
                                 </div>
+
+                                    <div class="col-4">
+                                        <label>Data de Pagamento</label>
+                                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                            <input type="text" class="form-control" name="datapagamento" value="01/01/2018 - 01/15/2018" />
+                                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
                                 </div>
                             </div>
 
@@ -67,15 +85,7 @@
 {{--                                </div>--}}
 {{--                            </div>--}}
 
-                            <div class="form-group">
 
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-
-
-                                </div>
-                            </div>
 
                             <div class="row">
                                 <div class="col-4">
@@ -730,6 +740,52 @@
                 console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
             });
         });
+
+        $(function() {
+            $('input[name="datapagamento"]').daterangepicker({
+                "singleDatePicker": true,
+                "locale": {
+                    "format": "MM/DD/YYYY",
+                    "separator": " - ",
+                    "applyLabel": "Aplicar",
+                    "cancelLabel": "Cancelar",
+                    "fromLabel": "From",
+                    "toLabel": "To",
+                    "customRangeLabel": "Custom",
+                    "weekLabel": "W",
+                    "daysOfWeek": [
+                        "Do",
+                        "Seg",
+                        "Ter",
+                        "Qua",
+                        "Qui",
+                        "Sex",
+                        "Sab"
+                    ],
+                    "monthNames": [
+                        "Janeiro",
+                        "Fevereiro",
+                        "Março",
+                        "Abril",
+                        "Maio",
+                        "Junho",
+                        "Julho",
+                        "Agosto",
+                        "Setembro",
+                        "Outubro",
+                        "Novembro",
+                        "Dezembro"
+                    ],
+                    "firstDay": 1
+                },
+                "startDate": "01/07/2023",
+                "endDate": "01/13/2023"
+            }, function(start, end, label) {
+                console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            });
+        });
+
+
 
     </script>
 
