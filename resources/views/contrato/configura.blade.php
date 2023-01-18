@@ -75,27 +75,27 @@
                                         @foreach($data['contrato'] as $contra)
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-3">
-                                                    <label>Reajuste</label>
-                                                    <input type="text" name="reajuste" value="{{$contra->reajuste}}" class="form-control" placeholder="Valor do reajuste (%) ">
-                                                </div>
+{{--                                                <div class="col-3">--}}
+{{--                                                    <label>Reajuste</label>--}}
+{{--                                                    <input type="text" name="reajuste" value="{{$contra->reajuste}}" class="form-control" placeholder="Valor do reajuste (%) ">--}}
+{{--                                                </div>--}}
 
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-4">
-                                                <label>Nº Parcela </label>
-                                                <input type="number" name="parcela" value="{{$contra->qtdparcela}}" class="form-control" placeholder="Nº Parcela ">
-                                            </div>
+{{--                                            <div class="col-4">--}}
+{{--                                                <label>Nº Parcela </label>--}}
+{{--                                                <input type="number" name="parcela" value="{{$contra->qtdparcela}}" class="form-control" placeholder="Nº Parcela ">--}}
+{{--                                            </div>--}}
                                             <div class="col-4">
                                                 <label>Dia Vencimento</label>
                                                 <input type="numer" name="vencimento" value="{{$contra->diavencimento}}" class="form-control" placeholder="Dia Vencimento">
                                             </div>
-                                            <div class="col-4">
-                                                <label>Valor R$</label>
-                                                <input type="text" name="valor" value="{{$contra->valormensalidade}}" class="form-control" placeholder="Valor R$">
-                                            </div>
+{{--                                            <div class="col-4">--}}
+{{--                                                <label>Valor R$</label>--}}
+{{--                                                <input type="text" name="valor" value="{{$contra->valormensalidade}}" class="form-control" placeholder="Valor R$">--}}
+{{--                                            </div>--}}
                                         </div>
                                     @endforeach
                             </div>
@@ -153,23 +153,23 @@
                                 </div>
                                     <div class="form-group">
                                     <div class="row">
-                                        <div class="col-3">
-                                            <input type="text" name="reajuste" class="form-control" placeholder="Valor do reajuste (%) ">
-                                        </div>
+{{--                                        <div class="col-3">--}}
+{{--                                            <input type="text" name="reajuste" class="form-control" placeholder="Valor do reajuste (%) ">--}}
+{{--                                        </div>--}}
 
                                     </div>
                                     </div>
 
                                 <div class="row">
-                                    <div class="col-4">
-                                        <input type="number" name="parcela" class="form-control" placeholder="Nº Parcela ">
-                                    </div>
+{{--                                    <div class="col-4">--}}
+{{--                                        <input type="number" name="parcela" class="form-control" placeholder="Nº Parcela ">--}}
+{{--                                    </div>--}}
                                     <div class="col-4">
                                         <input type="numer" name="vencimento" class="form-control" placeholder="Dia Vencimento">
                                     </div>
-                                    <div class="col-4">
-                                        <input type="text" name="valor" class="form-control" placeholder="Valor R$">
-                                    </div>
+{{--                                    <div class="col-4">--}}
+{{--                                        <input type="text" name="valor" class="form-control" placeholder="Valor R$">--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
 
