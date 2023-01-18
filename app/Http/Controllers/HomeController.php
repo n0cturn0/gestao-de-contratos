@@ -46,7 +46,10 @@ class HomeController extends Controller
 //
 //        return view('produto.cadastro');
 //    }
-
+    public function servico()
+    {
+        return view('servico.index');
+    }
     public function produto()
     {
         return view('produto.index');

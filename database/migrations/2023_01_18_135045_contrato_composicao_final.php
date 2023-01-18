@@ -23,8 +23,9 @@ class ContratoComposicaoFinal extends Migration
             $table->integer('qtdparcela');
             $table->integer('stateview')->comment('0=show 1=hidden');
             $table->timestamps();
+        });
 
-        }
+
     }
 
     /**

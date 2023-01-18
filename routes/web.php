@@ -24,6 +24,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Route::get('/produto', [App\Http\Controllers\HomeController::class, 'produto'])->name('produto');
 //Route::get('/produto-cadastro', [App\Http\Controllers\HomeController::class, 'cadastro'])->name('produto.cadastro');
 Route::get('/produto', [App\Http\Controllers\HomeController::class, 'produto'])->name('produto.principal');
+Route::get('/servico', [App\Http\Controllers\HomeController::class, 'servico'])->name('servico.principal');
 Route::get('/cliente', [App\Http\Controllers\HomeController::class, 'cliente'])->name('cliente.principal');
 Route::get('/vendedor', [App\Http\Controllers\HomeController::class, 'vendedor'])->name('vendedor.principal');
 Route::get('/grupo', [App\Http\Controllers\HomeController::class, 'grupo'])->name('grupo.principal');
