@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contrato;
 use App\Models\ContratoPeriodo;
 use App\Models\ContratoSituacao;
+use App\Models\Servico;
 use App\Models\Vendedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -226,14 +227,11 @@ class HomeController extends Controller
 
     public function adicionaservico($id='NULL')
     {
-        $vendedores = DB::table('vendedors')->get();
-        $data = array(
-            'id'            => $id,
-
-
-
-        );
-        return view('contrato.insere-servico',['data' => $data]);
+        $contratos = DB::table('contrato_composicao_final')
+            ->join('produtos', 'idativo', '=', 'produtos.id')
+            ->where('contrato_composicao_final.idsituacao', '=',  $id)
+            ->get();
+        return view('contrato.insere-servico',['data' => $contratos]);
     }
 
     public function adicionaproduto($id='NULL')
