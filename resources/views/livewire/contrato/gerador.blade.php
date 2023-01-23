@@ -1,59 +1,77 @@
 <div>
+    <div>
 
-    @include('livewire.grupomodal')
 
-    <div class="container" >
-        <div class="row">
-            <div class="col-md-12" style="margin-top: 10px">
-                @if (session()->has('message'))
-                    <h5 class="alert alert-success">{{ session('message') }}</h5>
-                @endif
 
-                <div class="card" style="margin-top: 25px;">
-                    <div class="card-header">
-                        <h4>
-                            <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar grupo" style="width: 230px" />
-                            <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentModal">
-                                Adicionar novo Grupo
-                            </button>
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-borderd table-striped">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Grupo</th>
+        <div class="container" >
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 10px">
+                    @if (session()->has('message'))
+                        <h5 class="alert alert-success">{{ session('message') }}</h5>
+                    @endif
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @forelse ($students as $student)
-                                <tr>
-                                    <td>{{ $student->id }}</td>
-                                    <td>{{ $student->grupo }}</td>
+                    <div class="card" style="margin-top: 25px;">
 
-                                    <td>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#updateStudentModal" wire:click="editStudent({{$student->id}})" class="btn btn-primary">
-                                            Edit
-                                        </button>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" wire:click="deleteStudent({{$student->id}})" class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5">No Record Found</td>
-                                </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
-                        <div style="margin-top: 5px">
-                            {{ $students->links() }}
+                        <div class="card-header">
+                            <h4>
+                                {{--                                <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar cliente" style="width: 230px" />--}}
+                                {{--                                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentModal">--}}
+                                {{--                                    Adicionar novo Vendedor--}}
+                                {{--                                </button>--}}
+                            </h4>
                         </div>
+                        <div class="col-md-6">
+                            <span>
+                               <label>Selecione  Um cliente</label>
+                            </span>
+                            <div class="form-group">
+                                <select  class="custom-select" wire:model="idcontrato">
+                                    <option label="Selecione uma opção"></option>
+                                    @foreach($clients as $values)
+                                        <option value="{{$values->id}}"> Contrato: {{ $values->produto }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        {{$idcontrato}}
+
+                        <div class="col-md-6">
+                            <span>
+                               <label>Selecione  Um cliente</label>
+                            </span>
+                            <div class="form-group">
+                                <input type="text"   wire:model="contato">
+{{--                                <select  class="custom-select" wire:model="idcontrato">--}}
+{{--                                    @foreach($items as $values)--}}
+{{--                                        <option value="{{$values->id}}"> Contrato: {{ $values->idcontrato }}  - {{$values->cliente}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+                            </div>
+                        </div>
+
+
+
+                        <div class="card-body">
+
+                            <div style="margin-top: 5px">
+
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+{{--                            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Adicionar</button>--}}
+{{--                            <div wire:loading>--}}
+{{--                                Procurando . . .--}}
+{{--                            </div>--}}
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>
