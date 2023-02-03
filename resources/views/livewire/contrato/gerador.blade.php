@@ -1,77 +1,109 @@
 <div>
     <div>
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
 
+{{--        <table class="table table-bordered">--}}
+{{--            <tr>--}}
+{{--                <th>ID</th>--}}
+{{--                <th>Name</th>--}}
+{{--                <th>Phone</th>--}}
+{{--            </tr>--}}
+{{--            @foreach($contacts as $key => $value)--}}
+{{--                <tr>--}}
+{{--                    <td>{{ $value->id }}</td>--}}
+{{--                    <td>{{ $value->valorunitario }}</td>--}}
+{{--                    <td>{{ $value->valortotal }}</td>--}}
+{{--                </tr>--}}
+{{--            @endforeach--}}
+{{--        </table>--}}
 
+        <form>
+            <div class=" add-input">
+                <div class="row">
+                    <div class="col-md-5">
+                    <select>
+                        @foreach($situacao as $item)
+                            <option value="{{$item->id}}">{{$item->cliente}}</option>
+                        @endforeach
+                    </select>
+                    </div>
 
-        <div class="container" >
-            <div class="row">
-                <div class="col-md-12" style="margin-top: 10px">
-                    @if (session()->has('message'))
-                        <h5 class="alert alert-success">{{ session('message') }}</h5>
-                    @endif
+                    <div class="col-md-5">
+                        <select wire:model="servicoid.0" >
+                            <option value="">--------</option>
+                            @foreach($servico as $item)
+                                <option value="{{$item->id}}">{{$item->servico}}        R$:{{$item->precounitario}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
-                    <div class="card" style="margin-top: 25px;">
-
-                        <div class="card-header">
-                            <h4>
-                                {{--                                <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar cliente" style="width: 230px" />--}}
-                                {{--                                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentModal">--}}
-                                {{--                                    Adicionar novo Vendedor--}}
-                                {{--                                </button>--}}
-                            </h4>
-                        </div>
-                        <div class="col-md-6">
-                            <span>
-                               <label>Selecione  Um cliente</label>
-                            </span>
-                            <div class="form-group">
-                                <select  class="custom-select" wire:model="idcontrato">
-                                    <option label="Selecione uma opção"></option>
-                                    @foreach($clients as $values)
-                                        <option value="{{$values->id}}"> Contrato: {{ $values->produto }} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        {{$idcontrato}}
-
-                        <div class="col-md-6">
-                            <span>
-                               <label>Selecione  Um cliente</label>
-                            </span>
-                            <div class="form-group">
-                                <input type="text"   wire:model="contato">
-{{--                                <select  class="custom-select" wire:model="idcontrato">--}}
-{{--                                    @foreach($items as $values)--}}
-{{--                                        <option value="{{$values->id}}"> Contrato: {{ $values->idcontrato }}  - {{$values->cliente}}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-                            </div>
-                        </div>
-
-
-
-                        <div class="card-body">
-
-                            <div style="margin-top: 5px">
-
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-{{--                            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Adicionar</button>--}}
-{{--                            <div wire:loading>--}}
-{{--                                Procurando . . .--}}
-{{--                            </div>--}}
-                        </div>
-
-
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button type="button" wire:click.prevent="identificacao()"      class="btn btn-success btn-sm" wire:loading.attr="disabled" >Adicionar </button>
 
                     </div>
                 </div>
+
+                <div class="row">
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter Name" wire:model="valorunitario.0">
+                            @error('valorunitario.0') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input type="phone" class="form-control" wire:model="valortotal.0" placeholder="Enter Phone">
+                            @error('valortotal.0') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn text-white btn-info btn-sm" wire:click.prevent="add({{$i}})">Add</button>
+                    </div>
+                </div>
             </div>
-        </div>
 
+            @foreach($inputs as $key => $value)
+                <div class=" add-input">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" placeholder="Enter Name" wire:model="inputservico.0">
+                                @error('valorunitario.0') <span class="text-danger error">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter Name" wire:model="valorunitario.{{ $value }}">
+                                @error('valorunitario.'.$value) <span class="text-danger error">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control" wire:model="valortotal.{{ $value }}" placeholder="Enter phone">
+                                @error('valortotal.'.$value) <span class="text-danger error">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-danger btn-sm" wire:click.prevent="remove({{$key}})">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" wire:click.prevent="store()" class="btn btn-success btn-sm">Submit</button>
+                </div>
+            </div>
+
+        </form>
     </div>
-
 </div>

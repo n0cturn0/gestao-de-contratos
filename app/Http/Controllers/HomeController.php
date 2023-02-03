@@ -227,11 +227,17 @@ class HomeController extends Controller
 
     public function adicionaservico($id='NULL')
     {
-        $contratos = DB::table('contrato_composicao_final')
-            ->join('produtos', 'idativo', '=', 'produtos.id')
-            ->where('contrato_composicao_final.idsituacao', '=',  $id)
-            ->get();
-        return view('contrato.insere-servico',['data' => $contratos]);
+
+    $data = [
+        'servicos'  =>  DB::table('servicos')->get(),
+        'id'        => $id,
+        'vendedores'    => DB::table('vendedors')->get()
+    ];
+
+
+
+
+        return view('contrato.insere-servico',['data' =>$data]);
     }
 
     public function adicionaproduto($id='NULL')
