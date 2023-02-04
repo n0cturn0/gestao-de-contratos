@@ -335,6 +335,11 @@ return [
             'icon_color' => 'red',
         ],
         [
+            'text' => 'Serviço',
+            'url'  => '/servico',
+            'icon_color' => 'red',
+        ],
+        [
             'text' => 'Vendedor',
             'url'  => '/vendedor',
             'icon_color' => 'red',

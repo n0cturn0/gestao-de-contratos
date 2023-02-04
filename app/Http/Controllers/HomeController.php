@@ -307,31 +307,6 @@ class HomeController extends Controller
                 }
 
             }
-
-
-
-
-//            echo 'id'.$id;
-//            echo '<br>';
-//            echo 'idvendedor'.$vendedor;
-//            echo '<br>';
-//            $tipo = 1;
-//            echo 'tipo'. $tipo;
-//            echo '<br>';
-//            echo 'preco unitário'. $precounitario;
-//            echo '<br>';
-//            $idservico = $request->input('servico');
-//            echo 'idservico' .$idservico;
-//            echo '<br>';
-//            echo 'Valor da Parcela:' . $ValParcela;
-//            echo '<br>';
-//            echo 'quantidade de parcela' .$parcela;
-//                echo number_format($final,2,",",".");
-//               var_dump($final);
-
-//        return back()->with('success', 'User created successfully.');
-
-
     }
 
 
