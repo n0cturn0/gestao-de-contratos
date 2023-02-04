@@ -21,7 +21,7 @@
         <div class="container" >
             <div class="row">
                 <div class="col-md-12" style="margin-top: 10px">
-                    <p>@money(142.85714285714)</p>
+
 
                     <div class="card" style="margin-top: 25px;">
                         <div class="card-header">
