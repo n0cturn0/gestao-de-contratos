@@ -227,21 +227,97 @@ class HomeController extends Controller
 
     public function adicionaservico($id='NULL')
     {
+        $items = DB::table('contratos')
+            ->join('clientes','idCliente', '=', 'clientes.id')
+            ->join ('produtos', 'idProduto', '=', 'produtos.id')
+            ->join('contrato_situacaos','idcontrato','=', 'contratos.id' )
+            ->where('contratos.id', $id)
+            ->where('controle', '=', 0)
+            ->select('contratos.*', 'produtos.produto', 'clientes.cliente', 'contrato_situacaos.situacao')->get();
 
-    $data = [
-        'servicos'  =>  DB::table('servicos')->get(),
-        'id'        => $id,
-        'vendedores'    => DB::table('vendedors')->get()
-    ];
-
-
-
-
-        return view('contrato.insere-servico',['data' =>$data]);
+            $data = [
+                'servicos'  =>  DB::table('servicos')->get(),
+                'id'        => $id,
+                'vendedores'    => DB::table('vendedors')->get(),
+                'contrato'  => $items
+            ];
+            return view('contrato.insere-servico',['data' =>$data]);
+        dd($data);
     }
 
-    public function adicionaproduto($id='NULL')
+    public function adicionaativo(Request $request)
     {
+        $validatedData = $request->validate([
+            'qtdparcela' => 'required|integer|min:1',
+            'servico' => 'required',
+            'vendedor' => 'required',
+
+        ],[
+            'vendedor.required' => 'É preciso Selecionar um vendedor',
+            'servico.required'  => 'É preciso selecionar um serviço'
+        ]);
+
+            $ValorServico = DB::table('servicos')
+                ->where('id', '=', $request->input('servico'))
+                ->get();
+            foreach ($ValorServico as $key => $value)
+            {
+                $precounitario =  $value->precounitario;
+            }
+            $parcial = floatval($precounitario);
+            $parcela = $request->input('qtdparcela');
+            $ValParcela = ($parcial/$parcela);
+            $ValParcelaFloat =floatval($ValParcela);
+
+
+            $id =   $request->input('id');
+            $vendedor = $request->input('vendedor');
+            $idservico = $request->input('servico');
+            if(DB::table('contrato_composicao_final')->insert([
+                'idsituacao'    => $id,
+                'vendedorid'    => $vendedor,
+                'tipo'          => 1,
+                'idativo'       => $idservico,
+                'valorunitario' => $ValParcelaFloat,
+                'qtdparcela'    => $parcela,
+                'stateview'     => 1
+
+            ])){
+                if(DB::table('contrato_ccontrole_valores')->insert([
+                    'idcomposicao'  => $id,
+                    'valorpago'     => 0,
+                    'valortotal'    =>  $precounitario,
+                    'stateview'     => 1
+                ])){
+                   // return redirect()->back();
+                    return back()->with('success', 'User created successfully.');
+                }
+
+            }
+
+
+
+
+//            echo 'id'.$id;
+//            echo '<br>';
+//            echo 'idvendedor'.$vendedor;
+//            echo '<br>';
+//            $tipo = 1;
+//            echo 'tipo'. $tipo;
+//            echo '<br>';
+//            echo 'preco unitário'. $precounitario;
+//            echo '<br>';
+//            $idservico = $request->input('servico');
+//            echo 'idservico' .$idservico;
+//            echo '<br>';
+//            echo 'Valor da Parcela:' . $ValParcela;
+//            echo '<br>';
+//            echo 'quantidade de parcela' .$parcela;
+//                echo number_format($final,2,",",".");
+//               var_dump($final);
+
+//        return back()->with('success', 'User created successfully.');
+
 
     }
 
