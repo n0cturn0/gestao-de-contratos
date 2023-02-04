@@ -21,7 +21,7 @@
         <div class="container" >
             <div class="row">
                 <div class="col-md-12" style="margin-top: 10px">
-                    <p>@money(1200)</p>
+                    <p>@money(142.85714285714)</p>
 
                     <div class="card" style="margin-top: 25px;">
                         <div class="card-header">
@@ -106,7 +106,8 @@
                                     @foreach($data['contrato'] as $ckey => $cvalue)
                                         <label for="exampleSelectBorder"><code>contrato:{{$cvalue->id}}</code><br>Cliente: {{$cvalue->cliente}} / Produto: {{$cvalue->produto}}  </label>
                                     @endforeach
-                                   <table class="table table-hover text-nowrap">
+                                    <div class="card-body table-responsive p-0">
+                                   <table class="table table-hover text-nowrap ">
                                        <thead>
                                        <th>Vendedor</th>
                                        <th>Serviço</th>
@@ -115,22 +116,33 @@
                                        <th>Valor total</th>
                                        </thead>
                                        <tbody>
+                                       <?php  $totalizado=0; ?>
+                                       @foreach($data['inseridos'] as $key => $value)
                                         <tr>
-                                            <td>ffff</td>
-                                            <td>10000</td>
-                                            <td>ffff</td>
-                                            <td>10000</td>
-                                            <td>ffff</td>
+                                            <td>{{$value->vendedor}}</td>
+                                            <td>{{$value->servico}}</td>
+                                            <td><?php echo number_format($value->valorunitario,2,",",".") ?></td>
+                                            <td>{{$value->qtdparcela}}</td>
+                                            <td>
+                                                <?php
+                                                  $total = ($value->qtdparcela*$value->valorunitario);
+
+                                                  $totalizado+=$total;
+                                                  echo number_format($total,2,",",".");
+
+                                                    ?>
+                                            </td>
 
                                         </tr>
+                                       @endforeach
                                         <tr>
                                             <td  colspan="3">Valor Total</td>
-                                            <td colspan="2">500</td>
+                                            <td colspan="2">{{$totalizado}}</td>
 
                                         </tr>
                                        </tbody>
                                    </table>
-
+                                    </div>
 
 
                                 </div>

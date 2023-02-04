@@ -235,14 +235,27 @@ class HomeController extends Controller
             ->where('controle', '=', 0)
             ->select('contratos.*', 'produtos.produto', 'clientes.cliente', 'contrato_situacaos.situacao')->get();
 
+        $inseridos = DB::table('contrato_composicao_final')
+            ->join('vendedors', 'vendedors.id', '=', 'vendedorid')
+            ->join('servicos', 'servicos.id', '=', 'idativo')
+//            ->join('contrato_ccontrole_valores', 'contrato_ccontrole_valores.idcomposicao', '=', 'contrato_composicao_final.idsituacao')
+            ->where('contrato_composicao_final.idsituacao', '=', $id)
+
+            ->select('vendedors.vendedor',
+                            'servicos.servico',
+                            'contrato_composicao_final.valorunitario',
+                            'contrato_composicao_final.qtdparcela')->get();
+
+
             $data = [
                 'servicos'  =>  DB::table('servicos')->get(),
                 'id'        => $id,
                 'vendedores'    => DB::table('vendedors')->get(),
-                'contrato'  => $items
+                'contrato'  => $items,
+                'inseridos' => $inseridos,
             ];
             return view('contrato.insere-servico',['data' =>$data]);
-        dd($data);
+
     }
 
     public function adicionaativo(Request $request)
