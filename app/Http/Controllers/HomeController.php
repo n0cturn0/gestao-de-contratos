@@ -303,7 +303,7 @@ class HomeController extends Controller
                     'stateview'     => 1
                 ])){
                    // return redirect()->back();
-                    return back()->with('success', 'User created successfully.');
+                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
                 }
 
             }
