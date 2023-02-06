@@ -296,18 +296,24 @@ class HomeController extends Controller
                 'qtdparcela'    => $parcela,
                 'stateview'     => 1
 
-            ])){
-                if(DB::table('contrato_ccontrole_valores')->insert([
-                    'idcomposicao'  => $id,
-                    'valorpago'     => 0,
-                    'valortotal'    =>  $precounitario,
-                    'stateview'     => 1
-                ])){
-                   // return redirect()->back();
-                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
-                }
+            ]));
+            //Captura ultimo id
+            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+        dd($last->id);
 
-            }
+//            {
+//                if(DB::table('contrato_ccontrole_valores')->insert([
+//                    'idcomposicao'  => $id,
+//                    'valorpago'     => 0,
+//                    'valortotal'    =>  $precounitario,
+//                    'stateview'     => 1
+//                ])){
+//                   // return redirect()->back();
+//                    //Refatorar -pegar ultimo id inserido e colocar na tabela contrato_controle_valores criar coluna
+//                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+//                }
+//
+//            }
     }
 
     public function apagaservico($id='NULL')
