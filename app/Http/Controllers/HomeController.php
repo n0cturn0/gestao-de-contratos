@@ -244,7 +244,8 @@ class HomeController extends Controller
             ->select('vendedors.vendedor',
                             'servicos.servico',
                             'contrato_composicao_final.valorunitario',
-                            'contrato_composicao_final.qtdparcela')->get();
+                            'contrato_composicao_final.qtdparcela',
+                            'contrato_composicao_final.id')->get();
 
 
             $data = [
@@ -307,6 +308,12 @@ class HomeController extends Controller
                 }
 
             }
+    }
+
+    public function apagaservico($id='NULL')
+    {
+        dd($id);
+
     }
 
 
