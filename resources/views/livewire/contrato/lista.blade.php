@@ -109,7 +109,7 @@
                                 </tbody>
                             </table>
                             <div style="margin-top: 5px">
-                                {{ $students->links() }}
+{{--                                {{ $students->links() }}--}}
                             </div>
                         </div>
 

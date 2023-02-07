@@ -62,7 +62,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Data do reajuste:</label>
                                             <div class="input-group date" id="reservationdate" data-target-input="nearest">
@@ -72,7 +72,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
+
                                         @foreach($data['contrato'] as $contra)
+                                            <label>Valor do reajuste:</label>
+                                            <div class="col-4">
+                                                <input type="numer" name="valorreajuste" value="{{$contra->valorreajuste}}" class="form-control" placeholder="Valor do Reajuste">
+                                            </div>
                                         <div class="form-group">
                                             <div class="row">
 {{--                                                <div class="col-3">--}}
@@ -153,6 +159,10 @@
                                 </div>
                                     <div class="form-group">
                                     <div class="row">
+                                        <label>Valor do reajuste:</label>
+                                        <div class="col-4">
+                                            <input type="numer" name="valorreajuste" value="" class="form-control" placeholder="Valor do Reajuste em %">
+                                        </div>
 {{--                                        <div class="col-3">--}}
 {{--                                            <input type="text" name="reajuste" class="form-control" placeholder="Valor do reajuste (%) ">--}}
 {{--                                        </div>--}}

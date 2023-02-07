@@ -51,6 +51,22 @@
 
                             @endif
 
+                                @if(Session::has('alert'))
+
+                                    <div class="alert alert-danger">
+
+                                        {{ Session::get('alert') }}
+
+                                        @php
+
+                                            Session::forget('alert');
+
+                                        @endphp
+
+                                    </div>
+
+                                @endif
+
 
                             <form method="POST" action="/insereativo">
                                 @csrf
@@ -144,7 +160,7 @@
                                        @endforeach
                                         <tr>
                                             <td  colspan="3">Valor Total</td>
-                                            <td colspan="2">{{$totalizado}}</td>
+                                            <td colspan="2"><?php echo number_format($totalizado,2,",",".") ?></td>
 
                                         </tr>
                                        </tbody>

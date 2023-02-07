@@ -97,7 +97,7 @@ class HomeController extends Controller
           $situacao->situacao = 0;
            $situacao->controle = 0;
           $situacao->save();
-          echo  'Decidir o redirect';
+           return redirect()->route('lista-contrato');
 
        }
 
@@ -189,6 +189,7 @@ class HomeController extends Controller
             'datafinal'     => $s_final,
             'datainicial'   => $s_inicial,
             'datareajuste'  => $_reajuste,
+            'valorreajuste'    => $request->valorreajuste,
 //            'reajuste'      => $request->reajuste,
 //            'qtdparcela'    => $request->parcela,
             'diavencimento' => $request->vencimento,
@@ -209,18 +210,20 @@ class HomeController extends Controller
         $s_inicial =date('Y-m-d', strtotime($inicial));
         $_reajuste = date('Y-m-d', strtotime($request->daterange));
 
-        $affected = DB::table('contrato_periodos')
+       if  ($affected = DB::table('contrato_periodos')
             ->where('idsituacao',$request->id)
             ->update([
                 'idvendedor'       =>$request->vendedor,
                 'datafinal'     => $s_final,
                 'datainicial'   => $s_inicial,
                 'datareajuste'  => $_reajuste,
-                'reajuste'      => $request->reajuste,
-                'qtdparcela'    => $request->parcela,
+//                'reajuste'      => $request->reajuste,
+                'valorreajuste'    => $request->valorreajuste,
                 'diavencimento' => $request->vencimento,
-                'valormensalidade'  => $request->valor
-            ]);
+//                'valormensalidade'  => $request->valor
+            ])){
+           return redirect('lista-contrato');
+       }
 
 
     }
@@ -299,26 +302,34 @@ class HomeController extends Controller
             ]));
             //Captura ultimo id
             $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
-        dd($last->id);
+            {
+                if(DB::table('contrato_ccontrole_valores')->insert([
+                    'idcomposicao'  => $id,
+                    'ultimoidcomposicaofinal' => $last->id,
+                    'valorpago'     => 0,
+                    'valortotal'    =>  $precounitario,
+                    'stateview'     => 1
+                ])){
+                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+                }
 
-//            {
-//                if(DB::table('contrato_ccontrole_valores')->insert([
-//                    'idcomposicao'  => $id,
-//                    'valorpago'     => 0,
-//                    'valortotal'    =>  $precounitario,
-//                    'stateview'     => 1
-//                ])){
-//                   // return redirect()->back();
-//                    //Refatorar -pegar ultimo id inserido e colocar na tabela contrato_controle_valores criar coluna
-//                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
-//                }
-//
-//            }
+            }
     }
 
     public function apagaservico($id='NULL')
     {
-        dd($id);
+        if(DB::table('contrato_composicao_final')->where('id', '=', $id)->delete())
+        {
+            if(DB::table('contrato_ccontrole_valores')->where('ultimoidcomposicaofinal', '=', $id)->delete())
+            {
+                return back()->with('success', 'Serviço excluído desse contrato.');
+            } else {
+                return back()->with('alert', 'Algo deu errado.');
+            }
+        } else {
+            return back()->with('alert', 'Algo deu errado.');
+        }
+
 
     }
 

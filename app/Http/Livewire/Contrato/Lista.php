@@ -30,7 +30,7 @@ class Lista extends Component
                     ->where('contrato_situacaos.controle' ,  '=', 0)
                     ->where('contrato_situacaos.situacao' ,  '=', $this->type)
                     ->select('contratos.*', 'produtos.produto', 'clientes.cliente', 'contrato_situacaos.situacao')
-                    ->paginate(10);
+                    ->get();
         return view('livewire.contrato.lista' , ['students' => $items]);
     }
 
