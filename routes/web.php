@@ -41,6 +41,7 @@ Route::get('/insere-servico/{id}', [App\Http\Controllers\HomeController::class, 
 Route::get('/insere-produto/{id}', [App\Http\Controllers\HomeController::class, 'adicionaproduto'])->name('insere-produto');
 Route::post('/insereativo', [App\Http\Controllers\HomeController::class, 'adicionaativo'])->name('insereativo');
 Route::get('/apaga-servico/{id}', [App\Http\Controllers\HomeController::class, 'apagaservico'])->name('apaga-servico');
+Route::get('/teste', [App\Http\Controllers\HomeController::class, 'rmaster'])->name('teste');
 
 
 

@@ -7,6 +7,7 @@ use App\Models\ContratoPeriodo;
 use App\Models\ContratoSituacao;
 use App\Models\Servico;
 use App\Models\Vendedor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
@@ -329,6 +330,40 @@ class HomeController extends Controller
         } else {
             return back()->with('alert', 'Algo deu errado.');
         }
+
+
+    }
+
+    public function rmaster()
+    {
+        $data1 = '2023-01-07 00:00:00';
+        $data2 ='2026-11-08 00:00:00';
+        $inicio =  new Carbon($data1);
+        $fim =  new Carbon($data2);
+        $diff = $inicio->diff($fim);
+        echo 'Anos' . $diff->y . '<br>';
+        echo 'Meses' . $diff->m . '<br>';
+        $diff->y ; //Ano
+        $diff->m; //Mês
+
+        if($diff->y != 0)
+        {
+            $ContaMes = (($diff->y * 12)+ $diff->m);
+        }
+        echo 'Total de meses :' . $ContaMes;
+        $MesEntrada =4;
+
+        $contador =1 ;
+        while($contador <=  $diff->y){
+            for ($x =1; $x<=12;$x++){
+            echo $contador . '--' . $x .'<br>';
+            }
+            $contador++;
+        }
+
+
+
+
 
 
     }
