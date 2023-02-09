@@ -267,12 +267,17 @@ class HomeController extends Controller
     {
         $validatedData = $request->validate([
             'qtdparcela' => 'required|integer|min:1',
+            'valorreajuste' => 'required|integer|min:1',
             'servico' => 'required',
             'vendedor' => 'required',
+            'daterangeprimeira' => 'required',
+
 
         ],[
             'vendedor.required' => 'É preciso Selecionar um vendedor',
-            'servico.required'  => 'É preciso selecionar um serviço'
+            'servico.required'  => 'É preciso selecionar um serviço',
+            'daterangeprimeira.required' => 'Preciso adicionar uma data para a primeira cobrança',
+            'valorreajuste.required' => 'Entre com o valor para o reajuste'
         ]);
 
             $ValorServico = DB::table('servicos')
@@ -286,11 +291,60 @@ class HomeController extends Controller
             $parcela = $request->input('qtdparcela');
             $ValParcela = ($parcial/$parcela);
             $ValParcelaFloat =floatval($ValParcela);
-
-
+            //Form
             $id =   $request->input('id');
             $vendedor = $request->input('vendedor');
             $idservico = $request->input('servico');
+            //Pegar Data final do contrato
+            $DataFinalContrato = DB::table('contrato_periodos')
+                ->where('idsituacao','=',$id)
+                ->get();
+            foreach ($DataFinalContrato as $key => $value)
+            {
+                $DataFinalContrato=$value->datafinal;
+            }
+            //Data da primeira cobrança
+            $DataPrimeiraCobranca = $request->input('daterangeprimeira');
+            echo $DataPrimeiraCobranca;
+            echo '<br>';
+            $dia = substr($DataPrimeiraCobranca,0,2);
+            $mes = substr($DataPrimeiraCobranca,3,2);
+            $ano = substr($DataPrimeiraCobranca,6,4);
+            $DataCompleta = $ano.'-'.$dia.'-'.$mes. '00';
+
+            $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d H', $DataCompleta)->toDateTimeString();
+
+
+
+            $Inicio = new Carbon($DataPrimeiraCobrancaForm);
+
+            $Fim    = new Carbon($DataFinalContrato);
+            echo 'Data Formatada ' . $Inicio . '<br>';
+            echo 'Data Final' . $Fim . '<br>';
+            $diff = $Fim->diff($Inicio);
+            if($diff->y != 0)
+            {
+                $ContaMes = (($diff->y * 12)+ $diff->m);
+            }
+
+
+
+            $contador =0 ;
+            while($contador <=  $diff->y){
+                for ($x =1; $x<=12;$x++){
+//                    echo $contador . '--' . $x .'<br>';
+                        $create[] = [
+                            'id' => $id,
+                            'vencimento' => $dia. '-' .$x
+                        ];
+                }
+                $contador++;
+            }
+
+            dd($create);
+
+
+
             if(DB::table('contrato_composicao_final')->insert([
                 'idsituacao'    => $id,
                 'vendedorid'    => $vendedor,
@@ -353,15 +407,13 @@ class HomeController extends Controller
         echo 'Total de meses :' . $ContaMes;
         $MesEntrada =4;
 
-        $contador =1 ;
+        $contador =0 ;
         while($contador <=  $diff->y){
             for ($x =1; $x<=12;$x++){
             echo $contador . '--' . $x .'<br>';
             }
             $contador++;
         }
-
-
 
 
 
