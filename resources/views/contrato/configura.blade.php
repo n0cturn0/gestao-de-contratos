@@ -74,18 +74,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Data da primeira cobrança:</label>
-                                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                        <input type="text" class="form-control" name="daterangeprimeira" value="01/01/2018 - 01/15/2018" />
-                                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
 
 
@@ -164,30 +152,15 @@
                                     </div>
                                 </div>
 
-
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label>Data do reajuste:</label>
-                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
-                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Data da Primeira cobrança:</label>
-                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" class="form-control" name="daterangeprimeira" value="01/01/2018 - 01/15/2018" />
-                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
-                                            </div>
+                                <div class="form-group">
+                                    <label>Data do reajuste:</label>
+                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                        <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
+                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
-
-
+                                </div>
                                     <div class="form-group">
                                     <div class="row">
                                         <label>Valor do reajuste:</label>

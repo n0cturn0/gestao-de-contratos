@@ -305,22 +305,21 @@ class HomeController extends Controller
             }
             //Data da primeira cobrança
             $DataPrimeiraCobranca = $request->input('daterangeprimeira');
-            echo $DataPrimeiraCobranca;
-            echo '<br>';
-            $dia = substr($DataPrimeiraCobranca,0,2);
-            $mes = substr($DataPrimeiraCobranca,3,2);
+
+            $mes = substr($DataPrimeiraCobranca,0,2);
+            $dia = substr($DataPrimeiraCobranca,3,2);
             $ano = substr($DataPrimeiraCobranca,6,4);
             $DataCompleta = $ano.'-'.$dia.'-'.$mes. '00';
 
             $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d H', $DataCompleta)->toDateTimeString();
-
+            $AnoPrimeiraCobranca = Carbon::createFromFormat('m/d/Y', $DataPrimeiraCobranca)->format('Y');
 
 
             $Inicio = new Carbon($DataPrimeiraCobrancaForm);
 
             $Fim    = new Carbon($DataFinalContrato);
-            echo 'Data Formatada ' . $Inicio . '<br>';
-            echo 'Data Final' . $Fim . '<br>';
+            echo 'Data da primeira mensalidade ' . $Inicio . '<br>';
+            echo 'Data Final Contrato da base da dados' . $Fim . '<br>';
             $diff = $Fim->diff($Inicio);
             if($diff->y != 0)
             {
@@ -329,15 +328,24 @@ class HomeController extends Controller
 
 
 
-            $contador =0 ;
+            $contador = 0;
             while($contador <=  $diff->y){
-                for ($x =1; $x<=12;$x++){
-//                    echo $contador . '--' . $x .'<br>';
+                for ($x =1; $x<=$parcela;$x++) {
+
+                        echo $AnoPrimeiraCobranca . '--' . $x . '<br>';
                         $create[] = [
                             'id' => $id,
-                            'vencimento' => $dia. '-' .$x
+                            'Dia-vencimento' => $dia,
+                            'Mes-Vencimento' => $mes,
+                            'Valor' => $ValParcelaFloat
+
                         ];
+                    $mes++;
+                    if($mes==13){
+                        $mes = 1;
+                    }
                 }
+                $AnoPrimeiraCobranca++;
                 $contador++;
             }
 

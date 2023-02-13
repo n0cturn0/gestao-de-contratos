@@ -1,6 +1,6 @@
 
 @extends('adminlte::page')
-
+<script src="https://momentjs.com/downloads/moment.js"></script>
 
 @section('title', 'Criando um contrato')
 
@@ -103,9 +103,53 @@
 
                                 <div class="row">
                                     <div class="col-3">
+                                        <label>Quantidade de parcelas:</label>
                                         <input name="qtdparcela" class="form-control" type="text" placeholder="Qtd Parcela" required >
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Data da primeira cobrança:</label>
+                                            <div>
+                                                @if($errors->has('daterangeprimeira'))
+                                                    <button class="btn btn-block btn-danger btn-xs" type="button">{{ $errors->first('daterangeprimeira') }}</button>
+                                                @endif
+                                            </div>
+                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                <input type="text" class="form-control" name="daterangeprimeira" value="01/01/2018 - 01/15/2018" />
+                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                            <hr>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label>Valor do reajuste:(%)</label>
+                                        @if($errors->has('valorreajuste'))
+                                            <button class="btn btn-block btn-danger btn-xs" type="button">{{ $errors->first('valorreajuste') }}</button>
+                                        @endif
+                                        <input type="numer" name="valorreajuste"  class="form-control" placeholder="Valor do Reajuste" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Data de para o reajuste:</label>
+                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                <input type="text" class="form-control" name="daterangereajuste" value="01/01/2018 - 01/15/2018" />
+                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
                                 <div style="margin-top: 5px">
                                     <button class="btn btn-block btn-primary" type="submit">inserir</button>
                                 </div>
@@ -186,7 +230,105 @@
     </div>
 
 </div>
+<script>
+    //     $(function() {
+    //     $('input[name="daterange"]').daterangepicker({
+    //         opens: 'left'
+    //     }, function(start, end, label) {
+    //         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    //     });
+    // });
 
+    $(function() {
+        $('input[name="daterangeprimeira"]').daterangepicker({
+            "singleDatePicker": true,
+            "locale": {
+                "format": "MM/DD/YYYY",
+                "separator": " - ",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "Custom",
+                "weekLabel": "W",
+                "daysOfWeek": [
+                    "Do",
+                    "Seg",
+                    "Ter",
+                    "Qua",
+                    "Qui",
+                    "Sex",
+                    "Sab"
+                ],
+                "monthNames": [
+                    "Janeiro",
+                    "Fevereiro",
+                    "Março",
+                    "Abril",
+                    "Maio",
+                    "Junho",
+                    "Julho",
+                    "Agosto",
+                    "Setembro",
+                    "Outubro",
+                    "Novembro",
+                    "Dezembro"
+                ],
+                "firstDay": 1
+            },
+            "startDate": "01/07/2023",
+            "endDate": "01/13/2023"
+        }, function(start, end, label) {
+            console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+        });
+    });
+
+
+    $(function() {
+        $('input[name="daterangereajuste"]').daterangepicker({
+            "singleDatePicker": true,
+            "locale": {
+                "format": "MM/DD/YYYY",
+                "separator": " - ",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "Custom",
+                "weekLabel": "W",
+                "daysOfWeek": [
+                    "Do",
+                    "Seg",
+                    "Ter",
+                    "Qua",
+                    "Qui",
+                    "Sex",
+                    "Sab"
+                ],
+                "monthNames": [
+                    "Janeiro",
+                    "Fevereiro",
+                    "Março",
+                    "Abril",
+                    "Maio",
+                    "Junho",
+                    "Julho",
+                    "Agosto",
+                    "Setembro",
+                    "Outubro",
+                    "Novembro",
+                    "Dezembro"
+                ],
+                "firstDay": 1
+            },
+            "startDate": "01/07/2023",
+            "endDate": "01/13/2023"
+        }, function(start, end, label) {
+            console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+        });
+    });
+
+</script>
 @stop
 
 
