@@ -247,8 +247,8 @@ class HomeController extends Controller
 
             ->select('vendedors.vendedor',
                             'servicos.servico',
-                            'contrato_composicao_final.valorunitario',
-                            'contrato_composicao_final.qtdparcela',
+                            'contrato_composicao_final.valorparcela',
+                            'contrato_composicao_final.pagamento',
                             'contrato_composicao_final.id')->get();
 
 
@@ -267,7 +267,7 @@ class HomeController extends Controller
     {
         $validatedData = $request->validate([
             'qtdparcela' => 'required|integer|min:1',
-            'valorreajuste' => 'required|integer|min:1',
+//            'valorreajuste' => 'required|integer|min:1',
             'servico' => 'required',
             'vendedor' => 'required',
             'daterangeprimeira' => 'required',
@@ -277,7 +277,7 @@ class HomeController extends Controller
             'vendedor.required' => 'É preciso Selecionar um vendedor',
             'servico.required'  => 'É preciso selecionar um serviço',
             'daterangeprimeira.required' => 'Preciso adicionar uma data para a primeira cobrança',
-            'valorreajuste.required' => 'Entre com o valor para o reajuste'
+//            'valorreajuste.required' => 'Entre com o valor para o reajuste'
         ]);
 
             $ValorServico = DB::table('servicos')
@@ -318,65 +318,77 @@ class HomeController extends Controller
             $Inicio = new Carbon($DataPrimeiraCobrancaForm);
 
             $Fim    = new Carbon($DataFinalContrato);
-            echo 'Data da primeira mensalidade ' . $Inicio . '<br>';
-            echo 'Data Final Contrato da base da dados' . $Fim . '<br>';
+
+
+//            echo 'Data da primeira mensalidade ' . $Inicio . '<br>';
+//            echo 'Data Final Contrato da base da dados' . $Fim . '<br>';
             $diff = $Fim->diff($Inicio);
             if($diff->y != 0)
             {
                 $ContaMes = (($diff->y * 12)+ $diff->m);
             }
 
-
-
-            $contador = 0;
-            while($contador <=  $diff->y){
-                for ($x =1; $x<=$parcela;$x++) {
-
-                        echo $AnoPrimeiraCobranca . '--' . $x . '<br>';
-                        $create[] = [
-                            'id' => $id,
-                            'Dia-vencimento' => $dia,
-                            'Mes-Vencimento' => $mes,
-                            'Valor' => $ValParcelaFloat
-
-                        ];
-                    $mes++;
-                    if($mes==13){
-                        $mes = 1;
-                    }
-                }
-                $AnoPrimeiraCobranca++;
-                $contador++;
+            for ($x =1; $x<=$parcela;$x++) {
+            $createInsert[] = [
+                'id' => $id,
+                'diavencimento' => $dia,
+                'mesvencimento' => $mes,
+                'valor' => $ValParcelaFloat
+            ];
+            $mes++;
+            if($mes==13){
+                $mes = 1;
             }
+            }
+           foreach ($createInsert as $v){
+               foreach ($v as $key => $value){
+                   echo $key . '--' . $value . '<br>';
+               }
+           }
+            dd($createInsert);
+           unset($createInsert);
+//        for ($x =1; $x<=$parcela;$x++) {
+//            foreach ($createInsert[$x] as $key => $value){
+//                echo $createInsert[$x]['id'] . '<br>';
+//            }
+//        }
 
-            dd($create);
+
+
+//            foreach ($createInsert as $k => $value){
+//                echo $k . '-' . $value . '<br>';
+//            }
+//        foreach($createInsert as $key => $value){
+//            if(DB::table('contrato_composicao_final')->insert([
+//                'idsituacao'    => $id,
+//                'vendedorid'    => $vendedor,
+//                'tipo'          => 1,
+//                'idativo'       => $idservico,
+//                'valorparcela' => $value->valor,
+//                'diavencimento'    => $value->diavencimento,
+//                'mesvencimento'     => $value->mesvencimento,
+//                'pagamento'     => 0
+//
+//            ]));
+//        }
 
 
 
-            if(DB::table('contrato_composicao_final')->insert([
-                'idsituacao'    => $id,
-                'vendedorid'    => $vendedor,
-                'tipo'          => 1,
-                'idativo'       => $idservico,
-                'valorunitario' => $ValParcelaFloat,
-                'qtdparcela'    => $parcela,
-                'stateview'     => 1
 
-            ]));
             //Captura ultimo id
-            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
-            {
-                if(DB::table('contrato_ccontrole_valores')->insert([
-                    'idcomposicao'  => $id,
-                    'ultimoidcomposicaofinal' => $last->id,
-                    'valorpago'     => 0,
-                    'valortotal'    =>  $precounitario,
-                    'stateview'     => 1
-                ])){
-                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
-                }
-
-            }
+//            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+//            {
+//                if(DB::table('contrato_ccontrole_valores')->insert([
+//                    'idcomposicao'  => $id,
+//                    'ultimoidcomposicaofinal' => $last->id,
+//                    'valorpago'     => 0,
+//                    'valortotal'    =>  $precounitario,
+//                    'stateview'     => 1
+//                ])){
+//                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+//                }
+//
+//            }
     }
 
     public function apagaservico($id='NULL')
