@@ -51,7 +51,7 @@
                                     <th></th>
                                     <th></th>
                                     <th>Serviço</th>
-                                    <th>Produto</th>
+
 
 
 
@@ -99,7 +99,7 @@
 
 
                                         </td>
-                                        <td> <a href="{{url('insere-produto/identificador='.$student->id)}}" class="btn btn-block btn-warning btn-sm"><i class="fa fa-solid fa-plus"></i></a></td>
+
                                     </tr>
                                 @empty
                                     <tr>
