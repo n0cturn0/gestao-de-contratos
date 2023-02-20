@@ -1,0 +1,22 @@
+
+trazer para os componente abaixo as seguintes informacao
+da tabela contrato_periodos, os seguintes campo valor do reajuste, datadoreajuste, diadovencimento. E criar ainda data da
+primeira cobranca estas informações estao contidas no link e tabelas abaixo
+
+
+link :insere-servico
+tabela: contrato_composicao_final;
+
+Trazer do link configura-contrato,da tabela  contrato_periodos
+
+
+
+        $data1 = '2023-01-07 00:00:00';
+        $data2 ='2026-11-08 00:00:00';
+        $inicio =  new Carbon($data1);
+        $fim =  new Carbon($data2);
+        $diff = $inicio->diff($fim);
+        echo 'Anos' . $diff->y . '<br>';
+        echo 'Meses' . $diff->m . '<br>';
+        $diff->y ; //Ano
+        $diff->m; //Mês
