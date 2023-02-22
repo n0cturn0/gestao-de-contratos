@@ -173,7 +173,7 @@
                                        <th>Serviço</th>
                                        <th>Valor da Parcela</th>
                                        <th>Quantidade da parcela</th>
-                                       <th>Valor total</th>
+                                       <th>Valor Pago</th>
                                        <th></th>
                                        </thead>
                                        <tbody>
@@ -185,14 +185,16 @@
                                             <td><?php echo number_format($value->valorparcela,2,",",".") ?></td>
                                             <td><?php echo $value->mesvencimento; ?></td>
                                             <td>
-                                                <?php echo $value->pagamento;
+                                                <?php echo number_format($value->pagamento,2,",",".");
 //                                                    $acumula = 0;
 //
 //
-//                                                  $total = ($value->qtdparcela*$value->valorparcela);
-//
-//                                                  $totalizado+=$total;
-//                                                  echo number_format($total,2,",",".");
+                                                  $total = (floatval($value->pagamento));
+
+                                                  $totalizado+=$total;
+
+//                                                  echo number_format($teste,2,",",".");
+//                                                echo $total;
 
                                                     ?>
                                             </td>
@@ -207,7 +209,7 @@
                                        @endforeach
                                         <tr>
                                             <td  colspan="3">Valor Total</td>
-                                            <td colspan="2"><?php //echo number_format($value->pagamento,2,",","."); ?></td>
+                                            <td colspan="2"><?php echo number_format($totalizado,2,",","."); ?></td>
 
                                         </tr>
                                        </tbody>
