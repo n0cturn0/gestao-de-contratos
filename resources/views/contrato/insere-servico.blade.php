@@ -185,7 +185,7 @@
                                             <td><?php echo number_format($value->valorparcela,2,",",".") ?></td>
                                             <td><?php echo $value->mesvencimento; ?></td>
                                             <td>
-                                                <?php echo number_format($value->pagamento,2,",",".");
+                                                <?php echo $value->pagamento;
 //                                                    $acumula = 0;
 //
 //

@@ -244,7 +244,6 @@ class HomeController extends Controller
             ->join('servicos', 'servicos.id', '=', 'idativo')
 //            ->join('contrato_ccontrole_valores', 'contrato_ccontrole_valores.idcomposicao', '=', 'contrato_composicao_final.idsituacao')
             ->where('contrato_composicao_final.idsituacao', '=', $id)
-
             ->select('vendedors.vendedor',
                             'servicos.servico',
                             'contrato_composicao_final.valorparcela',
