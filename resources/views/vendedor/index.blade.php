@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 
-@section('title', 'Cadastro de novo Produto')
+@section('title', 'Cadastro de novo vendedor')
 
 @section('content_header')
 
