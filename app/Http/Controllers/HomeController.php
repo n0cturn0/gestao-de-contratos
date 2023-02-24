@@ -267,7 +267,7 @@ class HomeController extends Controller
     {
         $validatedData = $request->validate([
             'qtdparcela' => 'required|integer|min:1',
-//            'valorreajuste' => 'required|integer|min:1',
+           'valservico' => 'required|integer|min:1',
             'servico' => 'required',
             'vendedor' => 'required',
             'daterangeprimeira' => 'required',
@@ -276,6 +276,7 @@ class HomeController extends Controller
         ],[
             'vendedor.required' => 'É preciso Selecionar um vendedor',
             'servico.required'  => 'É preciso selecionar um serviço',
+            'valservico.required'  => 'Verifique o valor desse serviço',
             'daterangeprimeira.required' => 'Preciso adicionar uma data para a primeira cobrança',
 //            'valorreajuste.required' => 'Entre com o valor para o reajuste'
         ]);
@@ -283,11 +284,12 @@ class HomeController extends Controller
             $ValorServico = DB::table('servicos')
                 ->where('id', '=', $request->input('servico'))
                 ->get();
-            foreach ($ValorServico as $key => $value)
-            {
-                $precounitario =  $value->precounitario;
-            }
-            $parcial = floatval($precounitario);
+//            foreach ($ValorServico as $key => $value)
+//            {
+//                $precounitario =  $value->precounitario;
+//            }
+//            $parcial = floatval($precounitario);
+            $parcial = floatval($request->input('valservico'));
             $parcela = $request->input('qtdparcela');
             $ValParcela = ($parcial/$parcela);
             $ValParcelaFloat =floatval($ValParcela);
@@ -369,7 +371,7 @@ class HomeController extends Controller
                     'idcomposicao'  => $id,
                     'ultimoidcomposicaofinal' => $last->id,
                     'valorpago'     => 0,
-                    'valortotal'    =>  $precounitario,
+                    'valortotal'    =>  $request->input('valservico'),
                     'stateview'     => 1
                 ])){
                     return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');

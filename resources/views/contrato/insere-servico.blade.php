@@ -78,26 +78,36 @@
                                     </div>
 
                                     <input name="id" value="{{$data['id']}}" type="hidden">
+                                    <div class="row">
+                                        <div class="col-9">
                                     <label for="exampleSelectBorder">Selecione o vendedor </label>
                                     <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder">
-                                        <option value="">-----</option>
-                                        @foreach($data['vendedores'] as $ket => $value)
-                                            <option value="{{$value->id}}">{{$value->vendedor}}</option>
-                                        @endforeach
+                                    <option value="">-----</option>
+                                    @foreach($data['vendedores'] as $ket => $value)
+                                    <option value="{{$value->id}}">{{$value->vendedor}}</option>
+                                    @endforeach
                                     </select>
+                                    </div>
 
 
-                                    <label for="exampleSelectBorder">Adicionar novo serviço ao contrato </label>
-                                    @if($errors->has('servico'))
-                                        <button class="btn btn-block btn-danger btn-xs" type="button">{{ $errors->first('servico') }}</button>
-                                    @endif
-                                    <select name="servico" class="custom-select form-control-border" id="exampleSelectBorder">
-                                        <option value="">-----</option>
-                                        @foreach($data['servicos'] as $ket => $value)
-                                        <option value="{{$value->id}}">{{$value->servico}}&nbsp;&nbsp;&nbsp;Valor:{{$value->precounitario}}</option>
-                                        @endforeach
-                                    </select>
-
+                                    <div class="row">
+                                    <div class="col-9">
+                                            <label for="exampleSelectBorder">Adicionar novo serviço ao contrato </label>
+                                            @if($errors->has('servico'))
+                                                <button class="btn btn-block btn-danger btn-xs" type="button">{{ $errors->first('servico') }}</button>
+                                            @endif
+                                            <select name="servico" class="custom-select form-control-border" id="exampleSelectBorder">
+                                                <option value="">-----</option>
+                                                @foreach($data['servicos'] as $ket => $value)
+                                                    <option value="{{$value->id}}">{{$value->servico}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    <div class="col-3">
+                                        <label>Valor para esse serviço:</label>
+                                        <input name="valservico" class="form-control" type="text" placeholder="Valor para esse serviço" required >
+                                    </div>
+                                    </div>
 
                                 </div>
 
