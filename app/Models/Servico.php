@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Servico extends Model
 {
     use HasFactory;
-    protected $fillable = ['servico', 'tipo', 'precounitario'];
+    protected $fillable = ['servico', 'tipo'];
     protected $attributes = [
         'tipo' => 1,
     ];

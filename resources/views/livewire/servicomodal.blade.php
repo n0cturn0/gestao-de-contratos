@@ -16,11 +16,11 @@
                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label>Valor do Serviço</label>
-                        <input type="text" wire:model="precounitario" class="form-control">
-                        @error('precounitario') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+{{--                    <div class="mb-3">--}}
+{{--                        <label>Valor do Serviço</label>--}}
+{{--                        <input type="text" wire:model="precounitario" class="form-control">--}}
+{{--                        @error('precounitario') <span class="text-danger">{{ $message }}</span> @enderror--}}
+{{--                    </div>--}}
 
                 </div>
                 <div class="modal-footer">

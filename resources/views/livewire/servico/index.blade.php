@@ -24,7 +24,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Produto</th>
-                                <th>Valor</th>
+{{--                                <th>Valor</th>--}}
 
                             </tr>
                             </thead>
@@ -33,7 +33,7 @@
                                 <tr>
                                     <td>{{ $student->id }}</td>
                                     <td>{{ $student->servico }}</td>
-                                    <td>{{ $student->precounitario }}</td>
+{{--                                    <td></td>--}}
                                     <td>
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#updateStudentModal" wire:click="editStudent({{$student->id}})" class="btn btn-primary">
                                             Edit

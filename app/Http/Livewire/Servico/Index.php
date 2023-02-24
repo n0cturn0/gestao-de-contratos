@@ -16,7 +16,7 @@ class Index extends Component
     {
         return [
             'servico' => 'required|string|min:6',
-            'precounitario' => 'required|string|min:1',
+//            'precounitario' => 'required|string|min:1',
         ];
     }
     public function render()
@@ -50,7 +50,7 @@ class Index extends Component
         if ($student) {
             $this->student_id = $student->id;
             $this->servico = $student->servico;
-            $this->precounitario = $student->precounitario;
+//            $this->precounitario = $student->precounitario;
         } else {
             return redirect()->to('/servico');
             dd('erro');
@@ -62,7 +62,7 @@ class Index extends Component
         $validatedData = $this->validate();
         Servico::where('id', $this->student_id)->update([
             'servico'   => $validatedData['servico'],
-            'precounitario' => $validatedData['precounitario']
+//            'precounitario' => $validatedData['precounitario']
         ]);
         session()->flash('message','Serviço atualizado com sucesso');
 
