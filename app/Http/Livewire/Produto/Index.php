@@ -37,7 +37,7 @@ class Index extends Component
 
     public function render()
     {
-        $items = Produto::where('produto', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(10);
+        $items = Produto::where('produto', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(100);
         return view('livewire.produto.index', ['students' => $items]);
     }
 

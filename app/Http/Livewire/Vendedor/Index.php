@@ -86,7 +86,7 @@ class Index extends Component
 
     public function render()
     {
-        $items = Vendedor::where('vendedor', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(10);
+        $items = Vendedor::where('vendedor', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(100);
         return view('livewire.vendedor.index',['students' => $items]);
     }
 }

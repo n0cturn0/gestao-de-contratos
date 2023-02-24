@@ -21,7 +21,7 @@ class Index extends Component
     }
     public function render()
     {
-        $items = Servico::where('servico', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(10);
+        $items = Servico::where('servico', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(100);
         return view('livewire.servico.index',['students' => $items]);
     }
     public function resetInput()

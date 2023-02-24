@@ -49,7 +49,7 @@ class Index extends Component
 
     public function render()
     {
-        $items = Cliente::where('cliente', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(3);
+        $items = Cliente::where('cliente', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(100);
 
         return view('livewire.cliente.index',['students' => $items]);
     }

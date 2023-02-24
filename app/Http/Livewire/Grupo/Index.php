@@ -80,7 +80,7 @@ class Index extends Component
 
     public function render()
     {
-        $items = Grupo::where('grupo', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(10);
+        $items = Grupo::where('grupo', 'like', '%' . $this->search . '%')->orderBy('id', 'DESC')->paginate(100);
         return view('livewire.grupo.index', ['students' => $items]);
     }
 }
