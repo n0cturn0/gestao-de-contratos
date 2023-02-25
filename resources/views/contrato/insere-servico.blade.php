@@ -35,6 +35,11 @@
 
 
                         <div class="card-body">
+
+
+
+
+
                             @if(Session::has('success'))
 
                                 <div class="alert alert-success">
@@ -79,15 +84,7 @@
 
                                     <input name="id" value="{{$data['id']}}" type="hidden">
                                     <div class="row">
-                                        <div class="col-9">
-                                    <label for="exampleSelectBorder">Selecione o vendedor </label>
-                                    <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder">
-                                    <option value="">-----</option>
-                                    @foreach($data['vendedores'] as $ket => $value)
-                                    <option value="{{$value->id}}">{{$value->vendedor}}</option>
-                                    @endforeach
-                                    </select>
-                                    </div>
+
 
 
                                     <div class="row">
@@ -103,21 +100,24 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    <div class="col-3">
-                                        <label>Valor para esse serviço:</label>
-                                        <input name="valservico" class="form-control" type="text" placeholder="Valor para esse serviço" required >
-                                    </div>
+
                                     </div>
 
                                 </div>
 
                                 <div class="row">
                                     <div class="col-3">
+                                        <label>Valor para esse serviço:</label>
+                                        <input name="valservico" class="form-control" type="text" placeholder="Valor para esse serviço" required >
+                                    </div>
+
+
+                                    <div class="col-3">
                                         <label>Quantidade de parcelas:</label>
                                         <input name="qtdparcela" class="form-control" type="text" placeholder="Qtd Parcela" required >
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Data da primeira cobrança:</label>
                                             <div>
@@ -134,27 +134,51 @@
                                         </div>
                                     </div>
                                 </div>
-                                            <hr>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label>Valor do reajuste:(%)</label>
-                                        @if($errors->has('valorreajuste'))
-                                            <button class="btn btn-block btn-danger btn-xs" type="button">{{ $errors->first('valorreajuste') }}</button>
-                                        @endif
-                                        <input type="numer" name="valorreajuste"  class="form-control" placeholder="Valor do Reajuste" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Data de para o reajuste:</label>
-                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" class="form-control" name="daterangereajuste" value="01/01/2018 - 01/15/2018" />
-                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
-                                            </div>
+                                    <h2>Iinformação da venda</h2>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <label for="exampleSelectBorder">Selecione o vendedor </label>
+                                            <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder">
+                                                <option value="">-----</option>
+                                                @foreach($data['vendedores'] as $ket => $value)
+                                                    <option value="{{$value->id}}">{{$value->vendedor}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
+
+
+                                        <div class="col-3">
+                                            <label>Parcelas para Vendedor:</label>
+                                            <input name="parcelavendedor" class="form-control" type="text" placeholder="Qtd Parcela" required >
+                                        </div>
+
+                                        @if(!empty($menor))
+                                            <div class="alert alert-success"> {{ $menor }}</div>
+                                        @endif
+
+
+
                                     </div>
-                                </div>
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-3">--}}
+{{--                                        <label>Valor do reajuste:(%)</label>--}}
+{{--                                        @if($errors->has('valorreajuste'))--}}
+{{--                                            <button class="btn btn-block btn-danger btn-xs" type="button">{{ $errors->first('valorreajuste') }}</button>--}}
+{{--                                        @endif--}}
+{{--                                        <input type="numer" name="valorreajuste"  class="form-control" placeholder="Valor do Reajuste" required>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-6">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Data de para o reajuste:</label>--}}
+{{--                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">--}}
+{{--                                                <input type="text" class="form-control" name="daterangereajuste" value="01/01/2018 - 01/15/2018" />--}}
+{{--                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">--}}
+{{--                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
 
 
@@ -258,7 +282,7 @@
         $('input[name="daterangeprimeira"]').daterangepicker({
             "singleDatePicker": true,
             "locale": {
-                "format": "MM/DD/YYYY",
+                "format": "DD/MM/YYYY",
                 "separator": " - ",
                 "applyLabel": "Aplicar",
                 "cancelLabel": "Cancelar",
@@ -291,7 +315,7 @@
                 ],
                 "firstDay": 1
             },
-            "startDate": "01/07/2023",
+            "startDate": moment(new Date()).format('DD/MM/YYYY'),
             "endDate": "01/13/2023"
         }, function(start, end, label) {
             console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
@@ -303,7 +327,7 @@
         $('input[name="daterangereajuste"]').daterangepicker({
             "singleDatePicker": true,
             "locale": {
-                "format": "MM/DD/YYYY",
+                "format": "DD/MM/YYYY",
                 "separator": " - ",
                 "applyLabel": "Aplicar",
                 "cancelLabel": "Cancelar",
@@ -336,7 +360,7 @@
                 ],
                 "firstDay": 1
             },
-            "startDate": "01/07/2023",
+            "startDate": moment(new Date()).format('DD/MM/YYYY'),
             "endDate": "01/13/2023"
         }, function(start, end, label) {
             console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');

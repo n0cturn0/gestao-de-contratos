@@ -98,8 +98,8 @@ class HomeController extends Controller
           $situacao->situacao = 0;
            $situacao->controle = 0;
           $situacao->save();
-           return redirect()->route('lista-contrato');
-
+//           return redirect()->route('lista-contrato');
+           return redirect('insere-servico/'.$key->id);
        }
 
     }
@@ -231,6 +231,12 @@ class HomeController extends Controller
 
     public function adicionaservico($id='NULL')
     {
+        $contratoPeriodos = DB::table('contrato_periodos')
+            ->where('idsituacao', '=', $id)->count();
+        if ($contratoPeriodos == 0){
+            return view('contrato.incompleto')->with('alert', 'Este Contrato precisa ser configurado, data inicial e final.');
+        }
+
         $items = DB::table('contratos')
             ->join('clientes','idCliente', '=', 'clientes.id')
             ->join ('produtos', 'idProduto', '=', 'produtos.id')
@@ -266,29 +272,28 @@ class HomeController extends Controller
     public function adicionaativo(Request $request)
     {
         $validatedData = $request->validate([
-            'qtdparcela' => 'required|integer|min:1',
-           'valservico' => 'required|integer|min:1',
-            'servico' => 'required',
-            'vendedor' => 'required',
+            'qtdparcela'    => 'required|integer|min:1',
+            'valservico'    => 'required|integer|min:1',
+            'servico'       => 'required',
+            'vendedor'      => 'required',
             'daterangeprimeira' => 'required',
+            'parcelavendedor'   => 'required|integer|min:1',
 
 
         ],[
-            'vendedor.required' => 'É preciso Selecionar um vendedor',
-            'servico.required'  => 'É preciso selecionar um serviço',
-            'valservico.required'  => 'Verifique o valor desse serviço',
-            'daterangeprimeira.required' => 'Preciso adicionar uma data para a primeira cobrança',
+            'vendedor.required'             => 'É preciso Selecionar um vendedor',
+            'servico.required'              => 'É preciso selecionar um serviço',
+            'valservico.required'           => 'Verifique o valor desse serviço',
+            'daterangeprimeira.required'    => 'Preciso adicionar uma data para a primeira cobrança',
+            'qtdparcela'                    => 'É necessário informar a  quantidade de parcela',
+            'parcelavendedor'               => 'É necessário informar a  quantidade de parcela para o vendedor',
 //            'valorreajuste.required' => 'Entre com o valor para o reajuste'
         ]);
 
             $ValorServico = DB::table('servicos')
                 ->where('id', '=', $request->input('servico'))
                 ->get();
-//            foreach ($ValorServico as $key => $value)
-//            {
-//                $precounitario =  $value->precounitario;
-//            }
-//            $parcial = floatval($precounitario);
+
             $parcial = floatval($request->input('valservico'));
             $parcela = $request->input('qtdparcela');
             $ValParcela = ($parcial/$parcela);
@@ -298,12 +303,22 @@ class HomeController extends Controller
             $vendedor = $request->input('vendedor');
             $idservico = $request->input('servico');
             //Pegar Data final do contrato
+            $id = $request->input('id');
+            if($request->input('qtdparcela') < $request->input('parcelavendedor')){
+
+           return back()->with('alert', 'Quantidade da parcela é menor que a quantidade de parcela que o vendedor tem para receber.');
+
+            }
+
+
+
             $DataFinalContrato = DB::table('contrato_periodos')
                 ->where('idsituacao','=',$id)
                 ->get();
+
             foreach ($DataFinalContrato as $key => $value)
             {
-                $DataFinalContrato=$value->datafinal;
+                $final=$value->datafinal;
             }
             //Data da primeira cobrança
             $DataPrimeiraCobranca = $request->input('daterangeprimeira');
@@ -313,22 +328,19 @@ class HomeController extends Controller
             $ano = substr($DataPrimeiraCobranca,6,4);
             $DataCompleta = $ano.'-'.$dia.'-'.$mes;
 
-//            $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d H', $DataCompleta)->toDateTimeString();
-            $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d', $DataCompleta)->format('Y-m-d');
 
+            $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d', $DataCompleta)->format('Y-m-d');
             $AnoPrimeiraCobranca = Carbon::createFromFormat('Y-m-d', $DataPrimeiraCobrancaForm)->format('Y');
 
-//            $AnoPrimeiraCobranca = Carbon::createFromFormat('m/d/Y', $DataPrimeiraCobranca)->format('Y');
 
 
-            $Inicio = new Carbon($DataPrimeiraCobrancaForm);
 
-            $Fim    = new Carbon($DataFinalContrato);
+            $inicio = new Carbon($DataPrimeiraCobrancaForm);
+            $Fim    = new Carbon($final);
 
 
-//            echo 'Data da primeira mensalidade ' . $Inicio . '<br>';
-//            echo 'Data Final Contrato da base da dados' . $Fim . '<br>';
-            $diff = $Fim->diff($Inicio);
+
+            $diff = $Fim->diff($inicio);
             if($diff->y != 0)
             {
                 $ContaMes = (($diff->y * 12)+ $diff->m);
@@ -391,7 +403,7 @@ class HomeController extends Controller
                 return back()->with('alert', 'Algo deu errado.');
             }
         } else {
-            return back()->with('alert', 'Algo deu errado.');
+            return back()->with('alert', 'Mensalidade apagada.');
         }
 
 
