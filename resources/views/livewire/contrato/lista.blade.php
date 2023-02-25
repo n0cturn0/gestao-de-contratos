@@ -50,7 +50,8 @@
                                     <th>Contrato</th>
                                     <th></th>
                                     <th></th>
-                                    <th>Serviço</th>
+                                    <th></th>
+                                    <th></th>
 
 
 
@@ -94,10 +95,14 @@
                                         <td> <a href="{{url('configura-contrato/'.$student->id)}}" class="btn btn-block btn-danger btn-sm"><i class="fa fa-check-double"> Config</i></a></td>
                                         <td>
 
-                                            <a href="{{url('insere-servico/'.$student->id)}}" class="btn btn-block btn-success btn-sm"><i class="fa fa-solid fa-plus"></i></a>
+                                            <a href="{{url('insere-servico/'.$student->id)}}" class="btn btn-block btn-success btn-sm"><i class="fa fa-bolt">Lançamentos</i></a>
 
 
 
+
+                                        </td>
+                                        <td>
+                                            <a href="{{url('insere-servico/'.$student->id)}}" class="btn btn-block btn-info btn-sm"><i class="fa fa-rocket" aria-hidden="true">Comissão</i></a>
                                         </td>
 
                                     </tr>
