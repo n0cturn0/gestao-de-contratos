@@ -305,6 +305,9 @@ class HomeController extends Controller
             $id = $request->input('id');
             if($request->input('qtdparcela') < $request->input('parcelavendedor')){
             return back()->with('alert', 'Quantidade da parcela é menor que a quantidade de parcela que o vendedor tem para receber.');
+            } else {
+                $diferencaMeses = ($request->input('qtdparcela') - $request->input('parcelavendedor'));
+                $parcelaParaVendedor = $request->input('parcelavendedor');
             }
 
 
@@ -343,7 +346,7 @@ class HomeController extends Controller
                 $ContaMes = (($diff->y * 12)+ $diff->m);
             }
 
-            for ($x =1; $x<=$parcela;$x++) {
+            for ($x =1; $x<=$diferencaMeses;$x++) {
             $createInsert[] = [
                 'id' => $id,
                 'diavencimento' => $dia,
@@ -362,7 +365,7 @@ class HomeController extends Controller
             for ($x =0; $x<=$ContTrue;$x++){
             if(DB::table('contrato_composicao_final')->insert([
             'idsituacao'    => $createInsert[$x]['id'],
-            'vendedorid'    => $vendedor,
+            'vendedorid'    => 1,
             'tipo'          => 1,
             'idativo'       => $idservico,
             'valorparcela' => $createInsert[$x]['valor'],
@@ -372,6 +375,38 @@ class HomeController extends Controller
             'stateview' => 1
             ]));
             }
+
+            for ($x =1; $x<=$parcelaParaVendedor;$x++) {
+                $createInsertVend[] = [
+                    'id' => $id,
+                    'diavencimento' => $dia,
+                    'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
+                    'valor' => $ValParcelaFloat
+                ];
+                $mes++;
+                if($mes==13){
+                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca+1);
+                    $mes = 1;
+                }
+            }
+            $ContArrayVend = count($createInsertVend);
+            $ContTrueVend = ($ContArrayVend - 1);
+            for ($x =0; $x<=$ContTrueVend;$x++){
+                if(DB::table('contrato_composicao_final')->insert([
+                    'idsituacao'    => $createInsertVend[$x]['id'],
+                    'vendedorid'    => $vendedor,
+                    'tipo'          => 1,
+                    'idativo'       => $idservico,
+                    'valorparcela' => $createInsertVend[$x]['valor'],
+                    'diavencimento'    => $createInsertVend[$x]['diavencimento'],
+                    'mesvencimento'     => $createInsertVend[$x]['mesvencimento'],
+                    'pagamento'     => 0,
+                    'stateview' => 1
+                ]));
+            }
+
+
+
             unset($createInsert);
             //Captura ultimo id
             $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
