@@ -365,7 +365,8 @@ return [
                     'url'  => '/contrato',
                 ],
                 [
-                    'text' => 'Listar Contrato',
+                    'text' => 'Contratos',
+                    'icon'    => 'fa fa-rocket',
                     'url'  => '/lista-contrato',
                 ],
 //                [
@@ -471,21 +472,21 @@ return [
                 ],
             ],
         ],
-        'daterangepicker' => [
-            'active'    => true,
-            'files'     => [
-                [
-                   'type'   => 'js',
-                   'asset'  => false,
-                    'location'  => asset('vendor/daterangepicker/daterangepicker.js'),
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location'  => asset('vendor/daterangepicker/daterangepicker.css'),
-                ],
-            ],
-        ],
+//        'daterangepicker' => [
+//            'active'    => true,
+//            'files'     => [
+//                [
+//                   'type'   => 'js',
+//                   'asset'  => false,
+//                    'location'  => asset('vendor/daterangepicker/daterangepicker.js'),
+//                ],
+//                [
+//                    'type' => 'css',
+//                    'asset' => false,
+//                    'location'  => asset('vendor/daterangepicker/daterangepicker.css'),
+//                ],
+//            ],
+//        ],
         'Select2' => [
             'active' => false,
             'files' => [
