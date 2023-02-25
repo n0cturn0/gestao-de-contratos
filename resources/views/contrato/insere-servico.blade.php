@@ -185,7 +185,7 @@
 
 
                                 <div style="margin-top: 5px">
-                                    <button class="btn btn-block btn-primary" type="submit">inserir</button>
+                                    <button class="btn btn-block btn-primary" type="submit">Gerar Mensalidade para este contrato</button>
                                 </div>
                             </form>
 
@@ -208,7 +208,7 @@
                                        <th>Serviço</th>
                                        <th>Valor da Parcela</th>
                                        <th>Quantidade da parcela</th>
-                                       <th>Valor Pago</th>
+                                       <th>Config</th>
                                        <th></th>
                                        </thead>
                                        <tbody>
@@ -221,7 +221,8 @@
                                             <td><?php echo number_format($value->valorparcela,2,",",".") ?></td>
                                             <td><?php echo $value->mesvencimento; ?></td>
                                             <td>
-                                                <?php echo number_format($value->pagamento,2,",",".");
+                                                <?php
+//                                                    echo number_format($value->pagamento,2,",",".");
 //                                                    $acumula = 0;
 //
 //
