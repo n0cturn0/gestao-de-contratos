@@ -208,8 +208,8 @@
                                        <th>Serviço</th>
                                        <th>Valor da Parcela</th>
                                        <th>Quantidade da parcela</th>
-                                       <th>Config</th>
                                        <th></th>
+                                       <th>Config</th>
                                        </thead>
                                        <tbody>
                                        <?php  $totalizado=0; ?>
@@ -236,7 +236,9 @@
                                                     ?>
                                             </td>
                                             <td>
+                                                <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-user-plus text-info  fa-lg"></i></a> &nbsp;
                                                 <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-trash text-danger  fa-lg"></i></a>
+
 {{--                                                <button data-toggle="modal" id="smallButton" data-target="#modal-danger" data-attr="{{ route('apaga-servico', $value->id) }}" title="Delete Project">--}}
 {{--                                                    <i class="fas fa-trash text-danger  fa-lg"></i>--}}
 {{--                                                </button>--}}
