@@ -152,6 +152,11 @@
                                             <input name="parcelavendedor" class="form-control" type="text" placeholder="Qtd Parcela" required >
                                         </div>
 
+                                        <div class="col-3">
+                                            <label>Valor da comissão em %:</label>
+                                            <input name="valorvendedor" class="form-control" type="text" placeholder="Valor da comissão em %" required >
+                                        </div>
+
                                         @if(!empty($menor))
                                             <div class="alert alert-success"> {{ $menor }}</div>
                                         @endif
@@ -236,7 +241,7 @@
                                                     ?>
                                             </td>
                                             <td>
-                                                <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-user-plus text-info  fa-lg"></i></a> &nbsp;
+                                                <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-chevron-circle-right text-info  fa-lg"></i></a> &nbsp;
                                                 <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-trash text-danger  fa-lg"></i></a>
 
 {{--                                                <button data-toggle="modal" id="smallButton" data-target="#modal-danger" data-attr="{{ route('apaga-servico', $value->id) }}" title="Delete Project">--}}
