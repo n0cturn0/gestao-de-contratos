@@ -308,6 +308,8 @@ class HomeController extends Controller
             } else {
                 $diferencaMeses = ($request->input('qtdparcela') - $request->input('parcelavendedor'));
                 $parcelaParaVendedor = $request->input('parcelavendedor');
+
+
             }
 
 
@@ -328,17 +330,11 @@ class HomeController extends Controller
             $ano = substr($DataPrimeiraCobranca,6,4);
             $DataCompleta = $ano.'-'.$dia.'-'.$mes;
 
-
             $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d', $DataCompleta)->format('Y-m-d');
             $AnoPrimeiraCobranca = Carbon::createFromFormat('Y-m-d', $DataPrimeiraCobrancaForm)->format('Y');
 
-
-
-
             $inicio = new Carbon($DataPrimeiraCobrancaForm);
             $Fim    = new Carbon($final);
-
-
 
             $diff = $Fim->diff($inicio);
             if($diff->y != 0)
@@ -346,34 +342,83 @@ class HomeController extends Controller
                 $ContaMes = (($diff->y * 12)+ $diff->m);
             }
 
+        if ($request->input('qtdparcela') == $request->input('parcelavendedor')){
+            $diferencaMeses = $request->input('qtdparcela');
             for ($x =1; $x<=$diferencaMeses;$x++) {
-            $createInsert[] = [
-                'id' => $id,
-                'diavencimento' => $dia,
-                'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
-                'valor' => $ValParcelaFloat
-            ];
-            $mes++;
-            if($mes==13){
-                $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca+1);
-                $mes = 1;
-            }
+                $createInsert[] = [
+                    'id' => $id,
+                    'diavencimento' => $dia,
+                    'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
+                    'valor' => $ValParcelaFloat
+                ];
+                $mes++;
+                if($mes==13){
+                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca+1);
+                    $mes = 1;
+                }
             }
             $ContArray = count($createInsert);
             $ContTrue = ($ContArray - 1);
 
             for ($x =0; $x<=$ContTrue;$x++){
-            if(DB::table('contrato_composicao_final')->insert([
-            'idsituacao'    => $createInsert[$x]['id'],
-            'vendedorid'    => 1,
-            'tipo'          => 1,
-            'idativo'       => $idservico,
-            'valorparcela' => $createInsert[$x]['valor'],
-            'diavencimento'    => $createInsert[$x]['diavencimento'],
-            'mesvencimento'     => $createInsert[$x]['mesvencimento'],
-            'pagamento'     => 0,
-            'stateview' => 1
-            ]));
+                if(DB::table('contrato_composicao_final')->insert([
+                    'idsituacao'    => $createInsert[$x]['id'],
+                    'vendedorid'    => 1,
+                    'tipo'          => 1,
+                    'idativo'       => $idservico,
+                    'valorparcela' => $createInsert[$x]['valor'],
+                    'diavencimento'    => $createInsert[$x]['diavencimento'],
+                    'mesvencimento'     => $createInsert[$x]['mesvencimento'],
+                    'pagamento'     => 0,
+                    'stateview' => 1
+                ]));
+            }
+            unset($createInsert);
+            //Captura ultimo id
+            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+            {
+                if(DB::table('contrato_ccontrole_valores')->insert([
+                    'idcomposicao'  => $id,
+                    'ultimoidcomposicaofinal' => $last->id,
+                    'valorpago'     => 0,
+                    'valortotal'    =>  $request->input('valservico'),
+                    'stateview'     => 1
+                ])){
+                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+                }
+
+            }
+
+
+            } else {
+            for ($x =1; $x<=$diferencaMeses;$x++) {
+                $createInsert[] = [
+                    'id' => $id,
+                    'diavencimento' => $dia,
+                    'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
+                    'valor' => $ValParcelaFloat
+                ];
+                $mes++;
+                if($mes==13){
+                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca+1);
+                    $mes = 1;
+                }
+            }
+            $ContArray = count($createInsert);
+            $ContTrue = ($ContArray - 1);
+
+            for ($x =0; $x<=$ContTrue;$x++){
+                if(DB::table('contrato_composicao_final')->insert([
+                    'idsituacao'    => $createInsert[$x]['id'],
+                    'vendedorid'    => 1,
+                    'tipo'          => 1,
+                    'idativo'       => $idservico,
+                    'valorparcela' => $createInsert[$x]['valor'],
+                    'diavencimento'    => $createInsert[$x]['diavencimento'],
+                    'mesvencimento'     => $createInsert[$x]['mesvencimento'],
+                    'pagamento'     => 0,
+                    'stateview' => 1
+                ]));
             }
 
             for ($x =1; $x<=$parcelaParaVendedor;$x++) {
@@ -404,9 +449,6 @@ class HomeController extends Controller
                     'stateview' => 1
                 ]));
             }
-
-
-
             unset($createInsert);
             //Captura ultimo id
             $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
@@ -417,10 +459,11 @@ class HomeController extends Controller
                     'valorpago'     => 0,
                     'valortotal'    =>  $request->input('valservico'),
                     'stateview'     => 1
-                ])){
-                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+                ]))
+                {
+                return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
                 }
-
+            }
             }
     }
 
