@@ -203,6 +203,7 @@
                                     <div class="card-body table-responsive p-0">
                                    <table class="table table-hover text-nowrap ">
                                        <thead>
+                                       <th></th>
                                        <th>Vendedor</th>
                                        <th>Serviço</th>
                                        <th>Valor da Parcela</th>
@@ -214,6 +215,7 @@
                                        <?php  $totalizado=0; ?>
                                        @foreach($data['inseridos'] as $key => $value)
                                         <tr>
+                                            <th>{{$value->id}}</th>
                                             <td>{{$value->vendedor}}</td>
                                             <td>{{$value->servico}}</td>
                                             <td><?php echo number_format($value->valorparcela,2,",",".") ?></td>

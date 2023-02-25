@@ -287,38 +287,35 @@ class HomeController extends Controller
             'daterangeprimeira.required'    => 'Preciso adicionar uma data para a primeira cobrança',
             'qtdparcela'                    => 'É necessário informar a  quantidade de parcela',
             'parcelavendedor'               => 'É necessário informar a  quantidade de parcela para o vendedor',
-//            'valorreajuste.required' => 'Entre com o valor para o reajuste'
+
         ]);
 
             $ValorServico = DB::table('servicos')
-                ->where('id', '=', $request->input('servico'))
-                ->get();
+            ->where('id', '=', $request->input('servico'))
+            ->get();
 
             $parcial = floatval($request->input('valservico'));
             $parcela = $request->input('qtdparcela');
             $ValParcela = ($parcial/$parcela);
             $ValParcelaFloat =floatval($ValParcela);
             //Form
-            $id =   $request->input('id');
             $vendedor = $request->input('vendedor');
             $idservico = $request->input('servico');
             //Pegar Data final do contrato
             $id = $request->input('id');
             if($request->input('qtdparcela') < $request->input('parcelavendedor')){
-
-           return back()->with('alert', 'Quantidade da parcela é menor que a quantidade de parcela que o vendedor tem para receber.');
-
+            return back()->with('alert', 'Quantidade da parcela é menor que a quantidade de parcela que o vendedor tem para receber.');
             }
 
 
 
             $DataFinalContrato = DB::table('contrato_periodos')
-                ->where('idsituacao','=',$id)
-                ->get();
+            ->where('idsituacao','=',$id)
+            ->get();
 
             foreach ($DataFinalContrato as $key => $value)
             {
-                $final=$value->datafinal;
+            $final=$value->datafinal;
             }
             //Data da primeira cobrança
             $DataPrimeiraCobranca = $request->input('daterangeprimeira');
@@ -400,7 +397,7 @@ class HomeController extends Controller
             {
                 return back()->with('success', 'Serviço excluído desse contrato.');
             } else {
-                return back()->with('alert', 'Algo deu errado.');
+                return back()->with('alert', 'Mensalidade apagada.');
             }
         } else {
             return back()->with('alert', 'Mensalidade apagada.');
