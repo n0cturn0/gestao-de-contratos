@@ -278,6 +278,7 @@ class HomeController extends Controller
             'vendedor'      => 'required',
             'daterangeprimeira' => 'required',
             'parcelavendedor'   => 'required|integer|min:1',
+            'valorvendedor'     => 'required|min:1',
 
 
         ],[
@@ -287,6 +288,7 @@ class HomeController extends Controller
             'daterangeprimeira.required'    => 'Preciso adicionar uma data para a primeira cobrança',
             'qtdparcela'                    => 'É necessário informar a  quantidade de parcela',
             'parcelavendedor'               => 'É necessário informar a  quantidade de parcela para o vendedor',
+            'valorvendedor'                 => 'É necessário entrar com um valor para calcular a comissão,'
 
         ]);
 
@@ -298,6 +300,7 @@ class HomeController extends Controller
             $parcela = $request->input('qtdparcela');
             $ValParcela = ($parcial/$parcela);
             $ValParcelaFloat =floatval($ValParcela);
+            $porcentagemComissao = floatval($request->input('valorvendedor'));
             //Form
             $vendedor = $request->input('vendedor');
             $idservico = $request->input('servico');
@@ -308,8 +311,6 @@ class HomeController extends Controller
             } else {
                 $diferencaMeses = ($request->input('qtdparcela') - $request->input('parcelavendedor'));
                 $parcelaParaVendedor = $request->input('parcelavendedor');
-
-
             }
 
 
@@ -341,14 +342,19 @@ class HomeController extends Controller
             {
                 $ContaMes = (($diff->y * 12)+ $diff->m);
             }
+            //Calculando a comissão
+            $comissao = ($ValParcelaFloat  * $porcentagemComissao ) / 100;
+
 
         if ($request->input('qtdparcela') == $request->input('parcelavendedor')){
             $diferencaMeses = $request->input('qtdparcela');
             for ($x =1; $x<=$diferencaMeses;$x++) {
                 $createInsert[] = [
                     'id' => $id,
-                    'diavencimento' => $dia,
-                    'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
+                    'indicecomissao'    => $porcentagemComissao,
+                    'ivalorcomissao'    => $comissao,
+                    'diavencimento'     => $dia,
+                    'mesvencimento'     => $mes .'/' .$AnoPrimeiraCobranca,
                     'valor' => $ValParcelaFloat
                 ];
                 $mes++;
@@ -366,6 +372,8 @@ class HomeController extends Controller
                     'vendedorid'    => 1,
                     'tipo'          => 1,
                     'idativo'       => $idservico,
+                    'indicecomissao' => $createInsert[$x]['indicecomissao'],
+                    'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
                     'valorparcela' => $createInsert[$x]['valor'],
                     'diavencimento'    => $createInsert[$x]['diavencimento'],
                     'mesvencimento'     => $createInsert[$x]['mesvencimento'],
@@ -394,6 +402,8 @@ class HomeController extends Controller
             for ($x =1; $x<=$diferencaMeses;$x++) {
                 $createInsert[] = [
                     'id' => $id,
+                    'indicecomissao'    => $porcentagemComissao,
+                    'ivalorcomissao'    => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
                     'valor' => $ValParcelaFloat
@@ -413,6 +423,8 @@ class HomeController extends Controller
                     'vendedorid'    => 1,
                     'tipo'          => 1,
                     'idativo'       => $idservico,
+                    'indicecomissao' => $createInsert[$x]['indicecomissao'],
+                    'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
                     'valorparcela' => $createInsert[$x]['valor'],
                     'diavencimento'    => $createInsert[$x]['diavencimento'],
                     'mesvencimento'     => $createInsert[$x]['mesvencimento'],
@@ -424,6 +436,8 @@ class HomeController extends Controller
             for ($x =1; $x<=$parcelaParaVendedor;$x++) {
                 $createInsertVend[] = [
                     'id' => $id,
+                    'indicecomissao'    => $porcentagemComissao,
+                    'ivalorcomissao'    => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
                     'valor' => $ValParcelaFloat
@@ -442,7 +456,9 @@ class HomeController extends Controller
                     'vendedorid'    => $vendedor,
                     'tipo'          => 1,
                     'idativo'       => $idservico,
-                    'valorparcela' => $createInsertVend[$x]['valor'],
+                    'indicecomissao' => $createInsertVend[$x]['indicecomissao'],
+                    'ivalorcomissao' => $createInsertVend[$x]['ivalorcomissao'],
+                    'valorparcela'      => $createInsertVend[$x]['valor'],
                     'diavencimento'    => $createInsertVend[$x]['diavencimento'],
                     'mesvencimento'     => $createInsertVend[$x]['mesvencimento'],
                     'pagamento'     => 0,
