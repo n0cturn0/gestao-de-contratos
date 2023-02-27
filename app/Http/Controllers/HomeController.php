@@ -489,6 +489,10 @@ class HomeController extends Controller
             }
     }
 
+    public function editacontrato($id='NULL'){
+    return view('contrato.editacontrato');
+    }
+
     public function apagaservico($id='NULL')
     {
         if(DB::table('contrato_composicao_final')->where('id', '=', $id)->delete())

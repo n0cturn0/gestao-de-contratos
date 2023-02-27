@@ -1,0 +1,55 @@
+
+@extends('adminlte::page')
+<script src="https://momentjs.com/downloads/moment.js"></script>
+@section('title', 'Criando um contrato')
+@section('content_header')
+@stop
+@section('content')
+
+
+<div>
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 10px">
+                <div class="card" style="margin-top: 25px;">
+
+                    <div class="card-header">
+                        <h4>
+                            {{--                                <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar cliente" style="width: 230px" />--}}
+                            {{--                                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentModal">--}}
+                            {{--                                    Adicionar novo Vendedor--}}
+                            {{--                                </button>--}}
+                        </h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+
+                                    </table>
+                                </div>
+
+
+
+
+
+                                <div class="col-3">
+                                    <label>Quantidade de parcelas:</label>
+                                    <input name="qtdparcela" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@stop
