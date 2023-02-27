@@ -37,6 +37,7 @@
                                         <th></th>
                                         </thead>
                                         @foreach($inserido as $value)
+                                        <input type="hidden" name="id" value="{{$value->id}}">
                                         <tr>
                                             <td>
                                             </td>
