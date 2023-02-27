@@ -344,7 +344,7 @@ class HomeController extends Controller
             }
             //Calculando a comissão
             $comissao = ($ValParcelaFloat  * $porcentagemComissao ) / 100;
-
+            $lucroReal =($ValParcela - $comissao);
 
         if ($request->input('qtdparcela') == $request->input('parcelavendedor')){
             $diferencaMeses = $request->input('qtdparcela');
@@ -355,7 +355,8 @@ class HomeController extends Controller
                     'ivalorcomissao'    => $comissao,
                     'diavencimento'     => $dia,
                     'mesvencimento'     => $mes .'/' .$AnoPrimeiraCobranca,
-                    'valor' => $ValParcelaFloat
+                    'valor' => $ValParcelaFloat,
+                    'saldoreal' => $lucroReal,
                 ];
                 $mes++;
                 if($mes==13){
@@ -378,7 +379,8 @@ class HomeController extends Controller
                     'diavencimento'    => $createInsert[$x]['diavencimento'],
                     'mesvencimento'     => $createInsert[$x]['mesvencimento'],
                     'pagamento'     => 0,
-                    'stateview' => 1
+                    'stateview' => 1,
+                    'saldoreal' => $lucroReal,
                 ]));
             }
             unset($createInsert);
@@ -406,7 +408,8 @@ class HomeController extends Controller
                     'ivalorcomissao'    => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
-                    'valor' => $ValParcelaFloat
+                    'valor' => $ValParcelaFloat,
+                    'saldoreal' => $lucroReal,
                 ];
                 $mes++;
                 if($mes==13){
@@ -429,7 +432,8 @@ class HomeController extends Controller
                     'diavencimento'    => $createInsert[$x]['diavencimento'],
                     'mesvencimento'     => $createInsert[$x]['mesvencimento'],
                     'pagamento'     => 0,
-                    'stateview' => 1
+                    'stateview' => 1,
+                    'saldoreal' => $lucroReal,
                 ]));
             }
 
@@ -440,7 +444,8 @@ class HomeController extends Controller
                     'ivalorcomissao'    => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
-                    'valor' => $ValParcelaFloat
+                    'valor' => $ValParcelaFloat,
+                    'saldoreal' => $lucroReal,
                 ];
                 $mes++;
                 if($mes==13){
@@ -462,7 +467,8 @@ class HomeController extends Controller
                     'diavencimento'    => $createInsertVend[$x]['diavencimento'],
                     'mesvencimento'     => $createInsertVend[$x]['mesvencimento'],
                     'pagamento'     => 0,
-                    'stateview' => 1
+                    'stateview' => 1,
+                    'saldoreal' => $lucroReal,
                 ]));
             }
             unset($createInsert);
