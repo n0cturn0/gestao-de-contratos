@@ -38,6 +38,7 @@
                                         </thead>
                                         @foreach($inserido as $value)
                                         <input type="hidden" name="id" value="{{$value->id}}">
+                                        @csrf
                                         <tr>
                                             <td>
                                             </td>
