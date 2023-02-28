@@ -21,7 +21,21 @@
                             {{--                                </button>--}}
                         </h4>
                     </div>
+                    @if(Session::has('success'))
 
+                        <div class="alert alert-success">
+
+                            {{ Session::get('success') }}
+
+                            @php
+
+                                Session::forget('success');
+
+                            @endphp
+
+                        </div>
+
+                    @endif
                     <div class="card-body">
                         <div class="form-group">
                             <div class="row">
@@ -36,6 +50,7 @@
                                         <th>Vencimento</th>
                                         <th></th>
                                         </thead>
+                                        <form method="POST" action="/atualizaedicao">
                                         @foreach($inserido as $value)
                                         <input type="hidden" name="id" value="{{$value->id}}">
                                         @csrf
@@ -43,8 +58,9 @@
                                             <td>
                                             </td>
                                             <td>
-                                                <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder">
-                                                    <option>Selecione</option>
+
+                                                <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder" required>
+                                                    <option value="">Selecione</option>
                                                     @foreach($vendedores as $v)
                                                     <option value="{{$v->id}}">{{$v->vendedor}}</option>
                                                     @endforeach
@@ -58,9 +74,9 @@
                                         </tr>
                                         @endforeach
                                     </table>
-                                    <button type="button" class="btn btn-block btn-primary btn-xs">Atualizar Informações</button>
+                                    <button type="submit" class="btn btn-block btn-primary btn-xs">Atualizar Informações</button>
                                 </div>
-
+                                            </form>
 
 
 

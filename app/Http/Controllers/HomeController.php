@@ -525,6 +525,21 @@ class HomeController extends Controller
 
 
     }
+    public function atualizaedicao(Request $request)
+    {
+
+       if  ($affected = DB::table('contrato_composicao_final')
+            ->where('id', $request->input('id'))
+            ->update(
+                [
+                'vendedorid'        => $request->input('vendedor'),
+                'valorparcela'      => $request->input('valparcela'),
+                'ivalorcomissao'    => $request->input('qtdparcela')
+                ])){
+           return redirect()->route('edita-contrato', ['id' => $request->input('id')])->with('success', 'Atualizado com sucesso.');
+
+       }
+    }
 
     public function rmaster()
     {
