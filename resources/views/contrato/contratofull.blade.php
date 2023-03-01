@@ -51,7 +51,7 @@
                                             <th style="width:  1.0%">% Comissão</th>
                                             <th>Pgt Vendedor</th>
                                             </thead>
-                                            <form method="POST" action="/atualizaedicao">
+                                            <form method="POST" action="#">
 
 
                                                     @csrf
