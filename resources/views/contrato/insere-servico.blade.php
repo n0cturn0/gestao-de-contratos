@@ -241,10 +241,12 @@
                                                     ?>
                                             </td>
                                             <td>
+                                                <a href="{{url('edita-contrato-full/'.$value->idsituacao)}}"><i class="fa fa-bolt text-success" aria-hidden="true"></i></a>&nbsp&nbsp
                                                 <a href="{{url('edita-contrato/'.$value->id)}}"><i class="fas fa-chevron-circle-right text-info  fa-lg"></i></a> &nbsp;
                                                 <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-trash text-danger  fa-lg"></i></a>
 
-{{--                                                <button data-toggle="modal" id="smallButton" data-target="#modal-danger" data-attr="{{ route('apaga-servico', $value->id) }}" title="Delete Project">--}}
+
+                                                {{--                                                <button data-toggle="modal" id="smallButton" data-target="#modal-danger" data-attr="{{ route('apaga-servico', $value->id) }}" title="Delete Project">--}}
 {{--                                                    <i class="fas fa-trash text-danger  fa-lg"></i>--}}
 {{--                                                </button>--}}
                                             </td>

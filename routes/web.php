@@ -42,6 +42,7 @@ Route::get('/insere-produto/{id}', [App\Http\Controllers\HomeController::class, 
 Route::post('/insereativo', [App\Http\Controllers\HomeController::class, 'adicionaativo'])->name('insereativo');
 Route::get('/apaga-servico/{id}', [App\Http\Controllers\HomeController::class, 'apagaservico'])->name('apaga-servico');
 Route::get('/edita-contrato/{id}', [App\Http\Controllers\HomeController::class, 'editacontrato'])->name('edita-contrato');
+Route::get('/edita-contrato-full/{id}', [App\Http\Controllers\HomeController::class, 'editacontratofull'])->name('edita-contrato-full');
 Route::post('/atualizaedicao', [App\Http\Controllers\HomeController::class, 'atualizaedicao'])->name('atualizaedicao');
 Route::get('/teste', [App\Http\Controllers\HomeController::class, 'rmaster'])->name('teste');
 

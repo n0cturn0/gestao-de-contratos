@@ -255,6 +255,7 @@ class HomeController extends Controller
                             'contrato_composicao_final.valorparcela',
                             'contrato_composicao_final.pagamento',
                             'contrato_composicao_final.mesvencimento',
+                            'contrato_composicao_final.idsituacao',
                             'contrato_composicao_final.id')->get();
 
 
@@ -497,6 +498,7 @@ class HomeController extends Controller
             ->where('contrato_composicao_final.id', '=', $id)
             ->select('vendedors.vendedor',
             'servicos.servico',
+            'vendedors.vendedor',
             'contrato_composicao_final.valorparcela',
             'contrato_composicao_final.pagamento',
             'contrato_composicao_final.mesvencimento',
@@ -507,6 +509,31 @@ class HomeController extends Controller
 
 
             return view('contrato.editacontrato', ['inserido' => $inseridos],['vendedores' => $vendedor]);
+    }
+
+
+    public function editacontratofull($id='Null'){
+        $inseridos = DB::table('contrato_composicao_final')
+            ->join('vendedors', 'vendedors.id', '=', 'vendedorid')
+            ->join('servicos', 'servicos.id', '=', 'idativo')
+//            ->join('contrato_ccontrole_valores', 'contrato_ccontrole_valores.idcomposicao', '=', 'contrato_composicao_final.idsituacao')
+            ->where('contrato_composicao_final.idsituacao', '=', $id)
+            ->select('vendedors.vendedor',
+                'servicos.servico',
+                'contrato_composicao_final.diavencimento',
+                'contrato_composicao_final.valorparcela',
+                'contrato_composicao_final.pagamento',
+                'contrato_composicao_final.saldoreal',
+                'contrato_composicao_final.indicecomissao',
+                'contrato_composicao_final.mesvencimento',
+                'contrato_composicao_final.ivalorcomissao',
+                'contrato_composicao_final.id')->get();
+        $vendedor = DB::table('vendedors')->get();
+
+        return view('contrato.contratofull',['inserido' => $inseridos],['vendedores' => $vendedor]);
+
+
+
     }
 
     public function apagaservico($id='NULL')
