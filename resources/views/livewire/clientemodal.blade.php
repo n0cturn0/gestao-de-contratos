@@ -1,5 +1,5 @@
 <!-- Insert Modal -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div wire:ignore.self class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -11,16 +11,37 @@
             </div>
             <form wire:submit.prevent="saveStudent">
                 <div class="modal-body">
+
+{{--                    <div class="form-group">--}}
+{{--                        <p>Type:</p>--}}
+{{--                        <input  name="type" type="radio" id="internal" value="internal" style="vertical-align:middle; cursor: pointer;">--}}
+{{--                        <label for="internal">CPF</label><br>--}}
+{{--                        <input  name="type" type="radio" id="global" value="global"  style="vertical-align:middle; cursor: pointer;" checked>--}}
+{{--                        <label for="global">CNPJ</label>--}}
+
+{{--                    </div>--}}
+
                     <div class="mb-3">
                         <label>Cliente</label>
                         <input type="text" wire:model="cliente" class="form-control input-sm">
                         @error('cliente') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    <div class="mb-3">
-                        <label>Cnpj</label>
-                        <input type="text" wire:model="cnpj"  class="form-control input-sm">
-                        @error('cnpj') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+
+
+                        <div class="mb-3">
+                            <label>CPF</label>
+                            <input type="text" wire:model="cnpj"  class="form-control input-sm">
+                            @error('cnpj') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+
+{{--                    <div class="form-group" id="company_selecti" style="display:none">--}}
+{{--                    <div class="mb-3">--}}
+{{--                        <label>CNPJ</label>--}}
+{{--                        <input type="text" wire:model="cnpj"  class="form-control input-sm">--}}
+{{--                        @error('cnpj') <span class="text-danger">{{ $message }}</span> @enderror--}}
+{{--                    </div>--}}
+{{--                    </div>--}}
+
 
                     <div class="col-md-6">
                         <label>Estado</label>
@@ -114,8 +135,8 @@
                         </div>
                         <div class="mb-3">
                             <label>Cnpj</label>
-                            <input type="text" wire:model="cnpj"  class="form-control input-sm">
-                            @error('cnpj') <span class="text-danger">{{ $message }}</span> @enderror
+                            <input id="cpfcnpj" type="text" wire:model="cnpj"  class="form-control input-sm">
+{{--                            @error('cnpj') <span class="text-danger">{{ $message }}</span> @enderror--}}
                         </div>
 
                         <div class="col-md-6">
@@ -154,6 +175,16 @@
 
                             @error('estado') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+
+                        <div class="form-group">
+                            <p>Type:</p>
+                            <input  name="type" type="radio" id="internal" value="internal" style="vertical-align:middle; cursor: pointer;">
+                            <label for="internal">internal</label><br>
+                            <input  name="type" type="radio" id="global" value="global"  style="vertical-align:middle; cursor: pointer;" checked>
+                            <label for="global">global</label>
+
+                        </div>
+
 
                         <div class="mb-3" style="margin-top:8px">
                             <label>Cidade</label>
@@ -219,3 +250,27 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    // $(document).ready(function () {
+    //     $("input[name=type]").change(function(){
+    //
+    //         if($("#internal").is(':checked')){
+    //             $("#company_select").show();
+    //         }else{
+    //             $("#company_select").hide();
+    //         }
+    //         if($("#global").is(':checked')){
+    //             $("#company_selecti").show();
+    //         }else{
+    //             $("#company_selecti").hide();
+    //         }
+    //
+    //
+    //
+    //     });
+    // });
+
+
+</script>

@@ -269,6 +269,12 @@ class HomeController extends Controller
             return view('contrato.insere-servico',['data' =>$data]);
 
     }
+    public function processcontratofull(Request $request)
+    {
+        echo   '<pre>';
+        print_r($_POST);
+        echo    '<pre>';
+    }
 
     public function adicionaativo(Request $request)
     {

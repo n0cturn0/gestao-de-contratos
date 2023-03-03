@@ -51,7 +51,7 @@
                                             <th style="width:  1.0%">% Comissão</th>
                                             <th>Pgt Vendedor</th>
                                             </thead>
-                                            <form method="POST" action="#">
+                                            <form method="POST" action="/processcontratofull">
 
 
                                                     @csrf
@@ -72,7 +72,7 @@
                                                             </select>
                                                         </td>
                                                         <td> <input name="servico[]"      value="{{$value->servico}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.0%"> <input name="diavencimento[]"   value="{{$value->diavencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"> <input name="diavencimento_{{$value->id}}"   value="{{$value->diavencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.00%"> <input name="mesvencimento[]" disabled   value="{{$value->mesvencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                     <td style="width:  1.0%"> <input name="valorparcela[]"       value="{{$value->valorparcela}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.0%"><input name="indicecomissao[]"       value="{{$value->indicecomissao}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>

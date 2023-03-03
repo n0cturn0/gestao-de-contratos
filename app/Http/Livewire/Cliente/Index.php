@@ -19,7 +19,7 @@ class Index extends Component
     {
         return [
             'cliente'   => 'required|string|min:6',
-            'cnpj'      =>  'required|integer|digits:14',
+            'cnpj'      =>  'required|min:11|max:14',
             'estado'      =>  'required|string|min:2|max:2',
             'bairro'      =>  'required|string|min:2',
             'cidade'    => 'required|string|min:2',
