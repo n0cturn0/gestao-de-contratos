@@ -271,9 +271,32 @@ class HomeController extends Controller
     }
     public function processcontratofull(Request $request)
     {
-        echo   '<pre>';
-        print_r($_POST);
-        echo    '<pre>';
+        if ($request->isMethod('post')){
+        $data=$request->all();
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+       foreach($data['diavencimento'] as $key => $value){
+           if(!empty($value)){
+               foreach($value as $k => $v){
+                   echo $k . '--' . $v . '<br>';
+                   $affected = DB::table('contrato_composicao_final')
+                    ->where('id', $k)
+                    ->update(['diavencimento' => $v]);
+               }
+           }
+
+       }
+//        foreach ($data['diavencimento'] as $key=>$attr){
+//            if(!empty($attr)){
+//                $affected = DB::table('contrato_composicao_final')
+//                    ->where('id', $key)
+//                    ->update(['diavencimento' => $attr]);
+//            }
+//        }
+        } else {
+            dd('erro');
+        }
     }
 
     public function adicionaativo(Request $request)

@@ -71,12 +71,12 @@
 
                                                             </select>
                                                         </td>
-                                                        <td> <input name="servico[]"      value="{{$value->servico}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.0%"> <input name="diavencimento_{{$value->id}}"   value="{{$value->diavencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.00%"> <input name="mesvencimento[]" disabled   value="{{$value->mesvencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                    <td style="width:  1.0%"> <input name="valorparcela[]"       value="{{$value->valorparcela}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.0%"><input name="indicecomissao[]"       value="{{$value->indicecomissao}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.0%"><input name="saldoreal[]"       value="{{$value->saldoreal}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td> <input name="servico[][{{$value->id}}]"      value="{{$value->servico}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"> <input name="diavencimento[][{{$value->id}}]"   value="{{$value->diavencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.00%"> <input name="mesvencimento[][{{$value->id}}]" disabled   value="{{$value->mesvencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"> <input name="valorparcela[][{{$value->id}}]"       value="{{$value->valorparcela}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"><input name="indicecomissao[][{{$value->id}}]"       value="{{$value->indicecomissao}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"><input name="saldoreal[][{{$value->id}}]"       value="{{$value->saldoreal}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                     </tr>
                                             @endforeach
 
