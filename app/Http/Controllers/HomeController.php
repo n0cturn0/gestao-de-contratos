@@ -10,6 +10,7 @@ use App\Models\Vendedor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use Livewire\WithPagination;
 
 
@@ -271,11 +272,13 @@ class HomeController extends Controller
     }
     public function processcontratofull(Request $request)
     {
+
+
+
+
+
         if ($request->isMethod('post')){
         $data=$request->all();
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
        foreach($data['diavencimento'] as $key => $value){
            if(!empty($value)){
                foreach($value as $k => $v){
@@ -287,6 +290,17 @@ class HomeController extends Controller
 
        }
 
+            foreach($data['checkpagm'] as $key => $value){
+                if(!empty($value)){
+                    foreach($value as $k => $v){
+                        $affected = DB::table('contrato_composicao_final')
+                            ->where('id', $k)
+                            ->update(['pagamento' => 1]);
+                    }
+                }
+
+            }
+
 
             foreach($data['saldoreal'] as $key => $value){
                 if(!empty($value)){
@@ -294,6 +308,18 @@ class HomeController extends Controller
                         $affected = DB::table('contrato_composicao_final')
                             ->where('id', $k)
                             ->update(['saldoreal' => $v]);
+                    }
+                }
+
+            }
+
+
+            foreach($data['checkboleto'] as $key => $value){
+                if(!empty($value)){
+                    foreach($value as $k => $v){
+                        $affected = DB::table('contrato_composicao_final')
+                            ->where('id', $k)
+                            ->update(['boleto' => 1]);
                     }
                 }
 
@@ -419,10 +445,12 @@ class HomeController extends Controller
                     'valorparcela' => $createInsert[$x]['valor'],
                     'diavencimento'    => $createInsert[$x]['diavencimento'],
                     'mesvencimento'     => $createInsert[$x]['mesvencimento'],
+                    'datacontrole'      => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'pagamento'     => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
                 ]));
+
             }
             unset($createInsert);
             //Captura ultimo id
@@ -472,6 +500,7 @@ class HomeController extends Controller
                     'valorparcela' => $createInsert[$x]['valor'],
                     'diavencimento'    => $createInsert[$x]['diavencimento'],
                     'mesvencimento'     => $createInsert[$x]['mesvencimento'],
+                    'datacontrole'      => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'pagamento'     => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
@@ -507,6 +536,7 @@ class HomeController extends Controller
                     'valorparcela'      => $createInsertVend[$x]['valor'],
                     'diavencimento'    => $createInsertVend[$x]['diavencimento'],
                     'mesvencimento'     => $createInsertVend[$x]['mesvencimento'],
+                    'datacontrole'      => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'pagamento'     => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
@@ -567,6 +597,7 @@ class HomeController extends Controller
                 'contrato_composicao_final.indicecomissao',
                 'contrato_composicao_final.mesvencimento',
                 'contrato_composicao_final.ivalorcomissao',
+                'contrato_composicao_final.indicecomissao',
                 'contrato_composicao_final.id')->get();
         $vendedor = DB::table('vendedors')->get();
 

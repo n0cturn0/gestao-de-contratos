@@ -43,6 +43,8 @@
                                         <table class="table table-hover text-nowrap">
                                             <thead>
                                             <th></th>
+                                            <th>Pgm</th>
+                                            <th>Boleto</th>
                                             <th>Vendedor</th>
                                             <th>Serviço</th>
                                             <th style="width:  1.0%">Vencimento</th>
@@ -60,6 +62,19 @@
                                                         <td>
                                                         </td>
                                                         <td>
+                                                            <div class="form-check">
+                                                                <input name="checkpagm[][{{$value->id}}]" class="form-check-input" type="checkbox">
+                                                                <label class="form-check-label">Pago</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input name="checkboleto[][{{$value->id}}]" class="form-check-input" type="checkbox">
+                                                                <img src="{{asset('img/bb.png')}}" width="48" height="25">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+
 
                                                             <select name="vendedor[]" class="form-control select2" required >
 
@@ -75,7 +90,7 @@
                                                         <td style="width:  1.0%"> <input name="diavencimento[][{{$value->id}}]"   value="{{$value->diavencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.00%"> <input name="mesvencimento[][{{$value->id}}]" disabled   value="{{$value->mesvencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.0%"> <input name="valorparcela[][{{$value->id}}]"       value="{{$value->valorparcela}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.0%"><input name="indicecomissao[][{{$value->id}}]"       value="{{$value->indicecomissao}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"><input name="indicecomissao[][{{$value->id}}]"  disabled     value="{{$value->indicecomissao}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.0%"><input name="saldoreal[][{{$value->id}}]"       value="{{$value->saldoreal}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                     </tr>
                                             @endforeach
