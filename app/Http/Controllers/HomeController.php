@@ -332,7 +332,7 @@ class HomeController extends Controller
 //            }
 //        }
         } else {
-            dd('erro');
+            dd('Algo deu errado');
         }
     }
 
