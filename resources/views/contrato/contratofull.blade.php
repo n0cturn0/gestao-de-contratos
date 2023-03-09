@@ -62,16 +62,38 @@
                                                         <td>
                                                         </td>
                                                         <td>
+                                                            @switch($value->pagamento)
+                                                                @case(1)
                                                             <div class="form-check">
-                                                                <input name="checkpagm[][{{$value->id}}]" class="form-check-input" type="checkbox">
+                                                                <input name="checkpagm[][{{$value->id}}]" class="form-check-input" type="checkbox" checked disabled>
                                                                 <label class="form-check-label">Pago</label>
                                                             </div>
+                                                                    @break
+
+                                                                @case(0)
+                                                                    <div class="form-check">
+                                                                        <input name="checkpagm[][{{$value->id}}]" class="form-check-input" type="checkbox">
+                                                                        <label class="form-check-label">Pendente</label>
+                                                                    </div>
+                                                                @break
+                                                            @endswitch
                                                         </td>
                                                         <td>
+                                                            @switch($value->boleto)
+                                                                @case(1)
                                                             <div class="form-check">
-                                                                <input name="checkboleto[][{{$value->id}}]" class="form-check-input" type="checkbox">
+                                                                <input name="checkboleto[][{{$value->id}}]" class="form-check-input" checked disabled type="checkbox">
                                                                 <img src="{{asset('img/bb.png')}}" width="48" height="25">
                                                             </div>
+                                                                @break
+                                                                @case(0)
+                                                                    <div class="form-check">
+                                                                        <input name="checkboleto[][{{$value->id}}]" class="form-check-input"  type="checkbox">
+                                                                        <img src="{{asset('img/bb.png')}}" width="48" height="25">
+                                                                    </div>
+                                                                @break
+
+                                                            @endswitch
                                                         </td>
                                                         <td>
 

@@ -289,16 +289,16 @@ class HomeController extends Controller
            }
 
        }
-
-            foreach($data['checkpagm'] as $key => $value){
-                if(!empty($value)){
-                    foreach($value as $k => $v){
+            if(!empty($data['checkpagm'])){
+            foreach($data['checkpagm'] as $key => $value) {
+                if (!empty($value)) {
+                    foreach ($value as $k => $v) {
                         $affected = DB::table('contrato_composicao_final')
                             ->where('id', $k)
                             ->update(['pagamento' => 1]);
                     }
                 }
-
+            }
             }
 
 
@@ -313,16 +313,16 @@ class HomeController extends Controller
 
             }
 
-
-            foreach($data['checkboleto'] as $key => $value){
-                if(!empty($value)){
-                    foreach($value as $k => $v){
+            if(!empty($data['checkboleto'])){
+            foreach($data['checkboleto'] as $key => $value) {
+                if (!empty($value)) {
+                    foreach ($value as $k => $v) {
                         $affected = DB::table('contrato_composicao_final')
                             ->where('id', $k)
                             ->update(['boleto' => 1]);
                     }
                 }
-
+            }
             }
 //        foreach ($data['diavencimento'] as $key=>$attr){
 //            if(!empty($attr)){
@@ -598,6 +598,7 @@ class HomeController extends Controller
                 'contrato_composicao_final.mesvencimento',
                 'contrato_composicao_final.ivalorcomissao',
                 'contrato_composicao_final.indicecomissao',
+                'contrato_composicao_final.boleto',
                 'contrato_composicao_final.id')->get();
         $vendedor = DB::table('vendedors')->get();
 
