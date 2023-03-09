@@ -324,6 +324,20 @@ class HomeController extends Controller
                 }
             }
             }
+
+            if(!empty($data['vendedor'])){
+                foreach($data['vendedor'] as $key => $value) {
+                    if (!empty($value)) {
+                        foreach ($value as $k => $v) {
+                            $affected = DB::table('contrato_composicao_final')
+                                ->where('id', $k)
+                                ->update(['vendedorid' => $v]);
+                        }
+                    }
+                }
+            }
+
+            return back()->with('success', 'Informação salva com sucesso');
 //        foreach ($data['diavencimento'] as $key=>$attr){
 //            if(!empty($attr)){
 //                $affected = DB::table('contrato_composicao_final')

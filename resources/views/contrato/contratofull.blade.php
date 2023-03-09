@@ -98,7 +98,7 @@
                                                         <td>
 
 
-                                                            <select name="vendedor[]" class="form-control select2" required >
+                                                            <select name="vendedor[][{{$value->id}}]" class="form-control select2" required >
 
 
                                                                 @foreach($vendedores as $v)
