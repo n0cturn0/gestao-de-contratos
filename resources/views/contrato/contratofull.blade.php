@@ -73,7 +73,7 @@
                                                                 @case(0)
                                                                     <div class="form-check">
                                                                         <input name="checkpagm[][{{$value->id}}]" class="form-check-input" type="checkbox">
-                                                                        <label class="form-check-label">Pendente</label>
+                                                                        <label class="form-check-label"><button type="button" class="btn btn-block btn-warning btn-xs">Pendente</button></label>
                                                                     </div>
                                                                 @break
                                                             @endswitch
@@ -111,9 +111,9 @@
                                                         <td> <input name="servico[][{{$value->id}}]"      value="{{$value->servico}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.0%"> <input name="diavencimento[][{{$value->id}}]"   value="{{$value->diavencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.00%"> <input name="mesvencimento[][{{$value->id}}]" disabled   value="{{$value->mesvencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.0%"> <input name="valorparcela[][{{$value->id}}]"       value="{{$value->valorparcela}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"> <input name="valorparcela[][{{$value->id}}]"   readonly="true"    value="{{$value->valorparcela}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.0%"><input name="indicecomissao[][{{$value->id}}]"  disabled     value="{{$value->indicecomissao}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
-                                                        <td style="width:  1.0%"><input name="saldoreal[][{{$value->id}}]"       value="{{$value->saldoreal}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td style="width:  1.0%"><input name="pgtvendedor[][{{$value->id}}]"       value="{{$value->ivalorcomissao}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                     </tr>
                                             @endforeach
 

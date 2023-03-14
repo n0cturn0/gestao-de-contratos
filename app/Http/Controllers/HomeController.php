@@ -279,6 +279,7 @@ class HomeController extends Controller
 
         if ($request->isMethod('post')){
         $data=$request->all();
+
        foreach($data['diavencimento'] as $key => $value){
            if(!empty($value)){
                foreach($value as $k => $v){
@@ -300,14 +301,34 @@ class HomeController extends Controller
                 }
             }
             }
+            //Baixa Pagamento
+            if(!empty($data['valorparcela'])){
+                foreach($data['valorparcela'] as $key => $value) {
+                    if (!empty($value)) {
+                        foreach ($value as $k => $v) {
+                            //Atualiza tabela de valores
+                            $valores = DB::table('contrato_ccontrole_valores')
+                                ->where('ultimoidcomposicaofinal', $k)
+                                ->update(['valorpago' => $v]);
+
+                        }
+                    }
+                }
+            }
 
 
-            foreach($data['saldoreal'] as $key => $value){
+
+
+
+
+
+            foreach($data['pgtvendedor'] as $key => $value){
                 if(!empty($value)){
                     foreach($value as $k => $v){
                         $affected = DB::table('contrato_composicao_final')
                             ->where('id', $k)
-                            ->update(['saldoreal' => $v]);
+                            ->update(['ivalorcomissao' => $v]);
+
                     }
                 }
 
@@ -353,225 +374,233 @@ class HomeController extends Controller
     public function adicionaativo(Request $request)
     {
         $validatedData = $request->validate([
-            'qtdparcela'    => 'required|integer|min:1',
-            'valservico'    => 'required|integer|min:1',
-            'servico'       => 'required',
-            'vendedor'      => 'required',
+            'qtdparcela' => 'required|integer|min:1',
+            'valservico' => 'required|integer|min:1',
+            'servico' => 'required',
+            'vendedor' => 'required',
             'daterangeprimeira' => 'required',
-            'parcelavendedor'   => 'required|integer|min:1',
-            'valorvendedor'     => 'required|min:1',
+            'parcelavendedor' => 'required|integer|min:1',
+            'valorvendedor' => 'required|min:1',
 
 
-        ],[
-            'vendedor.required'             => 'É preciso Selecionar um vendedor',
-            'servico.required'              => 'É preciso selecionar um serviço',
-            'valservico.required'           => 'Verifique o valor desse serviço',
-            'daterangeprimeira.required'    => 'Preciso adicionar uma data para a primeira cobrança',
-            'qtdparcela'                    => 'É necessário informar a  quantidade de parcela',
-            'parcelavendedor'               => 'É necessário informar a  quantidade de parcela para o vendedor',
-            'valorvendedor'                 => 'É necessário entrar com um valor para calcular a comissão,'
+        ], [
+            'vendedor.required' => 'É preciso Selecionar um vendedor',
+            'servico.required' => 'É preciso selecionar um serviço',
+            'valservico.required' => 'Verifique o valor desse serviço',
+            'daterangeprimeira.required' => 'Preciso adicionar uma data para a primeira cobrança',
+            'qtdparcela' => 'É necessário informar a  quantidade de parcela',
+            'parcelavendedor' => 'É necessário informar a  quantidade de parcela para o vendedor',
+            'valorvendedor' => 'É necessário entrar com um valor para calcular a comissão,'
 
         ]);
 
-            $ValorServico = DB::table('servicos')
+        $ValorServico = DB::table('servicos')
             ->where('id', '=', $request->input('servico'))
             ->get();
 
-            $parcial = floatval($request->input('valservico'));
-            $parcela = $request->input('qtdparcela');
-            $ValParcela = ($parcial/$parcela);
-            $ValParcelaFloat =floatval($ValParcela);
-            $porcentagemComissao = floatval($request->input('valorvendedor'));
-            //Form
-            $vendedor = $request->input('vendedor');
-            $idservico = $request->input('servico');
-            //Pegar Data final do contrato
-            $id = $request->input('id');
-            if($request->input('qtdparcela') < $request->input('parcelavendedor')){
+        $parcial = floatval($request->input('valservico'));
+        $parcela = $request->input('qtdparcela');
+        $ValParcela = ($parcial / $parcela);
+        $ValParcelaFloat = floatval($ValParcela);
+        $porcentagemComissao = floatval($request->input('valorvendedor'));
+        //Form
+        $vendedor = $request->input('vendedor');
+        $idservico = $request->input('servico');
+        //Pegar Data final do contrato
+        $id = $request->input('id');
+        if ($request->input('qtdparcela') < $request->input('parcelavendedor')) {
             return back()->with('alert', 'Quantidade da parcela é menor que a quantidade de parcela que o vendedor tem para receber.');
-            } else {
-                $diferencaMeses = ($request->input('qtdparcela') - $request->input('parcelavendedor'));
-                $parcelaParaVendedor = $request->input('parcelavendedor');
-            }
+        } else {
+            $diferencaMeses = ($request->input('qtdparcela') - $request->input('parcelavendedor'));
+            $parcelaParaVendedor = $request->input('parcelavendedor');
+        }
 
 
-
-            $DataFinalContrato = DB::table('contrato_periodos')
-            ->where('idsituacao','=',$id)
+        $DataFinalContrato = DB::table('contrato_periodos')
+            ->where('idsituacao', '=', $id)
             ->get();
 
-            foreach ($DataFinalContrato as $key => $value)
-            {
-            $final=$value->datafinal;
-            }
-            //Data da primeira cobrança
-            $DataPrimeiraCobranca = $request->input('daterangeprimeira');
+        foreach ($DataFinalContrato as $key => $value) {
+            $final = $value->datafinal;
+        }
+        //Data da primeira cobrança
+        $DataPrimeiraCobranca = $request->input('daterangeprimeira');
 
-            $mes = substr($DataPrimeiraCobranca,0,2);
-            $dia = substr($DataPrimeiraCobranca,3,2);
-            $ano = substr($DataPrimeiraCobranca,6,4);
-            $DataCompleta = $ano.'-'.$dia.'-'.$mes;
+        $mes = substr($DataPrimeiraCobranca, 0, 2);
+        $dia = substr($DataPrimeiraCobranca, 3, 2);
+        $ano = substr($DataPrimeiraCobranca, 6, 4);
+        $DataCompleta = $ano . '-' . $dia . '-' . $mes;
 
-            $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d', $DataCompleta)->format('Y-m-d');
-            $AnoPrimeiraCobranca = Carbon::createFromFormat('Y-m-d', $DataPrimeiraCobrancaForm)->format('Y');
+        $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d', $DataCompleta)->format('Y-m-d');
+        $AnoPrimeiraCobranca = Carbon::createFromFormat('Y-m-d', $DataPrimeiraCobrancaForm)->format('Y');
 
-            $inicio = new Carbon($DataPrimeiraCobrancaForm);
-            $Fim    = new Carbon($final);
+        $inicio = new Carbon($DataPrimeiraCobrancaForm);
+        $Fim = new Carbon($final);
 
-            $diff = $Fim->diff($inicio);
-            if($diff->y != 0)
-            {
-                $ContaMes = (($diff->y * 12)+ $diff->m);
-            }
-            //Calculando a comissão
-            $comissao = ($ValParcelaFloat  * $porcentagemComissao ) / 100;
-            $lucroReal =($ValParcela - $comissao);
+        $diff = $Fim->diff($inicio);
+        if ($diff->y != 0) {
+            $ContaMes = (($diff->y * 12) + $diff->m);
+        }
+        //Calculando a comissão
+        $comissao = ($ValParcelaFloat * $porcentagemComissao) / 100;
+        $lucroReal = ($ValParcela - $comissao);
 
-        if ($request->input('qtdparcela') == $request->input('parcelavendedor')){
+        if ($request->input('qtdparcela') == $request->input('parcelavendedor')) {
             $diferencaMeses = $request->input('qtdparcela');
-            for ($x =1; $x<=$diferencaMeses;$x++) {
+            for ($x = 1; $x <= $diferencaMeses; $x++) {
                 $createInsert[] = [
                     'id' => $id,
-                    'indicecomissao'    => $porcentagemComissao,
-                    'ivalorcomissao'    => $comissao,
-                    'diavencimento'     => $dia,
-                    'mesvencimento'     => $mes .'/' .$AnoPrimeiraCobranca,
+                    'indicecomissao' => $porcentagemComissao,
+                    'ivalorcomissao' => $comissao,
+                    'diavencimento' => $dia,
+                    'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
                 $mes++;
-                if($mes==13){
-                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca+1);
+                if ($mes == 13) {
+                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
                     $mes = 1;
                 }
             }
             $ContArray = count($createInsert);
             $ContTrue = ($ContArray - 1);
 
-            for ($x =0; $x<=$ContTrue;$x++){
-                if(DB::table('contrato_composicao_final')->insert([
-                    'idsituacao'    => $createInsert[$x]['id'],
-                    'vendedorid'    => 1,
-                    'tipo'          => 1,
-                    'idativo'       => $idservico,
+            for ($x = 0; $x <= $ContTrue; $x++) {
+                if (DB::table('contrato_composicao_final')->insert([
+                    'idsituacao' => $createInsert[$x]['id'],
+                    'vendedorid' => 1,
+                    'tipo' => 1,
+                    'idativo' => $idservico,
                     'indicecomissao' => $createInsert[$x]['indicecomissao'],
                     'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
                     'valorparcela' => $createInsert[$x]['valor'],
-                    'diavencimento'    => $createInsert[$x]['diavencimento'],
-                    'mesvencimento'     => $createInsert[$x]['mesvencimento'],
-                    'datacontrole'      => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
-                    'pagamento'     => 0,
+                    'diavencimento' => $createInsert[$x]['diavencimento'],
+                    'mesvencimento' => $createInsert[$x]['mesvencimento'],
+                    'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
+                    'pagamento' => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
-                ]));
+                ])) ;
 
             }
             unset($createInsert);
             //Captura ultimo id
             $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
             {
-                if(DB::table('contrato_ccontrole_valores')->insert([
-                    'idcomposicao'  => $id,
+                if (DB::table('contrato_ccontrole_valores')->insert([
+                    'idcomposicao' => $id,
                     'ultimoidcomposicaofinal' => $last->id,
-                    'valorpago'     => 0,
-                    'valortotal'    =>  $request->input('valservico'),
-                    'stateview'     => 1
-                ])){
+                    'valorpago' => 0,
+                    'valortotal' => $request->input('valservico'),
+                    'stateview' => 1
+                ])) {
                     return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
                 }
 
             }
 
 
-            } else {
-            for ($x =1; $x<=$diferencaMeses;$x++) {
+        } else {
+            for ($x = 1; $x <= $diferencaMeses; $x++) {
                 $createInsert[] = [
                     'id' => $id,
-                    'indicecomissao'    => $porcentagemComissao,
-                    'ivalorcomissao'    => $comissao,
+                    'indicecomissao' => $porcentagemComissao,
+                    'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
-                    'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
+                    'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
                 $mes++;
-                if($mes==13){
-                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca+1);
+                if ($mes == 13) {
+                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
                     $mes = 1;
                 }
             }
             $ContArray = count($createInsert);
             $ContTrue = ($ContArray - 1);
 
-            for ($x =0; $x<=$ContTrue;$x++){
-                if(DB::table('contrato_composicao_final')->insert([
-                    'idsituacao'    => $createInsert[$x]['id'],
-                    'vendedorid'    => 1,
-                    'tipo'          => 1,
-                    'idativo'       => $idservico,
+            for ($x = 0; $x <= $ContTrue; $x++) {
+                if (DB::table('contrato_composicao_final')->insert([
+                    'idsituacao' => $createInsert[$x]['id'],
+                    'vendedorid' => 1,
+                    'tipo' => 1,
+                    'idativo' => $idservico,
                     'indicecomissao' => $createInsert[$x]['indicecomissao'],
                     'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
                     'valorparcela' => $createInsert[$x]['valor'],
-                    'diavencimento'    => $createInsert[$x]['diavencimento'],
-                    'mesvencimento'     => $createInsert[$x]['mesvencimento'],
-                    'datacontrole'      => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
-                    'pagamento'     => 0,
+                    'diavencimento' => $createInsert[$x]['diavencimento'],
+                    'mesvencimento' => $createInsert[$x]['mesvencimento'],
+                    'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
+                    'pagamento' => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
-                ]));
+                ])) ;
             }
 
-            for ($x =1; $x<=$parcelaParaVendedor;$x++) {
+            for ($x = 1; $x <= $parcelaParaVendedor; $x++) {
                 $createInsertVend[] = [
                     'id' => $id,
-                    'indicecomissao'    => $porcentagemComissao,
-                    'ivalorcomissao'    => $comissao,
+                    'indicecomissao' => $porcentagemComissao,
+                    'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
-                    'mesvencimento' => $mes .'/' .$AnoPrimeiraCobranca,
+                    'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
                 $mes++;
-                if($mes==13){
-                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca+1);
+                if ($mes == 13) {
+                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
                     $mes = 1;
                 }
             }
             $ContArrayVend = count($createInsertVend);
             $ContTrueVend = ($ContArrayVend - 1);
-            for ($x =0; $x<=$ContTrueVend;$x++){
-                if(DB::table('contrato_composicao_final')->insert([
-                    'idsituacao'    => $createInsertVend[$x]['id'],
-                    'vendedorid'    => $vendedor,
-                    'tipo'          => 1,
-                    'idativo'       => $idservico,
+            for ($x = 0; $x <= $ContTrueVend; $x++) {
+                if (DB::table('contrato_composicao_final')->insert([
+                    'idsituacao' => $createInsertVend[$x]['id'],
+                    'vendedorid' => $vendedor,
+                    'tipo' => 1,
+                    'idativo' => $idservico,
                     'indicecomissao' => $createInsertVend[$x]['indicecomissao'],
                     'ivalorcomissao' => $createInsertVend[$x]['ivalorcomissao'],
-                    'valorparcela'      => $createInsertVend[$x]['valor'],
-                    'diavencimento'    => $createInsertVend[$x]['diavencimento'],
-                    'mesvencimento'     => $createInsertVend[$x]['mesvencimento'],
-                    'datacontrole'      => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
-                    'pagamento'     => 0,
+                    'valorparcela' => $createInsertVend[$x]['valor'],
+                    'diavencimento' => $createInsertVend[$x]['diavencimento'],
+                    'mesvencimento' => $createInsertVend[$x]['mesvencimento'],
+                    'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
+                    'pagamento' => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
-                ]));
+                ])) ;
             }
             unset($createInsert);
             //Captura ultimo id
-            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
-            {
-                if(DB::table('contrato_ccontrole_valores')->insert([
-                    'idcomposicao'  => $id,
-                    'ultimoidcomposicaofinal' => $last->id,
-                    'valorpago'     => 0,
-                    'valortotal'    =>  $request->input('valservico'),
-                    'stateview'     => 1
-                ]))
-                {
-                return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+
+            $ValorServico = DB::table('contrato_composicao_final')
+                ->where('id', '=', 'id')
+                ->get();
+//            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->get();
+            foreach ($ValorServico as $key => $value) {
+                if (!empty($ValorServico)) {
+                    fazer update aqi cm as linhas abaixos
+//                $affected = DB::table('contrato_composicao_final')
+//                    ->where('id', $key)
+//                    ->update(['diavencimento' => $attr]);
+//            }
+//                if(DB::table('contrato_ccontrole_valores')->insert([
+//                    'idcomposicao'  => $id,
+//                    'ultimoidcomposicaofinal' => $last->id,
+//                    'valorpago'     => 0,
+//                    'valortotal'    =>  $request->input('valservico'),
+//                    'stateview'     => 1
+//                ]))
+                    {
+                        return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+                    }
                 }
             }
-            }
+        }
     }
 
     public function editacontrato($id='NULL'){
