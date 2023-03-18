@@ -45,6 +45,7 @@ Route::get('/edita-contrato/{id}', [App\Http\Controllers\HomeController::class, 
 Route::get('/edita-contrato-full/{id}', [App\Http\Controllers\HomeController::class, 'editacontratofull'])->name('edita-contrato-full');
 Route::get('/alteravendedor/{id}', [App\Http\Controllers\HomeController::class, 'alteravendedor'])->name('alteravendedor');
 Route::post('/atualizaedicao', [App\Http\Controllers\HomeController::class, 'atualizaedicao'])->name('atualizaedicao');
+Route::post('/updatevendedor', [App\Http\Controllers\HomeController::class, 'updatevendedor'])->name('updatevendedor');
 Route::post('/processcontratofull', [App\Http\Controllers\HomeController::class, 'processcontratofull'])->name('processcontratofull');
 Route::get('/teste', [App\Http\Controllers\HomeController::class, 'rmaster'])->name('teste');
 
