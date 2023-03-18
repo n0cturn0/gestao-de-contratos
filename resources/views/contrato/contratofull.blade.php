@@ -97,18 +97,12 @@
                                                         </td>
                                                         <td>
 
-
-                                                            <select name="vendedor[][{{$value->id}}]" class="form-control select2" required >
-
-
-                                                                @foreach($vendedores as $v)
-                                                                    <option value="{{$v->id}}" selectd>{{$v->vendedor}}</option>
-
-                                                                @endforeach
-
+                                                            <i class="fa fa-fw fa-pencil-alt" style="color:red"></i>
+                                                            <select name="vendedor[][{{$value->id}}]" readonly="true" class="form-control-sm" required >
+                                                                    <option value="{{$value->id}}"  selectd>{{$value->vendedor}}</option>
                                                             </select>
                                                         </td>
-                                                        <td> <input name="servico[][{{$value->id}}]"      value="{{$value->servico}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
+                                                        <td> <input name="servico[][{{$value->id}}]"      value="{{$value->servico}}" readonly="true" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.0%"> <input name="diavencimento[][{{$value->id}}]"   value="{{$value->diavencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.00%"> <input name="mesvencimento[][{{$value->id}}]" disabled   value="{{$value->mesvencimento}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                                         <td style="width:  1.0%"> <input name="valorparcela[][{{$value->id}}]"   readonly="true"    value="{{$value->valorparcela}}"  class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
