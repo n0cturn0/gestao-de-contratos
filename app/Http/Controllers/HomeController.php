@@ -583,25 +583,25 @@ class HomeController extends Controller
 //            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->get();
             foreach ($ValorServico as $key => $value) {
                 if (!empty($ValorServico)) {
-                    fazer update aqi cm as linhas abaixos
-//                $affected = DB::table('contrato_composicao_final')
-//                    ->where('id', $key)
-//                    ->update(['diavencimento' => $attr]);
-//            }
-//                if(DB::table('contrato_ccontrole_valores')->insert([
-//                    'idcomposicao'  => $id,
-//                    'ultimoidcomposicaofinal' => $last->id,
-//                    'valorpago'     => 0,
-//                    'valortotal'    =>  $request->input('valservico'),
-//                    'stateview'     => 1
-//                ]))
+
+                $affected = DB::table('contrato_composicao_final')
+                    ->where('id', $key)
+                    ->update(['diavencimento' => $attr]);
+            }
+                if(DB::table('contrato_ccontrole_valores')->insert([
+                    'idcomposicao'  => $id,
+                    'ultimoidcomposicaofinal' => $last->id,
+                    'valorpago'     => 0,
+                    'valortotal'    =>  $request->input('valservico'),
+                    'stateview'     => 1
+                ]))
                     {
                         return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
                     }
                 }
             }
         }
-    }
+
 
     public function editacontrato($id='NULL'){
         $inseridos = DB::table('contrato_composicao_final')
@@ -624,7 +624,24 @@ class HomeController extends Controller
             return view('contrato.editacontrato', ['inserido' => $inseridos],['vendedores' => $vendedor]);
     }
 
+    public function alteravendedor($id=null){
+    return view('vendedor.alteravendedor', ['vendedor' => $vendedor = DB::table('vendedors')->get()], ['id' => $id]);
+    }
 
+    public function updatevendedor(Request $request)
+    {
+        if($affected = DB::table('contrato_composicao_final')
+            ->where('id', $request->input('id'))
+            ->update(
+            [
+            'vendedorid'        => $request->input('vendedor'),
+            ])){
+            $vendedor = DB::table('contrato_composicao_final')
+            ->where('id', '=',  $request->input('id'))
+            ->first();
+            return redirect()->route('insere-servico', ['id' => $vendedor->idsituacao]);
+                }
+    }
     public function editacontratofull($id='Null'){
         $inseridos = DB::table('contrato_composicao_final')
             ->join('vendedors', 'vendedors.id', '=', 'vendedorid')
