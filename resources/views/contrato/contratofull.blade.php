@@ -97,7 +97,7 @@
                                                         </td>
                                                         <td>
 
-                                                            <i class="fa fa-fw fa-pencil-alt" style="color:red"></i>
+                                                            <a href="{{url('alteravendedor/'.$value->id)}}"> <i class="fa fa-fw fa-pencil-alt" style="color:red"></i></a>
                                                             <select name="vendedor[][{{$value->id}}]" readonly="true" class="form-control-sm" required >
                                                                     <option value="{{$value->id}}"  selectd>{{$value->vendedor}}</option>
                                                             </select>
