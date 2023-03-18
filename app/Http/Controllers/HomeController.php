@@ -575,30 +575,31 @@ class HomeController extends Controller
                 ])) ;
             }
             unset($createInsert);
-            //Captura ultimo id
-
-            $ValorServico = DB::table('contrato_composicao_final')
-                ->where('id', '=', 'id')
-                ->get();
-//            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->get();
-            foreach ($ValorServico as $key => $value) {
-                if (!empty($ValorServico)) {
-
-                $affected = DB::table('contrato_composicao_final')
-                    ->where('id', $key)
-                    ->update(['diavencimento' => $attr]);
+            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+            if (DB::table('contrato_ccontrole_valores')->insert([
+                'idcomposicao' => $id,
+                'ultimoidcomposicaofinal' => $last->id,
+                'valorpago' => 0,
+                'valortotal' => $request->input('valservico'),
+                'stateview' => 1
+            ])) {
+                return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
             }
-                if(DB::table('contrato_ccontrole_valores')->insert([
-                    'idcomposicao'  => $id,
-                    'ultimoidcomposicaofinal' => $last->id,
-                    'valorpago'     => 0,
-                    'valortotal'    =>  $request->input('valservico'),
-                    'stateview'     => 1
-                ]))
-                    {
-                        return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
-                    }
-                }
+
+//            $ValorServico = DB::table('contrato_composicao_final')
+//                ->where('id', '=', 'id')
+//                ->get();
+//            foreach ($ValorServico as $key => $value) {
+//                if (!empty($ValorServico)) {
+//
+//                $affected = DB::table('contrato_composicao_final')
+//                    ->where('id', $key)
+//                    ->update(['diavencimento' => $attr]);
+//            }
+//
+//
+//
+//                }
             }
         }
 
@@ -649,6 +650,7 @@ class HomeController extends Controller
 //            ->join('contrato_ccontrole_valores', 'contrato_ccontrole_valores.idcomposicao', '=', 'contrato_composicao_final.idsituacao')
             ->where('contrato_composicao_final.idsituacao', '=', $id)
             ->select('vendedors.vendedor',
+                'vendedors.id AS idvendedor',
                 'servicos.servico',
                 'contrato_composicao_final.diavencimento',
                 'contrato_composicao_final.valorparcela',
