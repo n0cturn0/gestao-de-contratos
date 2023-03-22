@@ -279,6 +279,7 @@ class HomeController extends Controller
 
         if ($request->isMethod('post')){
         $data=$request->all();
+//       dd($request->all());
 
        foreach($data['diavencimento'] as $key => $value){
            if(!empty($value)){
@@ -294,6 +295,11 @@ class HomeController extends Controller
             foreach($data['checkpagm'] as $key => $value) {
                 if (!empty($value)) {
                     foreach ($value as $k => $v) {
+//                        if($v=='on'){
+//                            $affected = DB::table('contrato_ccontrole_valores')
+//                            ->where('ultimoidcomposicaofinal', $k)
+//                            ->update(['pagamento' => 1]);
+//                        }
                         $affected = DB::table('contrato_composicao_final')
                             ->where('id', $k)
                             ->update(['pagamento' => 1]);
@@ -486,20 +492,21 @@ class HomeController extends Controller
             }
             unset($createInsert);
             //Captura ultimo id
-            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+            $ValorServico = DB::table('contrato_composicao_final')
+                ->where('idsituacao', '=', $id)
+                ->get();
+//            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+            foreach($ValorServico as $key => $value)
             {
                 if (DB::table('contrato_ccontrole_valores')->insert([
                     'idcomposicao' => $id,
-                    'ultimoidcomposicaofinal' => $last->id,
+                    'ultimoidcomposicaofinal' => $value->id,
                     'valorpago' => 0,
                     'valortotal' => $request->input('valservico'),
                     'stateview' => 1
-                ])) {
-                    return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
-                }
-
+                ])) ;
             }
-
+            return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
 
         } else {
             for ($x = 1; $x <= $diferencaMeses; $x++) {
@@ -575,19 +582,23 @@ class HomeController extends Controller
                 ])) ;
             }
             unset($createInsert);
-            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
-            if (DB::table('contrato_ccontrole_valores')->insert([
-                'idcomposicao' => $id,
-                'ultimoidcomposicaofinal' => $last->id,
-                'valorpago' => 0,
-                'valortotal' => $request->input('valservico'),
-                'stateview' => 1
-            ])) {
-                return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
+//            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+            $ValorServico = DB::table('contrato_composicao_final')
+                ->where('idsituacao', '=', $id)
+                ->get();
+            foreach($ValorServico as $key => $value) {
+                if (DB::table('contrato_ccontrole_valores')->insert([
+                    'idcomposicao' => $id,
+                    'ultimoidcomposicaofinal' => $value->id,
+                    'valorpago' => 0,
+                    'valortotal' => $request->input('valservico'),
+                    'stateview' => 1
+                ]));
             }
+            return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
 
 //            $ValorServico = DB::table('contrato_composicao_final')
-//                ->where('id', '=', 'id')
+//                ->where('idsituacao', '=', $id)
 //                ->get();
 //            foreach ($ValorServico as $key => $value) {
 //                if (!empty($ValorServico)) {
