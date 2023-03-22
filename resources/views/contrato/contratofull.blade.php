@@ -99,7 +99,7 @@
 
                                                             <a href="{{url('alteravendedor/'.$value->id)}}"> <i class="fa fa-fw fa-pencil-alt" style="color:red"></i></a>
                                                             <select name="vendedor[][{{$value->id}}]" readonly="true" class="form-control-sm" required >
-                                                                    <option value="{{$value->id}}"  selectd>{{$value->vendedor}}</option>
+                                                                    <option value="{{$value->idvendedor}}"  selectd>{{$value->vendedor}}</option>
                                                             </select>
                                                         </td>
                                                         <td> <input name="servico[][{{$value->id}}]"      value="{{$value->servico}}" readonly="true" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
