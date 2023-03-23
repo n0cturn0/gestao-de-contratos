@@ -275,37 +275,54 @@ class HomeController extends Controller
 
         if ($request->isMethod('post')){
         $data=$request->all();
-      // dd($request->all());
+//       dd($request->all());
 
 
-       foreach($data['diavencimento'] as $key => $value){
-           if(!empty($value)){
-               foreach($value as $k => $v){
-                   $affected = DB::table('contrato_composicao_final')
-                    ->where('id', $k)
-                    ->update(['diavencimento' => $v]);
-               }
-           }
-       }
-
+//       foreach($data['diavencimento'] as $key => $value){
+//           if(!empty($value)){
+//               foreach($value as $k => $v){
+//                   $affected = DB::table('contrato_composicao_final')
+//                    ->where('id', $k)
+//                    ->update(['diavencimento' => $v]);
+//               }
+//           }
+//       }
+//
+//
+//            if(!empty($data['checkpagm'])){
+//            foreach($data['checkpagm'] as $key => $value) {
+//                if (!empty($value)) {
+//                    foreach ($value as $k => $v) {
+//
+//                        $affected = DB::table('contrato_composicao_final')
+//                            ->where('id', $k)
+//                            ->update(['pagamento' => 1]);
+//                    }
+//                }
+//            }
+//            }
 
             if(!empty($data['checkpagm'])){
-            foreach($data['checkpagm'] as $key => $value) {
-                if (!empty($value)) {
-                    foreach ($value as $k => $v) {
-//
-                        $affected = DB::table('contrato_composicao_final')
-                            ->where('id', $k)
-                            ->update(['pagamento' => 1]);
+                //Checkbox
+                foreach($data['checkpagm'] as $key => $checkbox) {
+                    if (!empty($checkbox)) {
+                        foreach ($checkbox as $ck => $cv) {
+                            $insertcheckbox[$ck]=$cv;
+                        }
+                    }
+                }
+                //Pagamento
+                foreach($data['valorparcela'] as $key => $valor) {
+                    if (!empty($valor)) {
+                        foreach ($valor as $valk => $val) {
+                            $insertvalor[$valk]=$val;
 
-                        $controleValores[] = [
-                            'ultimoidcomposicaofinal' => $k
-                        ];
+                        }
                     }
                 }
             }
-            }
-
+            $composto[] = (array_intersect_key($insertcheckbox,$insertvalor));
+            dd($composto);
 
             //Baixa Pagamento
             if(!empty($data['valorparcela'])){
@@ -321,8 +338,6 @@ class HomeController extends Controller
                     }
                 }
             }
-
-
 
 
 
