@@ -273,13 +273,10 @@ class HomeController extends Controller
     public function processcontratofull(Request $request)
     {
 
-
-
-
-
         if ($request->isMethod('post')){
         $data=$request->all();
-//       dd($request->all());
+      // dd($request->all());
+
 
        foreach($data['diavencimento'] as $key => $value){
            if(!empty($value)){
@@ -289,24 +286,27 @@ class HomeController extends Controller
                     ->update(['diavencimento' => $v]);
                }
            }
-
        }
+
+
             if(!empty($data['checkpagm'])){
             foreach($data['checkpagm'] as $key => $value) {
                 if (!empty($value)) {
                     foreach ($value as $k => $v) {
-//                        if($v=='on'){
-//                            $affected = DB::table('contrato_ccontrole_valores')
-//                            ->where('ultimoidcomposicaofinal', $k)
-//                            ->update(['pagamento' => 1]);
-//                        }
+//
                         $affected = DB::table('contrato_composicao_final')
                             ->where('id', $k)
                             ->update(['pagamento' => 1]);
+
+                        $controleValores[] = [
+                            'ultimoidcomposicaofinal' => $k
+                        ];
                     }
                 }
             }
             }
+
+
             //Baixa Pagamento
             if(!empty($data['valorparcela'])){
                 foreach($data['valorparcela'] as $key => $value) {
