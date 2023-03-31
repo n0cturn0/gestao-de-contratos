@@ -273,69 +273,61 @@ class HomeController extends Controller
     public function processcontratofull(Request $request)
     {
 
-        if ($request->isMethod('post')){
-        $data=$request->all();
-//       dd($request->all());
-
-
-       foreach($data['diavencimento'] as $key => $value){
-           if(!empty($value)){
-               foreach($value as $k => $v){
-                   $affected = DB::table('contrato_composicao_final')
-                    ->where('id', $k)
-                    ->update(['diavencimento' => $v]);
-               }
-           }
-       }
-            if(!empty($data['checkpagm'])){
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            foreach ($data['diavencimento'] as $key => $value) {
+                if (!empty($value)) {
+                    foreach ($value as $k => $v) {
+                        $affected = DB::table('contrato_composicao_final')
+                            ->where('id', $k)
+                            ->update(['diavencimento' => $v]);
+                    }
+                }
+            }
+            if (!empty($data['checkpagm'])) {
                 $chbox = array();
                 $chbox = $data['checkpagm'];
             }
-            if(!empty($data['valorparcela'])){
+            if (!empty($data['valorparcela'])) {
                 $ValParcela = array();
                 $ValParcela = $data['valorparcela'];
             }
-            $composto= (array_intersect_key($ValParcela,$chbox));
 
-            foreach ($composto as $key => $value){
-                // Obtém a coleção de registros correspondentes à chave $key
-                $records = DB::table('contrato_ccontrole_valores')->where('ultimoidcomposicaofinal', $key)->get();
-
-                // Atualiza o valorpago de cada registro na coleção com o valor correspondente em $composto
-                $records->each(function($record) use ($value) {
-                    $record->valorpago = $value;
-                    $record->save();
-                });
-            }
-
-
-
-
-
-            if(!empty($data['checkpagm'])){
-            foreach($data['checkpagm'] as $key => $value) {
-                if (!empty($value)) {
-                    foreach ($value as $k => $v) {
-
-                        $affected = DB::table('contrato_composicao_final')
-                            ->where('id', $k)
-                            ->update(['pagamento' => 1]);
-                    }
-
-
-
-
+            foreach ($chbox as $valor) {
+                foreach ($valor as $chave => $valor2) {
+                    $nchbox[$chave] = $valor2;
                 }
             }
+            foreach ($ValParcela as $valor) {
+                foreach ($valor as $chave => $valor2) {
+                    $nValParcela[$chave] = $valor2;
+                }
             }
 
-
+            $composto = array();
+            $composto = (array_intersect_key($nValParcela, $nchbox));
+            foreach ($composto as $key => $value) {
+                // Obtém a coleção de registros correspondentes à chave $key
+                DB::table('contrato_ccontrole_valores')
+                    ->where('idstatus', $key)
+                    ->update(['valorpago' => $value]);
+            }
+            if (!empty($data['checkpagm'])) {
+                foreach ($data['checkpagm'] as $key => $value) {
+                    if (!empty($value)) {
+                        foreach ($value as $k => $v) {
+                            $affected = DB::table('contrato_composicao_final')
+                                ->where('id', $k)
+                                ->update(['pagamento' => 1]);
+                        }
+                    }
+                }
+            }
 
 
 //           foreach ($composto as $key => $v){
 //               echo $key . '-' . $v . '<br>';
 //           }
-
 
 
 //            foreach($data['valorparcela'] as $key => $valor) {
@@ -348,10 +340,6 @@ class HomeController extends Controller
 //                    }
 //                }
 //            }
-
-
-
-
 
 
 //                if(!empty($data['checkpagm'])){
@@ -369,43 +357,31 @@ class HomeController extends Controller
 //                }
 
 
-
-
-
-
-
-
-
-
-
-
-
-            foreach($data['pgtvendedor'] as $key => $value){
-                if(!empty($value)){
-                    foreach($value as $k => $v){
-                        $affected = DB::table('contrato_composicao_final')
-                            ->where('id', $k)
-                            ->update(['ivalorcomissao' => $v]);
-
-                    }
-                }
-
-            }
-
-            if(!empty($data['checkboleto'])){
-            foreach($data['checkboleto'] as $key => $value) {
+            foreach ($data['pgtvendedor'] as $key => $value) {
                 if (!empty($value)) {
                     foreach ($value as $k => $v) {
                         $affected = DB::table('contrato_composicao_final')
                             ->where('id', $k)
-                            ->update(['boleto' => 1]);
+                            ->update(['ivalorcomissao' => $v]);
+                    }
+                }
+
+            }
+
+            if (!empty($data['checkboleto'])) {
+                foreach ($data['checkboleto'] as $key => $value) {
+                    if (!empty($value)) {
+                        foreach ($value as $k => $v) {
+                            $affected = DB::table('contrato_composicao_final')
+                                ->where('id', $k)
+                                ->update(['boleto' => 1]);
+                        }
                     }
                 }
             }
-            }
 
-            if(!empty($data['vendedor'])){
-                foreach($data['vendedor'] as $key => $value) {
+            if (!empty($data['vendedor'])) {
+                foreach ($data['vendedor'] as $key => $value) {
                     if (!empty($value)) {
                         foreach ($value as $k => $v) {
                             $affected = DB::table('contrato_composicao_final')
@@ -416,12 +392,7 @@ class HomeController extends Controller
                 }
             }
 
-
-
-
-
-
-
+            return back()->with('success', 'Valor baixado com sucesso.');
         } else {
             dd('Algo deu errado');
         }
@@ -550,7 +521,7 @@ class HomeController extends Controller
             {
                 if (DB::table('contrato_ccontrole_valores')->insert([
                     'idcomposicao' => $id,
-                    'ultimoidcomposicaofinal' => $value->id,
+                    'idstatus' => $value->id,
                     'valorpago' => 0,
                     'valortotal' => $request->input('valservico'),
                     'stateview' => 1
@@ -639,7 +610,7 @@ class HomeController extends Controller
             foreach($ValorServico as $key => $value) {
                 if (DB::table('contrato_ccontrole_valores')->insert([
                     'idcomposicao' => $id,
-                    'ultimoidcomposicaofinal' => $value->id,
+                    'idstatus' => $value->id,
                     'valorpago' => 0,
                     'valortotal' => $request->input('valservico'),
                     'stateview' => 1
@@ -735,7 +706,7 @@ class HomeController extends Controller
     {
         if(DB::table('contrato_composicao_final')->where('id', '=', $id)->delete())
         {
-            if(DB::table('contrato_ccontrole_valores')->where('ultimoidcomposicaofinal', '=', $id)->delete())
+            if(DB::table('contrato_ccontrole_valores')->where('idstatus', '=', $id)->delete())
             {
                 return back()->with('success', 'Serviço excluído desse contrato.');
             } else {
