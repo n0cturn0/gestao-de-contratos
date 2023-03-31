@@ -278,66 +278,103 @@ class HomeController extends Controller
 //       dd($request->all());
 
 
-//       foreach($data['diavencimento'] as $key => $value){
-//           if(!empty($value)){
-//               foreach($value as $k => $v){
-//                   $affected = DB::table('contrato_composicao_final')
-//                    ->where('id', $k)
-//                    ->update(['diavencimento' => $v]);
-//               }
+       foreach($data['diavencimento'] as $key => $value){
+           if(!empty($value)){
+               foreach($value as $k => $v){
+                   $affected = DB::table('contrato_composicao_final')
+                    ->where('id', $k)
+                    ->update(['diavencimento' => $v]);
+               }
+           }
+       }
+            if(!empty($data['checkpagm'])){
+                $chbox = array();
+                $chbox = $data['checkpagm'];
+            }
+            if(!empty($data['valorparcela'])){
+                $ValParcela = array();
+                $ValParcela = $data['valorparcela'];
+            }
+            $composto= (array_intersect_key($ValParcela,$chbox));
+
+            foreach ($composto as $key => $value){
+                // Obtém a coleção de registros correspondentes à chave $key
+                $records = DB::table('contrato_ccontrole_valores')->where('ultimoidcomposicaofinal', $key)->get();
+
+                // Atualiza o valorpago de cada registro na coleção com o valor correspondente em $composto
+                $records->each(function($record) use ($value) {
+                    $record->valorpago = $value;
+                    $record->save();
+                });
+            }
+
+
+
+
+
+            if(!empty($data['checkpagm'])){
+            foreach($data['checkpagm'] as $key => $value) {
+                if (!empty($value)) {
+                    foreach ($value as $k => $v) {
+
+                        $affected = DB::table('contrato_composicao_final')
+                            ->where('id', $k)
+                            ->update(['pagamento' => 1]);
+                    }
+
+
+
+
+                }
+            }
+            }
+
+
+
+
+//           foreach ($composto as $key => $v){
+//               echo $key . '-' . $v . '<br>';
 //           }
-//       }
-//
-//
-//            if(!empty($data['checkpagm'])){
-//            foreach($data['checkpagm'] as $key => $value) {
-//                if (!empty($value)) {
-//                    foreach ($value as $k => $v) {
-//
-//                        $affected = DB::table('contrato_composicao_final')
-//                            ->where('id', $k)
-//                            ->update(['pagamento' => 1]);
+
+
+
+//            foreach($data['valorparcela'] as $key => $valor) {
+//                if (!empty($valor)) {
+//                    foreach ($valor as $valk => $val) {
+//                        $insertvalor[$i]=[
+//                            'chave'=>$valk,
+//                            'out'=>$val
+//                        ];
 //                    }
 //                }
 //            }
-//            }
 
-            if(!empty($data['checkpagm'])){
-                //Checkbox
-                foreach($data['checkpagm'] as $key => $checkbox) {
-                    if (!empty($checkbox)) {
-                        foreach ($checkbox as $ck => $cv) {
-                            $insertcheckbox[$ck]=$cv;
-                        }
-                    }
-                }
-                //Pagamento
-                foreach($data['valorparcela'] as $key => $valor) {
-                    if (!empty($valor)) {
-                        foreach ($valor as $valk => $val) {
-                            $insertvalor[$valk]=$val;
 
-                        }
-                    }
-                }
-            }
-            $composto[] = (array_intersect_key($insertcheckbox,$insertvalor));
-            dd($composto);
 
-            //Baixa Pagamento
-            if(!empty($data['valorparcela'])){
-                foreach($data['valorparcela'] as $key => $value) {
-                    if (!empty($value)) {
-                        foreach ($value as $k => $v) {
-                            //Atualiza tabela de valores
-                            $valores = DB::table('contrato_ccontrole_valores')
-                                ->where('ultimoidcomposicaofinal', $k)
-                                ->update(['valorpago' => $v]);
 
-                        }
-                    }
-                }
-            }
+
+
+//                if(!empty($data['checkpagm'])){
+//                    //Checkbox
+//                    foreach($data['checkpagm'] as $key => $checkbox) {
+//                        if (!empty($checkbox)) {
+//                            foreach ($checkbox as $ck => $cv) {
+//                                $insertcheckbox[$i]=[
+//                                    'chave' => $ck,
+//                                    'out'   => $cv
+//                                ];
+//                            }
+//                        }
+//                    }
+//                }
+
+
+
+
+
+
+
+
 
 
 
@@ -379,14 +416,12 @@ class HomeController extends Controller
                 }
             }
 
-            return back()->with('success', 'Informação salva com sucesso');
-//        foreach ($data['diavencimento'] as $key=>$attr){
-//            if(!empty($attr)){
-//                $affected = DB::table('contrato_composicao_final')
-//                    ->where('id', $key)
-//                    ->update(['diavencimento' => $attr]);
-//            }
-//        }
+
+
+
+
+
+
         } else {
             dd('Algo deu errado');
         }
