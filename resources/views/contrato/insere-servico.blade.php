@@ -225,42 +225,30 @@
                                             <td>{{$value->servico}}</td>
                                             <td>
                                                 @if($value->pagamento == 1)
-                                                    <?php echo number_format($value->valorparcela,2,",",".").  '  <i class="fa fa-check-square text-success" aria-hidden="true"></i>'; ?>
+                                                @php
+                                                $pagamento = ($value->valorparcela);
+                                                $totalizado+=$pagamento;
+                                                @endphp
+
+                                                  <div class="text-black-50">  <?php echo number_format($value->valorparcela,2,",","."); ?><i class="fa fa-check-square text-success" aria-hidden="true"></i></div>
                                                     @else
-                                                    <?php echo number_format($value->valorparcela,2,",","."); ?>
+                                                    <div class="text-danger"> <?php echo number_format($value->valorparcela,2,",","."); ?></div>
                                                 @endif
                                             </td>
-                                            <td><?php echo $value->mesvencimento; ?></td>
+                                            <td>{{$value->mesvencimento}}</td>
                                             <td>
-                                                <?php
-//                                                    echo number_format($value->pagamento,2,",",".");
-//                                                    $acumula = 0;
-//
-//
-                                                  $total = (floatval($value->pagamento));
 
-                                                  $totalizado+=$total;
-
-//                                                  echo number_format($teste,2,",",".");
-//                                                echo $total;
-
-                                                    ?>
                                             </td>
                                             <td>
                                                 <a href="{{url('edita-contrato-full/'.$value->idsituacao)}}"><i class="fa fa-bolt text-success" aria-hidden="true"></i></a>&nbsp&nbsp
                                                 <a href="{{url('edita-contrato/'.$value->id)}}"><i class="fas fa-chevron-circle-right text-info  fa-lg"></i></a> &nbsp;
                                                 <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-trash text-danger  fa-lg"></i></a>
-
-
-                                                {{--                                                <button data-toggle="modal" id="smallButton" data-target="#modal-danger" data-attr="{{ route('apaga-servico', $value->id) }}" title="Delete Project">--}}
-{{--                                                    <i class="fas fa-trash text-danger  fa-lg"></i>--}}
-{{--                                                </button>--}}
                                             </td>
 
                                         </tr>
                                        @endforeach
                                         <tr>
-                                            <td  colspan="3">Valor Total</td>
+                                            <td  colspan="3">Valor Total Pago</td>
                                             <td colspan="2"><?php echo number_format($totalizado,2,",","."); ?></td>
 
                                         </tr>

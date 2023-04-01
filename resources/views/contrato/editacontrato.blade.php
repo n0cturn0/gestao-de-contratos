@@ -1,7 +1,7 @@
 
 @extends('adminlte::page')
 <script src="https://momentjs.com/downloads/moment.js"></script>
-@section('title', 'Criando um contrato')
+@section('title', 'Controle de parcela')
 @section('content_header')
 @stop
 @section('content')
@@ -58,13 +58,17 @@
                                             <td>
                                             </td>
                                             <td>
-
+                                                @if($value->pagamento == 1)
+                                                    <input name="servico" value="{{$value->vendedor}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required >
+                                                @else
                                                 <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder" required>
                                                     <option value="">Selecione</option>
                                                     @foreach($vendedores as $v)
-                                                    <option value="{{$v->id}}">{{$v->vendedor}}</option>
+                                                        <option value="{{$v->id}}">{{$v->vendedor}}</option>
                                                     @endforeach
                                                 </select>
+                                                @endif
+
                                             </td>
                                             <td> <input name="servico" value="{{$value->servico}}" disabled class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
                                             <td> <input name="valparcela" value="{{$value->valorparcela}}" class="form-control form-control-sm" type="text" placeholder="Qtd Parcela" required ></td>
@@ -74,7 +78,11 @@
                                         </tr>
                                         @endforeach
                                     </table>
-                                    <button type="submit" class="btn btn-block btn-primary btn-xs">Atualizar Informações</button>
+                                    @if($value->pagamento == 1)
+                                    <button disabled type="submit" class="btn btn-block btn-warning text-body">Pagamento ou baixa dessa Parcela já realizada</button>
+                                    @else
+                                        <button  type="submit" class="btn btn-block btn-success">Atualizar informação</button>
+                                    @endif
                                 </div>
                                             </form>
 
