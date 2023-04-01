@@ -257,6 +257,7 @@ class HomeController extends Controller
                             'contrato_composicao_final.pagamento',
                             'contrato_composicao_final.mesvencimento',
                             'contrato_composicao_final.idsituacao',
+                            'contrato_composicao_final.pagamento',
                             'contrato_composicao_final.id')->get();
 
 

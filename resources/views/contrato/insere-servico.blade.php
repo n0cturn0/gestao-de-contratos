@@ -223,7 +223,13 @@
                                             <th>{{$value->id}}</th>
                                             <td>{{$value->vendedor}}</td>
                                             <td>{{$value->servico}}</td>
-                                            <td><?php echo number_format($value->valorparcela,2,",",".") ?></td>
+                                            <td>
+                                                @if($value->pagamento == 1)
+                                                    <?php echo number_format($value->valorparcela,2,",",".").  '  <i class="fa fa-check-square text-success" aria-hidden="true"></i>'; ?>
+                                                    @else
+                                                    <?php echo number_format($value->valorparcela,2,",","."); ?>
+                                                @endif
+                                            </td>
                                             <td><?php echo $value->mesvencimento; ?></td>
                                             <td>
                                                 <?php
