@@ -96,8 +96,11 @@
                                                             @endswitch
                                                         </td>
                                                         <td>
-
-                                                            <a href="{{url('alteravendedor/'.$value->id)}}"> <i class="fa fa-fw fa-pencil-alt" style="color:red"></i></a>
+                                                            @if($value->pagamento ==  1)
+                                                            <i class="fa fa-fw fa-pencil-alt text-black-50" style="color:red"></i>
+                                                            @else
+                                                                <a href="{{url('alteravendedor/'.$value->id)}}"> <i class="fa fa-fw fa-pencil-alt" style="color:red"></i></a>
+                                                            @endif
                                                             <select name="vendedor[][{{$value->id}}]" readonly="true" class="form-control-sm" required >
                                                                     <option value="{{$value->idvendedor}}"  selectd>{{$value->vendedor}}</option>
                                                             </select>

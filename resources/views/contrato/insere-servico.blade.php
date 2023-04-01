@@ -164,26 +164,7 @@
 
 
                                     </div>
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-3">--}}
-{{--                                        <label>Valor do reajuste:(%)</label>--}}
-{{--                                        @if($errors->has('valorreajuste'))--}}
-{{--                                            <button class="btn btn-block btn-danger btn-xs" type="button">{{ $errors->first('valorreajuste') }}</button>--}}
-{{--                                        @endif--}}
-{{--                                        <input type="numer" name="valorreajuste"  class="form-control" placeholder="Valor do Reajuste" required>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-6">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Data de para o reajuste:</label>--}}
-{{--                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">--}}
-{{--                                                <input type="text" class="form-control" name="daterangereajuste" value="01/01/2018 - 01/15/2018" />--}}
-{{--                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">--}}
-{{--                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+
 
 
 
@@ -194,7 +175,7 @@
                                 </div>
                             </form>
 
-                            </form>
+
                         </div>
 
 
@@ -242,7 +223,13 @@
                                             <td>
                                                 <a href="{{url('edita-contrato-full/'.$value->idsituacao)}}"><i class="fa fa-bolt text-success" aria-hidden="true"></i></a>&nbsp&nbsp
                                                 <a href="{{url('edita-contrato/'.$value->id)}}"><i class="fas fa-chevron-circle-right text-info  fa-lg"></i></a> &nbsp;
-                                                <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-trash text-danger  fa-lg"></i></a>
+
+
+                                                @if($value->pagamento == 1)<i class="fas fa-trash text-black-50  fa-lg"></i>
+                                                @else
+                                                    <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-trash text-danger  fa-lg"></i></a>
+
+                                                @endif
                                             </td>
 
                                         </tr>
