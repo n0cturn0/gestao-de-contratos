@@ -223,13 +223,11 @@
                                             <td>
                                                 <a href="{{url('edita-contrato-full/'.$value->idsituacao)}}"><i class="fa fa-bolt text-success" aria-hidden="true"></i></a>&nbsp&nbsp
                                                 <a href="{{url('edita-contrato/'.$value->id)}}"><i class="fas fa-chevron-circle-right text-info  fa-lg"></i></a> &nbsp;
-
-
                                                 @if($value->pagamento == 1)<i class="fas fa-trash text-black-50  fa-lg"></i>
                                                 @else
                                                     <a href="{{url('apaga-servico/'.$value->id)}}"><i class="fas fa-trash text-danger  fa-lg"></i></a>
-
                                                 @endif
+                                                <a href="{{url('impressao-simples/'.$value->idsituacao)}}"><i class="fa fa-print text-info" aria-hidden="true"></i></a>&nbsp&nbsp
                                             </td>
 
                                         </tr>
