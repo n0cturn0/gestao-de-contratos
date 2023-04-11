@@ -10,6 +10,8 @@ use App\Models\Vendedor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 use Livewire\WithPagination;
 
@@ -325,37 +327,6 @@ class HomeController extends Controller
                 }
             }
 
-
-//           foreach ($composto as $key => $v){
-//               echo $key . '-' . $v . '<br>';
-//           }
-
-
-//            foreach($data['valorparcela'] as $key => $valor) {
-//                if (!empty($valor)) {
-//                    foreach ($valor as $valk => $val) {
-//                        $insertvalor[$i]=[
-//                            'chave'=>$valk,
-//                            'out'=>$val
-//                        ];
-//                    }
-//                }
-//            }
-
-
-//                if(!empty($data['checkpagm'])){
-//                    //Checkbox
-//                    foreach($data['checkpagm'] as $key => $checkbox) {
-//                        if (!empty($checkbox)) {
-//                            foreach ($checkbox as $ck => $cv) {
-//                                $insertcheckbox[$i]=[
-//                                    'chave' => $ck,
-//                                    'out'   => $cv
-//                                ];
-//                            }
-//                        }
-//                    }
-//                }
 
 
             foreach ($data['pgtvendedor'] as $key => $value) {
@@ -735,6 +706,51 @@ class HomeController extends Controller
        }
     }
 
+    public function impressaosimples($id='Null'){
+        $contratoPeriodos = DB::table('contrato_periodos')
+            ->where('idsituacao', '=', $id)->count();
+        if ($contratoPeriodos == 0){
+            return view('contrato.incompleto')->with('alert', 'Este Contrato precisa ser configurado, data inicial e final.');
+        }
+
+        $items = DB::table('contratos')
+            ->join('clientes','idCliente', '=', 'clientes.id')
+            ->join ('produtos', 'idProduto', '=', 'produtos.id')
+            ->join('contrato_situacaos','idcontrato','=', 'contratos.id' )
+            ->where('contratos.id', $id)
+            ->where('controle', '=', 0)
+            ->select('contratos.*', 'produtos.produto', 'clientes.cliente', 'contrato_situacaos.situacao')->get();
+
+        $inseridos = DB::table('contrato_composicao_final')
+            ->join('vendedors', 'vendedors.id', '=', 'vendedorid')
+            ->join('servicos', 'servicos.id', '=', 'idativo')
+//            ->join('contrato_ccontrole_valores', 'contrato_ccontrole_valores.idcomposicao', '=', 'contrato_composicao_final.idsituacao')
+            ->where('contrato_composicao_final.idsituacao', '=', $id)
+            ->select('vendedors.vendedor',
+                'servicos.servico',
+                'contrato_composicao_final.valorparcela',
+                'contrato_composicao_final.pagamento',
+                'contrato_composicao_final.mesvencimento',
+                'contrato_composicao_final.idsituacao',
+                'contrato_composicao_final.pagamento',
+                'contrato_composicao_final.id')->get();
+
+                $vend = DB::table('vendedors')->get();
+//        $data = [
+//            'servicos'  =>  DB::table('servicos')->get(),
+//            'vendedores'    => DB::table('vendedors')->get(),
+//            'contrato'  => $items,
+//            'inseridos' => $inseridos,
+//        ];
+
+//https://www.youtube.com/watch?v=u7PXHfzAqgA&ab_channel=CareerDevelopmentLab
+
+        $pdf = PDF\Pdf::loadView( 'relatorio.impressaosimples', compact('vend','inseridos'));
+        return $pdf->download('invloice.pdf');
+    }
+
+
+
     public function rmaster()
     {
         $data1 = '2023-01-07 00:00:00';
@@ -761,10 +777,6 @@ class HomeController extends Controller
             }
             $contador++;
         }
-
-
-
-
     }
 
 
