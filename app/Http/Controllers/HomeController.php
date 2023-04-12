@@ -749,7 +749,42 @@ class HomeController extends Controller
         return $pdf->download('invloice.pdf');
     }
 
+    public function relatorio()
+    {
+        $vendedores = DB::table('vendedors')->get();
+        return view('relatorio.vendedor',['vendedor' => $vendedores]);
+    }
+    public function relvendedor(Request $request)
+    {
+        $vendedordata = $request->input('relatorio');
 
+        $mes = substr($vendedordata, 0, 2);
+        $dia = substr($vendedordata, 3, 2);
+        $ano = substr($vendedordata, 6, 4);
+        $dataInicialTemp = $ano . '-' . $dia . '-' . $mes;
+        $DataInicial = Carbon::createFromFormat('Y-m-d', $dataInicialTemp)->format('Y-m-d');
+
+        $mesf = substr($vendedordata,13,2);
+        $diaf = substr($vendedordata,16,2);
+        $anof = substr($vendedordata,19,4);
+        $dataFinalTemp = $anof . '-' . $diaf . '-' . $mesf;
+        $dataFinal   = Carbon::createFromFormat('Y-m-d', $dataFinalTemp)->format('Y-m-d');
+        $relvendedor = DB::table('contrato_composicao_final')
+            ->whereBetween('datacontrole', [$DataInicial, $dataFinal])
+            ->where('vendedorid', '=', $request->input('vendedor'))
+            ->get();
+
+        $contador = count($relvendedor);
+        if($contador > 0){
+
+        } else {
+            dd('Não existe dados para exibir');
+        }
+
+
+//        $AnoPrimeiraCobranca = Carbon::createFromFormat('Y-m-d', $DataPrimeiraCobrancaForm)->format('Y');
+
+    }
 
     public function rmaster()
     {
