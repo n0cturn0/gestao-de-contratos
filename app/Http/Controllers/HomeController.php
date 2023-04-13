@@ -425,13 +425,22 @@ class HomeController extends Controller
         //Data da primeira cobrança
         $DataPrimeiraCobranca = $request->input('daterangeprimeira');
 
-        $mes = substr($DataPrimeiraCobranca, 0, 2);
-        $dia = substr($DataPrimeiraCobranca, 3, 2);
+        $dia = substr($DataPrimeiraCobranca, 0, 2);
+        $mes = substr($DataPrimeiraCobranca, 3, 2);
         $ano = substr($DataPrimeiraCobranca, 6, 4);
-        $DataCompleta = $ano . '-' . $dia . '-' . $mes;
+        $DataCompleta = $dia.'/'.$mes.'/'.$ano;
 
-        $DataPrimeiraCobrancaForm = Carbon::createFromFormat('Y-m-d', $DataCompleta)->format('Y-m-d');
-        $AnoPrimeiraCobranca = Carbon::createFromFormat('Y-m-d', $DataPrimeiraCobrancaForm)->format('Y');
+        $DataPrimeiraCobrancaForm = Carbon::createFromFormat('d/m/Y', $DataCompleta);
+        if($DataPrimeiraCobrancaForm->format('d/m/Y') !== $DataCompleta){
+            echo 'Algo deu errado, contate o administrador do sistema';
+            die();
+        } else {
+            $AnoPrimeiraCobranca = $DataPrimeiraCobrancaForm->year;
+        }
+
+
+
+
 
         $inicio = new Carbon($DataPrimeiraCobrancaForm);
         $Fim = new Carbon($final);
@@ -443,6 +452,8 @@ class HomeController extends Controller
         //Calculando a comissão
         $comissao = ($ValParcelaFloat * $porcentagemComissao) / 100;
         $lucroReal = ($ValParcela - $comissao);
+
+
 
         if ($request->input('qtdparcela') == $request->input('parcelavendedor')) {
             $diferencaMeses = $request->input('qtdparcela');
@@ -458,10 +469,13 @@ class HomeController extends Controller
                 ];
                 $mes++;
                 if ($mes == 13) {
-                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
-                    $mes = 01;
+                    $AnoPrimeiraCobranca++;
+                    $mes = 1;
                 }
             }
+
+
+
             $ContArray = count($createInsert);
             $ContTrue = ($ContArray - 1);
 
@@ -483,6 +497,8 @@ class HomeController extends Controller
                 ])) ;
 
             }
+            echo $ContTrue .'<br>';
+            dd($createInsert);
             unset($createInsert);
             //Captura ultimo id
             $ValorServico = DB::table('contrato_composicao_final')
@@ -502,7 +518,7 @@ class HomeController extends Controller
             return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
 
         } else {
-            for ($x = 1; $x <= $diferencaMeses; $x++) {
+            for ($x = 1; $x < $diferencaMeses; $x++) {
                 $createInsert[] = [
                     'id' => $id,
                     'indicecomissao' => $porcentagemComissao,
@@ -514,8 +530,8 @@ class HomeController extends Controller
                 ];
                 $mes++;
                 if ($mes == 13) {
-                    $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
-                    $mes = 01;
+                    $AnoPrimeiraCobranca++;
+                    $mes = 1;
                 }
             }
             $ContArray = count($createInsert);
@@ -552,7 +568,7 @@ class HomeController extends Controller
                 $mes++;
                 if ($mes == 13) {
                     $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
-                    $mes = 01;
+                    $mes = 1;
                 }
             }
             $ContArrayVend = count($createInsertVend);
@@ -769,8 +785,8 @@ class HomeController extends Controller
         }
         if($request->input('vencida') === null) {
         } else {
-            $vencida = 1;
             $dataAtual = Carbon::now();
+
         }
 
 
