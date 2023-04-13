@@ -459,7 +459,7 @@ class HomeController extends Controller
                 $mes++;
                 if ($mes == 13) {
                     $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
-                    $mes = 1;
+                    $mes = 01;
                 }
             }
             $ContArray = count($createInsert);
@@ -515,7 +515,7 @@ class HomeController extends Controller
                 $mes++;
                 if ($mes == 13) {
                     $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
-                    $mes = 1;
+                    $mes = 01;
                 }
             }
             $ContArray = count($createInsert);
@@ -552,7 +552,7 @@ class HomeController extends Controller
                 $mes++;
                 if ($mes == 13) {
                     $AnoPrimeiraCobranca = ($AnoPrimeiraCobranca + 1);
-                    $mes = 1;
+                    $mes = 01;
                 }
             }
             $ContArrayVend = count($createInsertVend);
@@ -757,6 +757,24 @@ class HomeController extends Controller
     public function relvendedor(Request $request)
     {
         $vendedordata = $request->input('relatorio');
+        //Filtros
+        if($request->input('pendente') === null) {
+        } else {
+            $pagamento = 0;
+        }
+
+        if($request->input('paga') === null) {
+        } else {
+            $pagamento = 1;
+        }
+        if($request->input('vencida') === null) {
+        } else {
+            $vencida = 1;
+            $dataAtual = Carbon::now();
+        }
+
+
+
 
         $mes = substr($vendedordata, 0, 2);
         $dia = substr($vendedordata, 3, 2);
