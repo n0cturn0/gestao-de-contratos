@@ -54,7 +54,7 @@
 
                                     <div class="col-md-6">
                                         <label>Selecione o vendedor</label>
-                                            <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder">
+                                            <select name="vendedor" class="custom-select form-control-border" id="exampleSelectBorder" required>
                                                 <option value="">-----</option>
                                                 @foreach($vendedor as  $value)
                                                 <option value="{{$value->id}}">{{$value->vendedor}}</option>
@@ -66,9 +66,10 @@
                                 <div class="row">
                                 <div class="form-group">
                                     <div class="icheckbox_flat-green checked" style="position: relative;" aria-checked="true" aria-disabled="false">
-                                        <input type="checkbox" class="flat-red" >Pendentes
-                                        <input type="checkbox" class="flat-red" >Pagas
-                                        <input type="checkbox" class="flat-red" >Vencidas
+                                        <input  type="radio" name="pagamemto" value="0" class="flat-red" >Pendentes
+                                        <input  type="radio" name="pagamemto" value="1" class="flat-red" >Pagas
+                                        <input  type="radio" name="pagamemto" value="2" class="flat-red" >Vencidas
+
 
                                     </div>
                                 </div>
