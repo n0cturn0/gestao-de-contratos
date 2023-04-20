@@ -48,6 +48,7 @@ Route::post('/atualizaedicao', [App\Http\Controllers\HomeController::class, 'atu
 Route::post('/updatevendedor', [App\Http\Controllers\HomeController::class, 'updatevendedor'])->name('updatevendedor');
 Route::get('/impressao-simples/{id}', [App\Http\Controllers\HomeController::class, 'impressaosimples'])->name('impressao-simples');
 Route::post('/processcontratofull', [App\Http\Controllers\HomeController::class, 'processcontratofull'])->name('processcontratofull');
+Route::post('/relvendedor', [App\Http\Controllers\HomeController::class, 'relvendedor'])->name('relvendedor');
 Route::get('/relatorio', [App\Http\Controllers\HomeController::class, 'relatorio'])->name('relatorio');
 Route::get('/teste', [App\Http\Controllers\HomeController::class, 'rmaster'])->name('teste');
 
