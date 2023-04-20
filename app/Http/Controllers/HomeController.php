@@ -625,10 +625,11 @@ class HomeController extends Controller
                     $mes = 1;
                 }
             }
+
             $ContArrayVend = count($createInsertVend);
             $ContTrueVend = ($ContArrayVend - 1);
             for ($x = 0; $x <= $ContTrueVend; $x++) {
-                if (DB::table('contrato_composicao_final')->insert([
+                DB::table('contrato_composicao_final')->insert([
                     'idsituacao' => $createInsertVend[$x]['id'],
                     'vendedorid' => $vendedor,
                     'tipo' => 1,
@@ -642,8 +643,9 @@ class HomeController extends Controller
                     'pagamento' => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
-                ])) ;
+                ]) ;
             }
+
             unset($createInsert);
 //            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
             $ValorServico = DB::table('contrato_composicao_final')
