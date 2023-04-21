@@ -438,10 +438,6 @@ class HomeController extends Controller
             $AnoPrimeiraCobranca = $DataPrimeiraCobrancaForm->year;
         }
 
-
-
-
-
         $inicio = new Carbon($DataPrimeiraCobrancaForm);
         $Fim = new Carbon($final);
 
@@ -455,10 +451,6 @@ class HomeController extends Controller
 
 
 
-
-
-
-
         if ($diferencaMeses==0) {
             for ($x = 1; $x <= $request->input('qtdparcela'); $x++) {
                 $createInsert[] = [
@@ -467,6 +459,7 @@ class HomeController extends Controller
                     'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
+                    'mesvendedor'   => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
@@ -492,7 +485,7 @@ class HomeController extends Controller
                     'valorparcela' => $createInsert[$x]['valor'],
                     'diavencimento' => $createInsert[$x]['diavencimento'],
                     'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                    'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
+                    'datacontrole' => $createInsert[$x]['mesvendedor'],
                     'pagamento' => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
@@ -509,7 +502,7 @@ class HomeController extends Controller
                     'valorparcela' => $createInsert[$x]['valor'],
                     'diavencimento' => $createInsert[$x]['diavencimento'],
                     'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                    'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
+                    'datacontrole' => $createInsert[$x]['mesvendedor'],
                     'pagamento' => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
@@ -541,6 +534,7 @@ class HomeController extends Controller
                     'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
+                    'mesvendedor'   => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
@@ -566,8 +560,7 @@ class HomeController extends Controller
                         'valorparcela' => $createInsert[$x]['valor'],
                         'diavencimento' => $createInsert[$x]['diavencimento'],
                         'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                        'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
-                        'pagamento' => 0,
+                        'datacontrole' => $createInsert[$x]['mesvendedor'],                        'pagamento' => 0,
                         'stateview' => 1,
                         'saldoreal' => $lucroReal,
                     ])) ;
@@ -584,7 +577,7 @@ class HomeController extends Controller
                             'valorparcela' => $createInsert[$x]['valor'],
                             'diavencimento' => $createInsert[$x]['diavencimento'],
                             'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                            'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
+                            'datacontrole' => $createInsert[$x]['mesvendedor'],
                             'pagamento' => 0,
                             'stateview' => 1,
                             'saldoreal' => $lucroReal,
@@ -602,7 +595,7 @@ class HomeController extends Controller
                     'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
-                    'mesvendedor'   => Carbon::parse($DataPrimeiraCobrancaForm)->month($mes),
+                    'mesvendedor'   => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
