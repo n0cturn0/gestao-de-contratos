@@ -455,9 +455,12 @@ class HomeController extends Controller
 
 
 
-        if ($request->input('qtdparcela') === $request->input('parcelavendedor')) {
-            $diferencaMeses = $request->input('qtdparcela');
-            for ($x = 1; $x <= $diferencaMeses; $x++) {
+
+
+
+
+        if ($diferencaMeses==0) {
+            for ($x = 1; $x <= $request->input('qtdparcela'); $x++) {
                 $createInsert[] = [
                     'id' => $id,
                     'indicecomissao' => $porcentagemComissao,
@@ -473,8 +476,6 @@ class HomeController extends Controller
                     $mes = 1;
                 }
             }
-
-
 
             $ContArray = count($createInsert);
             $ContTrue = ($ContArray - 1);
@@ -514,16 +515,11 @@ class HomeController extends Controller
                     'saldoreal' => $lucroReal,
                 ])) ;
             }
-
-
             }
-
-//            unset($createInsert);
-            //Captura ultimo id
+           unset($createInsert);
             $ValorServico = DB::table('contrato_composicao_final')
                 ->where('idsituacao', '=', $id)
                 ->get();
-//            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
             foreach($ValorServico as $key => $value)
             {
                 if (DB::table('contrato_ccontrole_valores')->insert([
@@ -537,6 +533,7 @@ class HomeController extends Controller
             return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
 
         } else {
+
             for ($x = 1; $x <= $diferencaMeses; $x++) {
                 $createInsert[] = [
                     'id' => $id,
@@ -557,22 +554,8 @@ class HomeController extends Controller
             $ContTrue = ($ContArray - 1);
 
             for ($x = 0; $x <= $ContTrue; $x++) {
-//                if (DB::table('contrato_composicao_final')->insert([
-//                    'idsituacao' => $createInsert[$x]['id'],
-//                    'vendedorid' => 1,
-//                    'tipo' => 1,
-//                    'idativo' => $idservico,
-//                    'indicecomissao' => $createInsert[$x]['indicecomissao'],
-//                    'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
-//                    'valorparcela' => $createInsert[$x]['valor'],
-//                    'diavencimento' => $createInsert[$x]['diavencimento'],
-//                    'mesvencimento' => $createInsert[$x]['mesvencimento'],
-//                    'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
-//                    'pagamento' => 0,
-//                    'stateview' => 1,
-//                    'saldoreal' => $lucroReal,
-//                ])) ;
-                if($x === 0) {
+                $dataFormatada = $DataPrimeiraCobrancaForm->month($createInsert[$x]['mesvencimento']);
+                if($x == 0) {
                     if (DB::table('contrato_composicao_final')->insert([
                         'idsituacao' => $createInsert[$x]['id'],
                         'vendedorid' => 1,
@@ -590,21 +573,24 @@ class HomeController extends Controller
                     ])) ;
 
                 } else {
-                    if (DB::table('contrato_composicao_final')->insert([
-                        'idsituacao' => $createInsert[$x]['id'],
-                        'vendedorid' => 1,
-                        'tipo' => 1,
-                        'idativo' => $idservico,
-                        'indicecomissao' => $createInsert[$x]['indicecomissao'],
-                        'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
-                        'valorparcela' => $createInsert[$x]['valor'],
-                        'diavencimento' => $createInsert[$x]['diavencimento'],
-                        'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                        'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
-                        'pagamento' => 0,
-                        'stateview' => 1,
-                        'saldoreal' => $lucroReal,
-                    ])) ;
+                    if($x != 0){
+                        if (DB::table('contrato_composicao_final')->insert([
+                            'idsituacao' => $createInsert[$x]['id'],
+                            'vendedorid' => 1,
+                            'tipo' => 1,
+                            'idativo' => $idservico,
+                            'indicecomissao' => $createInsert[$x]['indicecomissao'],
+                            'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
+                            'valorparcela' => $createInsert[$x]['valor'],
+                            'diavencimento' => $createInsert[$x]['diavencimento'],
+                            'mesvencimento' => $createInsert[$x]['mesvencimento'],
+                            'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
+                            'pagamento' => 0,
+                            'stateview' => 1,
+                            'saldoreal' => $lucroReal,
+                        ])) ;
+                    }
+
                 }
 
             }
@@ -616,6 +602,7 @@ class HomeController extends Controller
                     'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
+                    'mesvendedor'   => Carbon::parse($DataPrimeiraCobrancaForm)->month($mes),
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
@@ -629,25 +616,25 @@ class HomeController extends Controller
             $ContArrayVend = count($createInsertVend);
             $ContTrueVend = ($ContArrayVend - 1);
             for ($x = 0; $x <= $ContTrueVend; $x++) {
-                DB::table('contrato_composicao_final')->insert([
-                    'idsituacao' => $createInsertVend[$x]['id'],
-                    'vendedorid' => $vendedor,
-                    'tipo' => 1,
-                    'idativo' => $idservico,
-                    'indicecomissao' => $createInsertVend[$x]['indicecomissao'],
-                    'ivalorcomissao' => $createInsertVend[$x]['ivalorcomissao'],
-                    'valorparcela' => $createInsertVend[$x]['valor'],
-                    'diavencimento' => $createInsertVend[$x]['diavencimento'],
-                    'mesvencimento' => $createInsertVend[$x]['mesvencimento'],
-                    'datacontrole' => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
-                    'pagamento' => 0,
-                    'stateview' => 1,
-                    'saldoreal' => $lucroReal,
-                ]) ;
-            }
 
-            unset($createInsert);
-//            $last = DB::table('contrato_composicao_final')->orderBy('id', 'DESC')->first();
+                    DB::table('contrato_composicao_final')->insert([
+                        'idsituacao' => $createInsertVend[$x]['id'],
+                        'vendedorid' => $vendedor,
+                        'tipo' => 1,
+                        'idativo' => $idservico,
+                        'indicecomissao' => $createInsertVend[$x]['indicecomissao'],
+                        'ivalorcomissao' => $createInsertVend[$x]['ivalorcomissao'],
+                        'valorparcela' => $createInsertVend[$x]['valor'],
+                        'diavencimento' => $createInsertVend[$x]['diavencimento'],
+                        'mesvencimento' => $createInsertVend[$x]['mesvencimento'],
+                        'datacontrole' => $createInsertVend[$x]['mesvendedor'],
+                        'pagamento' => 0,
+                        'stateview' => 1,
+                        'saldoreal' => $lucroReal,
+                    ]) ;
+
+
+            }
             $ValorServico = DB::table('contrato_composicao_final')
                 ->where('idsituacao', '=', $id)
                 ->get();
@@ -661,21 +648,6 @@ class HomeController extends Controller
                 ]));
             }
             return back()->with('success', 'Serviço adicionado ao contrato com sucesso.');
-
-//            $ValorServico = DB::table('contrato_composicao_final')
-//                ->where('idsituacao', '=', $id)
-//                ->get();
-//            foreach ($ValorServico as $key => $value) {
-//                if (!empty($ValorServico)) {
-//
-//                $affected = DB::table('contrato_composicao_final')
-//                    ->where('id', $key)
-//                    ->update(['diavencimento' => $attr]);
-//            }
-//
-//
-//
-//                }
             }
         }
 
