@@ -102,7 +102,7 @@ class HomeController extends Controller
            $situacao->controle = 0;
           $situacao->save();
 //           return redirect()->route('lista-contrato');
-           return redirect('insere-servico/'.$key->id);
+           return redirect('insere'.$key->id);
        }
 
     }
@@ -449,7 +449,7 @@ class HomeController extends Controller
         $comissao = ($ValParcelaFloat * $porcentagemComissao) / 100;
         $lucroReal = ($ValParcela - $comissao);
 
-
+        $dt = Carbon::parse($DataPrimeiraCobrancaForm);
 
         if ($diferencaMeses==0) {
             for ($x = 1; $x <= $request->input('qtdparcela'); $x++) {
@@ -459,7 +459,6 @@ class HomeController extends Controller
                     'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
-                    'mesvendedor'   => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
@@ -473,6 +472,10 @@ class HomeController extends Controller
             $ContArray = count($createInsert);
             $ContTrue = ($ContArray - 1);
 
+
+
+
+
             for ($x = 0; $x <= $ContTrue; $x++) {
             if($x === 0) {
                 if (DB::table('contrato_composicao_final')->insert([
@@ -485,28 +488,30 @@ class HomeController extends Controller
                     'valorparcela' => $createInsert[$x]['valor'],
                     'diavencimento' => $createInsert[$x]['diavencimento'],
                     'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                    'datacontrole' => $createInsert[$x]['mesvendedor'],
+                    'datacontrole' => $DataPrimeiraCobrancaForm,
                     'pagamento' => 0,
                     'stateview' => 1,
                     'saldoreal' => $lucroReal,
                 ])) ;
 
             } else {
-                if (DB::table('contrato_composicao_final')->insert([
-                    'idsituacao' => $createInsert[$x]['id'],
-                    'vendedorid' => 1,
-                    'tipo' => 1,
-                    'idativo' => $idservico,
-                    'indicecomissao' => $createInsert[$x]['indicecomissao'],
-                    'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
-                    'valorparcela' => $createInsert[$x]['valor'],
-                    'diavencimento' => $createInsert[$x]['diavencimento'],
-                    'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                    'datacontrole' => $createInsert[$x]['mesvendedor'],
-                    'pagamento' => 0,
-                    'stateview' => 1,
-                    'saldoreal' => $lucroReal,
-                ])) ;
+                if($x != 0) {
+                    if (DB::table('contrato_composicao_final')->insert([
+                        'idsituacao' => $createInsert[$x]['id'],
+                        'vendedorid' => 1,
+                        'tipo' => 1,
+                        'idativo' => $idservico,
+                        'indicecomissao' => $createInsert[$x]['indicecomissao'],
+                        'ivalorcomissao' => $createInsert[$x]['ivalorcomissao'],
+                        'valorparcela' => $createInsert[$x]['valor'],
+                        'diavencimento' => $createInsert[$x]['diavencimento'],
+                        'mesvencimento' => $createInsert[$x]['mesvencimento'],
+                        'datacontrole' => $DataPrimeiraCobrancaForm->month($DataPrimeiraCobrancaForm->month + 1),
+                        'pagamento' => 0,
+                        'stateview' => 1,
+                        'saldoreal' => $lucroReal,
+                    ])) ;
+                }
             }
             }
            unset($createInsert);
@@ -560,7 +565,8 @@ class HomeController extends Controller
                         'valorparcela' => $createInsert[$x]['valor'],
                         'diavencimento' => $createInsert[$x]['diavencimento'],
                         'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                        'datacontrole' => $createInsert[$x]['mesvendedor'],                        'pagamento' => 0,
+                        'datacontrole' => $createInsert[$x]['mesvendedor'],
+                        'pagamento' => 0,
                         'stateview' => 1,
                         'saldoreal' => $lucroReal,
                     ])) ;
@@ -823,8 +829,8 @@ class HomeController extends Controller
             case 1:
                 $relvendedor = DB::table('contrato_composicao_final')
                 ->whereBetween('datacontrole', [$DataInicial, $dataFinal])
-                ->where('vendedorid', '=', $request->input('vendedor'))
-                ->where('pagamento', '=', $request->input('pagamento'))
+                ->Orwhere('vendedorid', '=', $request->input('vendedor'))
+//                ->where('pagamento', '=', $request->input('pagamento'))
                 ->get();
             break;
 
