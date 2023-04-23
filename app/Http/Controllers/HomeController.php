@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Database\Query\Builder;
 
 
 use Livewire\WithPagination;
@@ -799,16 +800,6 @@ class HomeController extends Controller
     {
 
         $vendedordata = $request->input('relatorio');
-        //Filtros
-
-        if($request->input('pagamemto') != 2) {
-        $filtro = 1;
-        } else {
-        $dataAtual = Carbon::now();
-        $filtro = 2;
-        }
-
-
 
 
         $mes = substr($vendedordata, 0, 2);
@@ -823,26 +814,44 @@ class HomeController extends Controller
         $dataFinalTemp = $anof . '-' . $diaf . '-' . $mesf;
         $dataFinal   = Carbon::createFromFormat('Y-m-d', $dataFinalTemp)->format('Y-m-d');
 
-        switch ($filtro){
-            case 1:
+        switch ($request->input('pagamemto')){
+            case 0:
+
                 $relvendedor = DB::table('contrato_composicao_final')
                 ->whereBetween('datacontrole', [$DataInicial, $dataFinal])
-                ->Orwhere('vendedorid', '=', $request->input('vendedor'))
-//                ->where('pagamento', '=', $request->input('pagamento'))
+                    ->where ([
+                        ['vendedorid', '=', $request->input('vendedor')],
+                        ['pagamento', '=', 0]
+                    ])
                 ->get();
             break;
 
-            case 2:
+            case 1:
+
                 $relvendedor = DB::table('contrato_composicao_final')
-                    ->where('datacontrole', '>', $dataAtual)
-                    ->where('vendedorid', '=', $request->input('vendedor'))
-                    ->where('pagamento', '=', 0)
+                    ->where ([
+                        ['vendedorid', '=', $request->input('vendedor')],
+                        ['pagamento', '=', 1]
+                    ])
                     ->get();
             break;
+            case 2:
+           $id =  $request->input('vendedor');
+
+                $dataAtualFormatada = Carbon::now()->format('Y-m-d');
+                        $relvendedor = DB::table('contrato_composicao_final')
+//                            ->where('vendedorid', '=', $id)
+                    ->where ('pagamento', '=', '0')
+
+                            ->whereDate('datacontrole', '<', $dataAtualFormatada)
+                            ->get();
+                dd($relvendedor);
+            break;
+
 
         }
 
-        dd($relvendedor);
+
 
 //        $contador = count($relvendedor);
 //        if($contador > 0){
