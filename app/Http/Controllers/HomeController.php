@@ -539,7 +539,6 @@ class HomeController extends Controller
                     'ivalorcomissao' => $comissao,
                     'diavencimento' => $dia,
                     'mesvencimento' => $mes . '/' . $AnoPrimeiraCobranca,
-                    'mesvendedor'   => Carbon::parse($DataPrimeiraCobrancaForm)->addMonths($x),
                     'valor' => $ValParcelaFloat,
                     'saldoreal' => $lucroReal,
                 ];
@@ -553,7 +552,6 @@ class HomeController extends Controller
             $ContTrue = ($ContArray - 1);
 
             for ($x = 0; $x <= $ContTrue; $x++) {
-                $dataFormatada = $DataPrimeiraCobrancaForm->month($createInsert[$x]['mesvencimento']);
                 if($x == 0) {
                     if (DB::table('contrato_composicao_final')->insert([
                         'idsituacao' => $createInsert[$x]['id'],
@@ -565,7 +563,7 @@ class HomeController extends Controller
                         'valorparcela' => $createInsert[$x]['valor'],
                         'diavencimento' => $createInsert[$x]['diavencimento'],
                         'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                        'datacontrole' => $createInsert[$x]['mesvendedor'],
+                        'datacontrole' => $DataPrimeiraCobrancaForm,
                         'pagamento' => 0,
                         'stateview' => 1,
                         'saldoreal' => $lucroReal,
@@ -583,7 +581,7 @@ class HomeController extends Controller
                             'valorparcela' => $createInsert[$x]['valor'],
                             'diavencimento' => $createInsert[$x]['diavencimento'],
                             'mesvencimento' => $createInsert[$x]['mesvencimento'],
-                            'datacontrole' => $createInsert[$x]['mesvendedor'],
+                            'datacontrole' => $DataPrimeiraCobrancaForm->month($DataPrimeiraCobrancaForm->month + 1),
                             'pagamento' => 0,
                             'stateview' => 1,
                             'saldoreal' => $lucroReal,
