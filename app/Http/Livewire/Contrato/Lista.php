@@ -21,8 +21,6 @@ class Lista extends Component
 
         public function render()
     {
-
-
         $items = DB::table('contratos')
                     ->join('clientes','idCliente', '=', 'clientes.id')
                     ->join ('produtos', 'idProduto', '=', 'produtos.id')
