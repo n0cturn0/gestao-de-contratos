@@ -825,43 +825,20 @@ class HomeController extends Controller
                     ])
                 ->get();
             break;
-
             case 1:
-
                 $relvendedor = DB::table('contrato_composicao_final')
+                    ->join('clientes', 'contrato_composicao_final.vendedorid', '=' ,'vendedor.id')
+                    ->select('contrato_composicao_final.*', 'clientes.cliente')
                     ->where ([
                         ['vendedorid', '=', $request->input('vendedor')],
                         ['pagamento', '=', 1]
                     ])
                     ->get();
             break;
-            case 2:
-           $id =  $request->input('vendedor');
-
-                $dataAtualFormatada = Carbon::now()->format('Y-m-d');
-                        $relvendedor = DB::table('contrato_composicao_final')
-//                            ->where('vendedorid', '=', $id)
-                    ->where ('pagamento', '=', '0')
-
-                            ->whereDate('datacontrole', '<', $dataAtualFormatada)
-                            ->get();
-                dd($relvendedor);
-            break;
-
-
         }
 
+        dd($relvendedor);
 
-
-//        $contador = count($relvendedor);
-//        if($contador > 0){
-//            dd($relvendedor);
-//        } else {
-//            dd('Não existe dados para exibir');
-//        }
-
-
-//        $AnoPrimeiraCobranca = Carbon::createFromFormat('Y-m-d', $DataPrimeiraCobrancaForm)->format('Y');
 
     }
 
