@@ -68,7 +68,7 @@
                                     <div class="icheckbox_flat-green checked" style="position: relative;" aria-checked="true" aria-disabled="false">
                                         <input  type="radio" name="pagamemto" value="0" class="flat-red" >Pendentes
                                         <input  type="radio" name="pagamemto" value="1" class="flat-red" >Pagas
-                                        <input  type="radio" name="pagamemto" value="2" class="flat-red" >Vencidas
+
 
 
                                     </div>
