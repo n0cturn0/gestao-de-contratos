@@ -114,6 +114,8 @@ class HomeController extends Controller
 //            ->join('contrato_periodos','id', '=', 'idsituacao')
         return view('contrato.lista');
     }
+
+
     public function situacaocontrato($id="NULL")
     {
 
