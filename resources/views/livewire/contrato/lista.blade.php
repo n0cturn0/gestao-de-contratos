@@ -52,6 +52,7 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
 
 
 
@@ -104,7 +105,7 @@
                                         <td>
                                             <a href="{{url('insere-servico/'.$student->id)}}" class="btn btn-block btn-info btn-sm"><i class="fa fa-rocket" aria-hidden="true">Comissão</i></a>
                                         </td>
-
+                                        <td><img src="{{asset('img/pdf.png')}}" width="32" height="32"></td>
                                     </tr>
                                 @empty
                                     <tr>
