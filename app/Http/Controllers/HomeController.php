@@ -38,7 +38,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $dataAtual = Carbon::now()->toDateString();
+        $vencidas = DB::table('contrato_composicao_final')->whereDate('datacontrole', '<', $dataAtual)
+        ->where('pagamento', '=', 0)->count();
+        $mensalidadesCount = DB::table('contrato_composicao_final')->count();
+        $mensalidadesPaga = DB::table('contrato_composicao_final')->where('pagamento', '=', 1)->count();
+        $mensalidadesPendente = DB::table('contrato_composicao_final')->where('pagamento', '=', 0)->count();
+        return view('home', compact('mensalidadesCount', 'mensalidadesPendente','mensalidadesPaga','vencidas'));
     }
 
 
