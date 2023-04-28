@@ -16,9 +16,6 @@ class Lista extends Component
     public $type='';
     public $search = '';
 
-
-
-
         public function render()
     {
         $items = DB::table('contratos')
