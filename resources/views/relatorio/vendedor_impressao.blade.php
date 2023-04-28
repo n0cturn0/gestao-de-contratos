@@ -17,18 +17,20 @@
 
 
 <div class="card-body table-responsive p-0">
+    <h3>{{$status}}</h3><hr>
+
     <table class="table table-bordered text-nowrap text-xs ">
         <thead>
 
         <th>Vendedor</th>
-        <th>Serviço</th>
+        <th>Serviços</th>
         <th>Valor</th>
         <th>Referência</th>
         <th></th>
         </thead>
         <tbody>
         <?php  $totalizado=0; ?>
-        @foreach($inseridos as $key => $value)
+        @foreach($relvendedor as $key => $value)
             <tr>
                 <td>{{$value->vendedor}}</td>
                 <td>{{$value->servico}}</td>
@@ -63,6 +65,9 @@
         </tr>
         </tbody>
     </table>
+    <div class="text text-xs">
+        Relatório gerado:{{$dataAtualFormatada}}
+    </div>
 </div>
 
 

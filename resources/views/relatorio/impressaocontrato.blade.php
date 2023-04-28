@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <?php  $totalizado=0; ?>
-        @foreach($inseridos as $key => $value)
+        @foreach($relvendedor as $key => $value)
             <tr>
                 <td>{{$value->vendedor}}</td>
                 <td>{{$value->servico}}</td>
