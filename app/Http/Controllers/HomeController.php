@@ -117,10 +117,15 @@ class HomeController extends Controller
 
     public function relatoriocontrato($id=NULL){
         $relvendedor = DB::table('contrato_composicao_final')
-            ->join('clientes', 'contrato_composicao_final.idsituacao', '=' ,$id)
-            ->select('contrato_composicao_final.*', 'clientes.cliente')
+
+            ->join('vendedors' ,'contrato_composicao_final.vendedorid', '=', 'vendedors.id')
+            ->select('contrato_composicao_final.*',  'vendedors.vendedor')
+            ->where('idsituacao', '=', $id)
             ->get();
 
+//        $pdf = PDF\Pdf::loadView( 'relatorio.impressaocontrato', compact('relvendedor'));
+//        return $pdf->download('invloice.pdf');
+            dd($relvendedor);
 
     }
 
