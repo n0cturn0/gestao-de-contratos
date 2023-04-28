@@ -104,11 +104,21 @@ class HomeController extends Controller
 
     }
 
+
+
     public function listacontrato()
     {
 //        $items = DB::table('contratos')
 //            ->join('contrato_periodos','id', '=', 'idsituacao')
         return view('contrato.lista');
+    }
+
+    public function apagacontrato($id){
+        if (DB::table('contratos')->where('id', '=', $id)->delete()){
+            return redirect()->route('lista-contrato');
+        }
+
+
     }
 
     public function relatoriocontrato($id=NULL){

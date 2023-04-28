@@ -43,6 +43,7 @@
                             <table class="table table-borderd table-striped">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>ID</th>
                                     <th>Cliente</th>
                                     <th>Produto</th>
@@ -63,6 +64,7 @@
                                 @forelse ($students as $student)
 
                                     <tr>
+                                        <td><a href="{{url('apaga-contrato/'.$student->id)}}"><i class="fa fa-minus-circle text-danger" aria-hidden="true"></i></a></td>
                                         <td>{{ $student->id }}</td>
                                         <td>{{ $student->cliente }}</td>
                                         <td>{{ $student->produto }}</td>
