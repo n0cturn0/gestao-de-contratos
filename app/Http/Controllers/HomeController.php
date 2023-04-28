@@ -41,17 +41,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-//    public function produto()
-//    {
-//        $message = 'Produto cadastrados';
-//        return view('produto', ['message' => $message]);
-//    }
 
-//    public function cadastro()
-//    {
-//
-//        return view('produto.cadastro');
-//    }
     public function servico()
     {
         return view('servico.index');
@@ -193,10 +183,7 @@ class HomeController extends Controller
     public function insereconfiguracao(Request $request)
     {
 
-//        $this->validate($request,[
-//            'vendedor' => 'required',
-//
-//        ]);
+
 
         $datas      = $request->master;
         $inicial    = substr($datas, 0,10);
@@ -796,14 +783,7 @@ class HomeController extends Controller
                 'contrato_composicao_final.id')->get();
 
                 $vend = DB::table('vendedors')->get();
-//        $data = [
-//            'servicos'  =>  DB::table('servicos')->get(),
-//            'vendedores'    => DB::table('vendedors')->get(),
-//            'contrato'  => $items,
-//            'inseridos' => $inseridos,
-//        ];
 
-//https://www.youtube.com/watch?v=u7PXHfzAqgA&ab_channel=CareerDevelopmentLab
 
         $pdf = PDF\Pdf::loadView( 'relatorio.impressaosimples', compact('vend','inseridos'));
         return $pdf->download('invloice.pdf');
