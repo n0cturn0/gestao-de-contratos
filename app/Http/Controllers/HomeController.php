@@ -115,6 +115,15 @@ class HomeController extends Controller
         return view('contrato.lista');
     }
 
+    public function relatoriocontrato($id=NULL){
+        $relvendedor = DB::table('contrato_composicao_final')
+            ->join('clientes', 'contrato_composicao_final.idsituacao', '=' ,$id)
+            ->select('contrato_composicao_final.*', 'clientes.cliente')
+            ->get();
+
+
+    }
+
 
     public function situacaocontrato($id="NULL")
     {
