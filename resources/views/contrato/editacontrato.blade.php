@@ -15,10 +15,7 @@
 
                     <div class="card-header">
                         <h4>
-                            {{--                                <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Buscar cliente" style="width: 230px" />--}}
-                            {{--                                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentModal">--}}
-                            {{--                                    Adicionar novo Vendedor--}}
-                            {{--                                </button>--}}
+
                         </h4>
                     </div>
                     @if(Session::has('success'))
