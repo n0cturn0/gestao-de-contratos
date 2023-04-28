@@ -117,15 +117,17 @@ class HomeController extends Controller
 
     public function relatoriocontrato($id=NULL){
         $relvendedor = DB::table('contrato_composicao_final')
-
+            ->join('servicos' ,'contrato_composicao_final.idativo', '=', 'servicos.id')
             ->join('vendedors' ,'contrato_composicao_final.vendedorid', '=', 'vendedors.id')
-            ->select('contrato_composicao_final.*',  'vendedors.vendedor')
+            ->select('contrato_composicao_final.*',  'vendedors.vendedor', 'servicos.servico')
             ->where('idsituacao', '=', $id)
             ->get();
 
-//        $pdf = PDF\Pdf::loadView( 'relatorio.impressaocontrato', compact('relvendedor'));
-//        return $pdf->download('invloice.pdf');
-            dd($relvendedor);
+        $pdf = PDF\Pdf::loadView( 'relatorio.impressaocontrato', compact('relvendedor'));
+        return $pdf->download('invloice.pdf');
+
+
+
 
     }
 
@@ -834,26 +836,41 @@ class HomeController extends Controller
             case 0:
 
                 $relvendedor = DB::table('contrato_composicao_final')
+                ->join('vendedors', 'contrato_composicao_final.vendedorid', '=' ,'vendedors.id')
+                ->join('servicos' ,'contrato_composicao_final.idativo', '=', 'servicos.id')
                 ->whereBetween('datacontrole', [$DataInicial, $dataFinal])
+                ->select('contrato_composicao_final.*', 'vendedors.vendedor', 'servicos.servico')
                     ->where ([
                         ['vendedorid', '=', $request->input('vendedor')],
                         ['pagamento', '=', 0]
                     ])
                 ->get();
+                $status = 'Mensalidades Pendentes';
+                $dataAtual = Carbon::now();
+                $dataAtualFormatada = $dataAtual->format('d/m/Y H:i:s');
+                $pdf = PDF\Pdf::loadView( 'relatorio.vendedor_impressao', compact('relvendedor','status','dataAtualFormatada'));
+                return $pdf->download('invloice.pdf');
             break;
             case 1:
-                $relvendedor = DB::table('contrato_composicao_final')
-                    ->join('clientes', 'contrato_composicao_final.vendedorid', '=' ,'vendedor.id')
-                    ->select('contrato_composicao_final.*', 'clientes.cliente')
-                    ->where ([
-                        ['vendedorid', '=', $request->input('vendedor')],
-                        ['pagamento', '=', 1]
-                    ])
-                    ->get();
+            $relvendedor = DB::table('contrato_composicao_final')
+            ->join('vendedors', 'contrato_composicao_final.vendedorid', '=' ,'vendedors.id')
+            ->join('servicos' ,'contrato_composicao_final.idativo', '=', 'servicos.id')
+            ->select('contrato_composicao_final.*', 'vendedors.vendedor','servicos.servico')
+            ->where ([
+                ['vendedorid', '=', $request->input('vendedor')],
+                ['pagamento', '=', 1]
+            ])
+            ->get();
+            $status = 'Mensalidades Pagas';
+            $dataAtual = Carbon::now();
+            $dataAtualFormatada = $dataAtual->format('d/m/Y H:i:s');
+
+                $pdf = PDF\Pdf::loadView( 'relatorio.vendedor_impressao', compact('relvendedor','status','dataAtualFormatada'));
+                return $pdf->download('invloice.pdf');
             break;
         }
 
-        dd($relvendedor);
+
 
 
     }
